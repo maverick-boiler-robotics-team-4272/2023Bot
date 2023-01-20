@@ -27,7 +27,7 @@ Andrew Lohr
 
 
 # Drivetrain
-The drivetrain's job is to get the robot from point A to B, whether that be by driver input or path following. It uses swerve drive, motion profiling via WPILib path following libraries (TODO check/clarify this), and odometry tracking both internally and via updates from fiducials on the field.
+The drivetrain's job is to get the robot from point A to B, whether that be by driver input or path following. It uses swerve drive, motion profiling via WPILib path following libraries (TODO check/clarify this), and odometry tracking both internally and via updates from fiducials (April Tags) on the field.
 
 *Marketing Note:* Motion profiling and odometry tracking are advanced topics; please make sure include highlight them in any media about the drivetrain.
 
@@ -39,13 +39,12 @@ In this state, the motion is controlled by a trajectory. This trajectory is fed 
 ### Rotation Lock
 In this state, the translation is controlled by the driver as described in the Drive State, but rotation is locked to ensure the robot is facing a particular point or direction at all times.
 ### Point State
-In this state, the robot moves directly, in a straight line, to another point on the field, without regard for anything potentially blocking the robot. The robot is not speed-limited in this situation. This could be useful, for instance, to speed to the loading station when there is a clear path there.
+In this state, the robot moves directly, in a straight line, to another point on the field, without regard for anything potentially blocking the robot. 
 
-*Marketing Note:* Robots generally do not exceed 16 feet/second because they are uncontrollable beyond that. However, in the Path Following and Point States, the driver is not in control. Therefore, please make sure to highlight that the robot can move up to __ feet/second (TODO update correct value) in these states.
 ## Hardware
 Swerve Drive Specialties MK4i using </br>
-4 NEO Brushless motors paired with Spark Max motor controller for driving (add gear ratio here) </br>
-4 NEO Brushless motors paired with Spark Max motor controller for module rotation (add gear ratio here)
+4 NEO Brushless motors paired with Spark Max motor controller for driving (6.75:1) </br>
+4 NEO Brushless motors paired with Spark Max motor controller for module rotation (150:7)
 
 TODO update all other subsystems below
 
@@ -77,15 +76,6 @@ This state allows for manual movement up and down of the arm. It should not allo
 ## Hardware
 1 FalonFX (105:1)
 
-# Climber
-This subsystem is in charge of raising and lowering the robot by attaching to the medium bar.
-## States
-### Position
-This state takes in an elevator position enum and moves the arm to the correct position accordingly.
-### Manual
-This state allows for manual movement up and down of the elevator. It should not allow the arm to go past the upper and lower limits. Make sure the speed is controllable to find intermediate positions with ease.
-## Hardware
-1 FalconFX (10.61:1)
 
 
 
