@@ -46,35 +46,31 @@ Swerve Drive Specialties MK4i using </br>
 4 NEO Brushless motors paired with Spark Max motor controller for driving (6.75:1) </br>
 4 NEO Brushless motors paired with Spark Max motor controller for module rotation (150:7)
 
-TODO update all other subsystems below
-
 # Intake
-The intake's job is to collect balls from the ground. It also ejects balls for scoring.
+The intake's job is to collect cones/cubes from the ground or loading station. It also ejects cones/cubes for scoring.
 
 ## States
 ### Idle
 The intake rollers stop spinning.
 ### Collecting
-The intake roller spin inward.
+The intake roller spin inward to collect cones/cubes.
 ### Ejecting
-The intake rollers spin outwards to score balls.
+The intake rollers spin outwards to score cones/cubes.
 
 ## Hardware
-1 VictorSPX (7:1 Redline)
+TODO update with the hardware
 
 # Arm
-The Arm's job is to move the intake to the ground to collect balls, then move it up to score them.
-
-*Technical Note:* The arm may also be involve in the high climb. Discuss with mechanical whether this is happening, so we can update this portion of the spec.
+The Arm's job is to move the intake to the ground or loading station to collect cones and cubes, then move them up to score.
 
 ## States
-### Position
-This state takes in an arm position enum and moves the arm to the correct position accordingly.
-### Manual
-This state allows for manual movement up and down of the arm. It should not allow the arm to go past the upper and lower limits. Make sure the speed is controllable to find intermediate positions with ease.
+### Forward Kinematic State
+This state moves the arm out to collect or score a cone or cube.
+### Backward Kinematic State
+This state moves the arm in to hold a game piece close to the robot.
 
 ## Hardware
-1 FalonFX (105:1)
+TODO update with the hardware
 
 
 
