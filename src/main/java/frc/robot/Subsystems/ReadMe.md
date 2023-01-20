@@ -15,7 +15,7 @@ Carl Lee Landskron
 Grady Whelan
 
 ## Dev Team
-Danny Quednow
+Daniel Quednow
 Andrew Lohr
 
 ## Resources
@@ -27,17 +27,27 @@ Andrew Lohr
 
 
 # Drivetrain
-The drivetrain's job is to get the robot from point A to B, whether that be by driver input or trajectory following. It uses curvature drive and motion-profiling with quintic spline generation.
+The drivetrain's job is to get the robot from point A to B, whether that be by driver input or path following. It uses swerve drive, motion profiling via WPILib path following libraries (TODO check/clarify this), and odometry tracking both internally and via updates from fiducials on the field.
 
-*Marketing Note:* Motion profiling + Curvature drive are very advance topics, please make sure include highlight them in any media about the drivetrain.
+*Marketing Note:* Motion profiling and odometry tracking are advanced topics; please make sure include highlight them in any media about the drivetrain.
 
 ## States
-### Open Loop (default)
-In this state, the driver is in full control of movement. Joystick input will be fed directly in as power inputs to the motors (after being cubed in order to give more control to the drivers)
+### Drive State (default)
+In this state, the driver is in full control of movement. Controller input will be converted to x, y, and rotational velocity to accurately move the drivetrain as controlled.
 ### Path Follower
-In this state, the motion is controlled by a trajectory. This trajectory is fed in as a parameter. It sets the speed of the drivetrain based on an internal timer. This state automatically ends when the timer reaches or exceeds the total time of the trajectory.
+In this state, the motion is controlled by a trajectory. This trajectory is fed in as a parameter. It sets the speed of the drivetrain based on an internal timer (TODO update when it is known whether it is time-based or position-reached / got-there based). This state automatically ends when the timer reaches or exceeds the total time of the trajectory.
+### Rotation Lock
+In this state, the translation is controlled by the driver as described in the Drive State, but rotation is locked to ensure the robot is facing a particular point or direction at all times.
+### Point State
+In this state, the robot moves directly, in a straight line, to another point on the field, without regard for anything potentially blocking the robot. The robot is not speed-limited in this situation. This could be useful, for instance, to speed to the loading station when there is a clear path there.
+
+*Marketing Note:* Robots generally do not exceed 16 feet/second because they are uncontrollable beyond that. However, in the Path Following and Point States, the driver is not in control. Therefore, please make sure to highlight that the robot can move up to __ feet/second (TODO update correct value) in these states.
 ## Hardware
-6 FalconFX's for driving (10.86:1)
+Swerve Drive Specialties MK4i using
+4 NEO Brushless motors paired with Spark Max motor controller for driving (add gear ratio here)
+4 NEO Brushless motors paired with Spark Max motor controller for module rotation (add gear ratio here)
+
+TODO update all other subsystems below
 
 # Intake
 The intake's job is to collect balls from the ground. It also ejects balls for scoring.
