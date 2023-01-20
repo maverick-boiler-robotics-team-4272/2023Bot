@@ -11,7 +11,7 @@ Thanks!
 *Marketing Note:* Make sure to highlight the fact that we use state-based programming. 
 
 ## Spec Author
-Carl Lee Landskron
+Carl Lee Landskron </br>
 Grady Whelan
 
 ## Dev Team
