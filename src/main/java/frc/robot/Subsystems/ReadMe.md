@@ -15,7 +15,7 @@ Carl Lee Landskron </br>
 Grady Whelan
 
 ## Dev Team
-Daniel Quednow
+Daniel Quednow </br>
 Andrew Lohr
 
 ## Resources
