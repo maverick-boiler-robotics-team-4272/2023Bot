@@ -43,8 +43,8 @@ In this state, the robot moves directly, in a straight line, to another point on
 
 *Marketing Note:* Robots generally do not exceed 16 feet/second because they are uncontrollable beyond that. However, in the Path Following and Point States, the driver is not in control. Therefore, please make sure to highlight that the robot can move up to __ feet/second (TODO update correct value) in these states.
 ## Hardware
-Swerve Drive Specialties MK4i using
-4 NEO Brushless motors paired with Spark Max motor controller for driving (add gear ratio here)
+Swerve Drive Specialties MK4i using </br>
+4 NEO Brushless motors paired with Spark Max motor controller for driving (add gear ratio here) </br>
 4 NEO Brushless motors paired with Spark Max motor controller for module rotation (add gear ratio here)
 
 TODO update all other subsystems below
