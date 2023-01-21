@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.utils.XboxController;
+import frc.team4272.controllers.utilities.JoystickAxes;
+import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
+import frc.team4272.swerve.commands.DriveState;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,8 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
+    public Drivetrain drivetrain = new Drivetrain();
 
     // The robot's IO devices and commands are defined here...
+    public XboxController driveController = new XboxController(0);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -35,7 +44,17 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        
+        JoystickAxes leftAxes = driveController.getAxes("left");
+        JoystickAxes rightAxes = driveController.getAxes("right");
+
+        leftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
+        rightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
+
+        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedY, () -> -leftAxes.getDeadzonedX(), rightAxes::getDeadzonedX, true));
+
+        new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
+            drivetrain.getGyroscope().setRotation(new Rotation2d(0));
+        }, drivetrain));
     }
 
     /**
