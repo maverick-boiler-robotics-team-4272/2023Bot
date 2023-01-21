@@ -7,7 +7,12 @@ import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+
 public class Drivetrain extends SwerveDriveBase {
+    private final SwerveDriveOdometry odometry;
 
     public Drivetrain() {
         super(
@@ -18,5 +23,19 @@ public class Drivetrain extends SwerveDriveBase {
             new PositionedSwerveModule(new SwerveModule(4,  59.0),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
+        odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions());
+    }
+
+    public void updateOdometry() {
+        odometry.update(gyroscope.getRotation().unaryMinus(), getPositions());
+    }
+
+    public Pose2d getRobotPose() {
+        Pose2d odometryPose = odometry.getPoseMeters();
+        return new Pose2d(odometryPose.getX(), odometryPose.getY(), new Rotation2d(odometryPose.getRotation().getRadians()));
+    }
+
+    public void setRobotPose(Pose2d pose) {
+        odometry.resetPosition(gyroscope.getRotation().unaryMinus(), getPositions(), pose);
     }
 }

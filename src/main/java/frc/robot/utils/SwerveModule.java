@@ -127,6 +127,6 @@ public class SwerveModule extends SwerveModuleBase {
      * @return Current state of the module
      */
     public SwerveModulePosition getPosition(){
-        return null;
+        return new SwerveModulePosition(driveEncoder.getPosition(), Rotation2d.fromDegrees(180).minus(getHeading()));
     }
 }
