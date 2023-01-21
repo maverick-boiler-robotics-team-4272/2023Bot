@@ -2,21 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.Arm;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
-  public ArmSubsystem() {}
+  public ArmSubsystem() {
+  }
 
-public void setElevatorPos(double height){
-  //TODO: finish setElevatorPosition
-}
+  public void setElevatorPos(double height) {
+    // TODO: finish setElevatorPosition
+  }
 
-public void setArm(double radians){
-  //TODO: finish setArm
-}
+  public void setArm(double radians) {
+    // TODO: finish setArm
+  }
 
   @Override
   public void periodic() {
