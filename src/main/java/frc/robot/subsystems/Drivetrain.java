@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.utils.Limelight;
 import frc.robot.utils.Pigeon;
 import frc.robot.utils.SwerveModule;
 import frc.team4272.swerve.utils.SwerveDriveBase;
@@ -23,7 +24,7 @@ public class Drivetrain extends SwerveDriveBase {
             new PositionedSwerveModule(new SwerveModule(4,  59.0),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
-        odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions());
+        odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getRobotPose());
     }
 
     public void updateOdometry() {
