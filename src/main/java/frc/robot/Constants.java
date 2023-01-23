@@ -38,5 +38,9 @@ public final class Constants {
 
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
+
+        public static final double MAX_TRANS_SPEED = 2.5; // 2.5 meters per second
+        public static final double MAX_ROT_SPEED = PI2 * 1.5; // 1.5 rotations per second
+        public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
     }
 }

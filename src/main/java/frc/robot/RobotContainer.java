@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.DriveState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
-import frc.team4272.swerve.commands.DriveState;
+
+import static frc.robot.Constants.DrivetrainConstants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,6 +34,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
+
+        drivetrain.setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
     }
 
     /**
@@ -50,7 +54,7 @@ public class RobotContainer {
         leftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
         rightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
 
-        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedY, () -> -leftAxes.getDeadzonedX(), rightAxes::getDeadzonedX, true));
+        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
             drivetrain.getGyroscope().setRotation(new Rotation2d(0));
