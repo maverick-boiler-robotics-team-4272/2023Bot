@@ -39,4 +39,9 @@ public class Drivetrain extends SwerveDriveBase {
     public void setRobotPose(Pose2d pose) {
         odometry.resetPosition(gyroscope.getRotation().unaryMinus(), getPositions(), pose);
     }
+
+    @Override
+    public void periodic() {
+        updateOdometry();
+    }
 }

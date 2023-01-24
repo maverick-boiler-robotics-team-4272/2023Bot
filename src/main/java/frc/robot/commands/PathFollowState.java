@@ -49,7 +49,7 @@ public class PathFollowState extends State<Drivetrain> {
 
         ChassisSpeeds speeds = controller.calculate(currentPose, desiredState, desiredState.holonomicRotation);
 
-        requiredSubsystem.driveFieldOriented(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, speeds.omegaRadiansPerSecond);
+        requiredSubsystem.drive(speeds);
     }
 
     @Override

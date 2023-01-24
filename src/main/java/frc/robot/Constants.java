@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -39,4 +46,13 @@ public final class Constants {
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
     }
+
+    public static class Paths {
+        public static PathPlannerTrajectory TEST_PATH = PathPlanner.loadPath("New Path", 2.5, 1.0);
+    }
+
+    public static final PIDController X_CONTROLLER = new PIDController(0.0, 0.0, 0.0);
+    public static final PIDController Y_CONTROLLER = new PIDController(0.0, 0.0, 0.0);
+    public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(0.001, 0.0, 0.0, new TrapezoidProfile.Constraints(1.5, 0.75));
+    public static final HolonomicDriveController DRIVE_CONTROLLER = new HolonomicDriveController(X_CONTROLLER, Y_CONTROLLER, THETA_CONTROLLER);
 }

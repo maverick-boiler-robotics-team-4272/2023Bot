@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.PathFollowState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
@@ -32,6 +33,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
+
+        drivetrain.setMaxSpeeds(3.0);
     }
 
     /**
@@ -63,6 +66,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return new PathFollowState(drivetrain, Constants.Paths.TEST_PATH, Constants.DRIVE_CONTROLLER);
     }
 }
