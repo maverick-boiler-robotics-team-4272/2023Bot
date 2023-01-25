@@ -28,7 +28,7 @@ public final class Limelight {
     public static Pose2d getRobotPose() {
         double[] pose = getBotPose();
         
-        return new Pose2d(pose[0] + FIELD_HALF_WIDTH, pose[1] + FIELD_HALF_HEIGHT, Rotation2d.fromDegrees(pose[5] + 180));
+        return new Pose2d(pose[0] + FIELD_HALF_WIDTH, pose[1] + FIELD_HALF_HEIGHT, Rotation2d.fromDegrees(pose[5]));
     }
 }
 

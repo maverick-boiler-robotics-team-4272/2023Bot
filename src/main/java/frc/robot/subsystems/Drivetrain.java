@@ -10,6 +10,7 @@ import static frc.robot.Constants.DrivetrainConstants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 
 public class Drivetrain extends SwerveDriveBase {
@@ -25,6 +26,12 @@ public class Drivetrain extends SwerveDriveBase {
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getRobotPose());
+    }
+
+    @Override
+    public void drive(ChassisSpeeds speeds) {
+        super.drive(speeds);
+        updateOdometry();
     }
 
     public void updateOdometry() {
