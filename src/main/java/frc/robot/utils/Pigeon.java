@@ -3,15 +3,15 @@ package frc.robot.utils;
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4272.globals.Gyroscope;
+import frc.team4272.globals.MathUtils;
 
 public class Pigeon extends Pigeon2 implements Gyroscope {
     private double offset;
 
     public Pigeon(int port, double offset) {
         super(port);
-        SmartDashboard.putNumber("Pigeon Heading", getYaw());
+        setYaw(MathUtils.euclideanModulo(getYaw(), 360.0));
         this.offset = offset;
     }
 

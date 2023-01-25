@@ -3,26 +3,24 @@ package frc.robot.commands;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
-import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Limelight;
 import frc.team4272.globals.State;
 
+import static frc.robot.Constants.PathUtils.*;
+
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
-    private HolonomicDriveController controller;
 
     private Timer timer;
     private Pose2d endPose;
 
-    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory, HolonomicDriveController controller) {
+    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
         super(drivetrain);
 
         this.trajectory = trajectory;
-        this.controller = controller;
         this.timer = new Timer();
     }
 
@@ -46,10 +44,13 @@ public class PathFollowState extends State<Drivetrain> {
     public void execute() {
         PathPlannerState desiredState = (PathPlannerState) trajectory.sample(timer.get());
         Pose2d currentPose = requiredSubsystem.getRobotPose();
+        Pose2d desiredPose = desiredState.poseMeters;
 
-        ChassisSpeeds speeds = controller.calculate(currentPose, desiredState, desiredState.holonomicRotation);
+        double xSpeed = X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
+        double ySpeed = Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
+        double tSpeed = THETA_CONTROLLER.calculate(requiredSubsystem.getGyroscope().getRotation().getRadians(), desiredState.holonomicRotation.getRadians());
 
-        requiredSubsystem.drive(speeds);
+        requiredSubsystem.driveFieldOriented(xSpeed, -ySpeed, tSpeed);
     }
 
     @Override
@@ -59,6 +60,6 @@ public class PathFollowState extends State<Drivetrain> {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= trajectory.getTotalTimeSeconds() && requiredSubsystem.getRobotPose().equals(endPose);
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.1);
     }
 }
