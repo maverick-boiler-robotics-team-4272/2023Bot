@@ -15,11 +15,9 @@ import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import frc.team4272.globals.State;
-import frc.team4272.swerve.commands.DriveState;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
 
-import static frc.robot.Constants.DrivetrainConstants.*;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -59,7 +57,7 @@ public class RobotContainer {
         leftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
         rightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
 
-        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedY, () -> -leftAxes.getDeadzonedX(), rightAxes::getDeadzonedX, true));
+        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedX, rightAxes::getDeadzonedX));
 
         // new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
         //     drivetrain.getGyroscope().setRotation(new Rotation2d(0));
