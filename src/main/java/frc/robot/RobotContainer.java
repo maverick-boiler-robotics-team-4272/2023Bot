@@ -17,7 +17,6 @@ import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import frc.team4272.globals.State;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -35,8 +34,6 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
-
-        drivetrain.setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
 
         drivetrain.setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
     }
@@ -64,7 +61,8 @@ public class RobotContainer {
         // }, drivetrain));
 
         new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelight.getRobotPose());
+            drivetrain.setRobotPose(Limelight.getLimelight("limelight-three").getRobotPose());
+            
         }, drivetrain));
     }
 

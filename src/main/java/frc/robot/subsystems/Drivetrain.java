@@ -25,7 +25,7 @@ public class Drivetrain extends SwerveDriveBase {
             new PositionedSwerveModule(new SwerveModule(4,  59.0),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
-        odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getRobotPose());
+        odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getLimelight("limelight-three").getRobotPose());
     }
 
     @Override

@@ -26,6 +26,9 @@ public final class Constants {
     public static final double PI2 = Math.PI * 2;
     public static final double VOLTAGE_COMPENSATION = 11.0;
 
+    public static final double FIELD_HALF_WIDTH = Units.feetToMeters(54.0 / 2.0);
+    public static final double FIELD_HALF_HEIGHT = Units.feetToMeters(27.0 / 2.0);
+
     public static class SwerveModuleConstants {
         public static final double WHEEL_RADIUS = 2.0;
         public static final double DRIVE_RATIO = 6.75;
@@ -60,11 +63,14 @@ public final class Constants {
         public static final PIDController Y_CONTROLLER = new PIDController(0.4, 0.015, 0.0);
         public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(1.75, 0.015, 0.0, new TrapezoidProfile.Constraints(DrivetrainConstants.MAX_ROT_SPEED, 1.5));
 
+        static {
+            THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
+        }
+
         public static boolean posesEqual(Pose2d a, Pose2d b, double delta) {
             return Math.abs(a.getX() - b.getX()) < delta &&
                    Math.abs(a.getY() - b.getY()) < delta &&
                    Math.abs(a.getRotation().getRadians() - b.getRotation().getRadians()) < delta;
         }
     }
-
 }

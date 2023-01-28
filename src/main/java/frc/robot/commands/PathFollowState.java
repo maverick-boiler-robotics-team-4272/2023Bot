@@ -4,12 +4,14 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Limelight;
 import frc.team4272.globals.State;
 
 import static frc.robot.Constants.PathUtils.*;
+import static frc.robot.Constants.*;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
@@ -32,8 +34,8 @@ public class PathFollowState extends State<Drivetrain> {
         PathPlannerState endState = trajectory.getEndState();
         endPose = new Pose2d(endState.poseMeters.getTranslation(), endState.holonomicRotation);
 
-        Pose2d aprilTagPose = Limelight.getRobotPose();
-        if(aprilTagPose.equals(new Pose2d())){
+        Pose2d aprilTagPose = Limelight.getLimelight("limelight-three").getRobotPose();
+        if(aprilTagPose.equals(new Pose2d(FIELD_HALF_WIDTH, FIELD_HALF_HEIGHT, new Rotation2d(0)))){
             requiredSubsystem.setRobotPose(trajectory.getInitialPose());
         } else {
             requiredSubsystem.setRobotPose(aprilTagPose);
