@@ -12,6 +12,9 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import frc.robot.utils.Limelight;
+import frc.robot.utils.ShuffleboardTable;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,9 +28,6 @@ public final class Constants {
 
     public static final double PI2 = Math.PI * 2;
     public static final double VOLTAGE_COMPENSATION = 11.0;
-
-    public static final double FIELD_HALF_WIDTH = Units.feetToMeters(54.0 / 2.0);
-    public static final double FIELD_HALF_HEIGHT = Units.feetToMeters(27.0 / 2.0);
 
     public static class SwerveModuleConstants {
         public static final double WHEEL_RADIUS = 2.0;
@@ -55,13 +55,18 @@ public final class Constants {
     }
 
     public static class Paths {
-        public static PathPlannerTrajectory TEST_PATH = PathPlanner.loadPath("New Path", DrivetrainConstants.MAX_TRANS_SPEED, 2.0);
+        public static final PathPlannerTrajectory TEST_PATH = PathPlanner.loadPath("New Path", DrivetrainConstants.MAX_TRANS_SPEED, 2.0);;
+
+        public static final PathPlannerTrajectory TOLERANCE_PATH_1 = PathPlanner.loadPath("Tolerance 1", 1.0, 1.0);
+        public static final PathPlannerTrajectory TOLERANCE_PATH_2 = PathPlanner.loadPath("Tolerance 2", 1.0, 1.0);
+
+        public static final PathPlannerTrajectory APRIL_SHUFFLE = PathPlanner.loadPath("April Shuffle", 1.0, 1.0);
     }
 
     public static class PathUtils {
         public static final PIDController X_CONTROLLER = new PIDController(0.4, 0.015, 0.0);
         public static final PIDController Y_CONTROLLER = new PIDController(0.4, 0.015, 0.0);
-        public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(1.75, 0.015, 0.0, new TrapezoidProfile.Constraints(DrivetrainConstants.MAX_ROT_SPEED, 1.5));
+        public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(0.7, 0.015, 0.0, new TrapezoidProfile.Constraints(DrivetrainConstants.MAX_ROT_SPEED, 1.5));
 
         static {
             THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
@@ -72,5 +77,21 @@ public final class Constants {
                    Math.abs(a.getY() - b.getY()) < delta &&
                    Math.abs(a.getRotation().getRadians() - b.getRotation().getRadians()) < delta;
         }
+    }
+
+    public static class Limelights {
+        public static final Limelight THREE = Limelight.getLimelight("limelight-three");
+    }
+
+    public static class FieldViewConstants {
+        public static final Field2d FIELD = new Field2d();
+        public static final ShuffleboardTable TABLE = ShuffleboardTable.getTable("Field View");
+    }
+
+    public static class FieldSizeConstants {
+        public static final double FIELD_WIDTH_METERS = Units.feetToMeters(54);
+        public static final double FIELD_HEIGHT_METERS = Units.feetToMeters(27);
+        public static final double FIELD_HALF_WIDTH = FIELD_WIDTH_METERS /  2.0;
+        public static final double FIELD_HALF_HEIGHT = FIELD_HEIGHT_METERS / 2.0;
     }
 }

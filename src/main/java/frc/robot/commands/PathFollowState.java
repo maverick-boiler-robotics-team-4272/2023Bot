@@ -4,14 +4,12 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.utils.Limelight;
 import frc.team4272.globals.State;
 
 import static frc.robot.Constants.PathUtils.*;
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.FieldViewConstants.*;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
@@ -34,12 +32,12 @@ public class PathFollowState extends State<Drivetrain> {
         PathPlannerState endState = trajectory.getEndState();
         endPose = new Pose2d(endState.poseMeters.getTranslation(), endState.holonomicRotation);
 
-        Pose2d aprilTagPose = Limelight.getLimelight("limelight-three").getRobotPose();
-        if(aprilTagPose.equals(new Pose2d(FIELD_HALF_WIDTH, FIELD_HALF_HEIGHT, new Rotation2d(0)))){
-            requiredSubsystem.setRobotPose(trajectory.getInitialPose());
-        } else {
-            requiredSubsystem.setRobotPose(aprilTagPose);
-        }
+        // Pose2d aprilTagPose = Limelight.getLimelight("limelight-three").getRobotPose();
+        // if(!Limelight.getLimelight("limelight-three").isValidTarget()){
+        //     requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
+        // } else {
+        //     requiredSubsystem.setRobotPose(aprilTagPose);
+        // }
     }
 
     @Override
@@ -53,6 +51,10 @@ public class PathFollowState extends State<Drivetrain> {
         double tSpeed = THETA_CONTROLLER.calculate(requiredSubsystem.getGyroscope().getRotation().getRadians(), desiredState.holonomicRotation.getRadians());
 
         requiredSubsystem.driveFieldOriented(xSpeed, -ySpeed, tSpeed);
+        
+        Pose2d holonomicPose = new Pose2d(desiredPose.getTranslation(), desiredState.holonomicRotation);
+
+        FIELD.setRobotPose(holonomicPose);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class PathFollowState extends State<Drivetrain> {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.1);
+        Pose2d robotPose = requiredSubsystem.getRobotPose();
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, new Pose2d(robotPose.getTranslation(), requiredSubsystem.getGyroscope().getRotation()), 0.1);
     }
 }

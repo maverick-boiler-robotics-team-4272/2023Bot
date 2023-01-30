@@ -4,19 +4,22 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveState;
 import frc.robot.commands.PathFollowState;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.utils.Limelight;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
-import frc.team4272.globals.State;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.Constants.FieldViewConstants.*;
+import static frc.robot.Constants.Limelights.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -36,6 +39,9 @@ public class RobotContainer {
         configureBindings();
 
         drivetrain.setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
+        
+        TABLE.putData("Field", FIELD);
+        TABLE.putData("Gyroscope", drivetrain.getGyroscope());
     }
 
     /**
@@ -54,14 +60,14 @@ public class RobotContainer {
         leftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
         rightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
 
-        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedX, rightAxes::getDeadzonedX));
+        drivetrain.setDefaultCommand(new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
 
         // new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
         //     drivetrain.getGyroscope().setRotation(new Rotation2d(0));
         // }, drivetrain));
 
         new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelight.getLimelight("limelight-three").getRobotPose());
+            drivetrain.setRobotPose(THREE.getRobotPose());
             
         }, drivetrain));
     }
@@ -71,7 +77,7 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public State<?> getAutonomousCommand() {
-        return new PathFollowState(drivetrain, Constants.Paths.TEST_PATH);
+    public Command getAutonomousCommand() {
+        return new RepeatCommand(new PathFollowState(drivetrain, Constants.Paths.APRIL_SHUFFLE));
     }
 }
