@@ -11,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableType;
 import edu.wpi.first.networktables.Topic;
 
-import static frc.robot.Constants.*;
+import static frc.robot.constants.UniversalConstants.*;
 
 public final class Limelight {
     private final Map<String, GenericEntry> entryMap = new HashMap<>();

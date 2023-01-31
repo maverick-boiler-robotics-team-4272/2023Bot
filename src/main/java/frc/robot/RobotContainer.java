@@ -16,7 +16,8 @@ import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import frc.team4272.globals.State;
 
-import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
+import static frc.robot.constants.AutoConstants.Paths.TEST_PATH;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -72,6 +73,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public State<?> getAutonomousCommand() {
-        return new PathFollowState(drivetrain, Constants.Paths.TEST_PATH);
+        return new PathFollowState(drivetrain, TEST_PATH);
     }
 }
