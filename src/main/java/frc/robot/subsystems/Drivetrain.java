@@ -26,6 +26,7 @@ public class Drivetrain extends SwerveDriveBase {
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getLimelight("limelight-three").getRobotPose());
+        setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
     }
 
     @Override
