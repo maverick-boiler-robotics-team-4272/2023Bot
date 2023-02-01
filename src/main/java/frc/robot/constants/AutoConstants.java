@@ -7,11 +7,19 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.RobotConstants.DrivetrainConstants;
 
 public class AutoConstants {
+    public static final SendableChooser<Command> AUTO_CHOOSER = new SendableChooser<>();
+
     public static class Paths {
-        public static PathPlannerTrajectory TEST_PATH = PathPlanner.loadPath("New Path", DrivetrainConstants.MAX_TRANS_SPEED, 2.0);
+        private static final PathPlannerTrajectory loadPath(String name) {
+            return PathPlanner.loadPath(TelemetryConstants.FMS.RED_ALLIANCE.get() ? "Red " : "Blue " + name, DrivetrainConstants.MAX_TRANS_SPEED, 2.0);
+        }
+
+        public static final PathPlannerTrajectory TEST_PATH = loadPath("Test Path");
     }
 
     public static class PathUtils {

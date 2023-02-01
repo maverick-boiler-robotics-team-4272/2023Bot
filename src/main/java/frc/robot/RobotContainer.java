@@ -4,19 +4,22 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveState;
 import frc.robot.commands.PathFollowState;
+import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.utils.Limelight;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
-import frc.team4272.globals.State;
 
-import static frc.robot.constants.AutoConstants.Paths.TEST_PATH;
+import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
+import static frc.robot.constants.AutoConstants.Paths.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,6 +41,7 @@ public class RobotContainer {
         // Run all configuration methods
         configureControllers();
         configureBindings();
+        configureAutoSendable();
     }
 
     /**
@@ -73,8 +77,7 @@ public class RobotContainer {
         );
 
         new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelight.getLimelight("limelight-three").getRobotPose());
-            
+            drivetrain.setRobotPose(Limelights.THREE.getRobotPose());
         }, drivetrain));
 
         // new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
@@ -94,12 +97,18 @@ public class RobotContainer {
 
     }
 
+    private void configureAutoSendable() {
+        AUTO_CHOOSER.addOption("Test Path", new PathFollowState(drivetrain, TEST_PATH));
+    
+        AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-    public State<?> getAutonomousCommand() {
-        return new PathFollowState(drivetrain, TEST_PATH);
+    public Command getAutonomousCommand() {
+        return AUTO_CHOOSER.getSelected();
     }
 }
