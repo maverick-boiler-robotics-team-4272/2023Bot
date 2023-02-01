@@ -16,7 +16,7 @@ public class AutoConstants {
 
     public static class Paths {
         private static final PathPlannerTrajectory loadPath(String name) {
-            return PathPlanner.loadPath(TelemetryConstants.FMS.RED_ALLIANCE.get() ? "Red " : "Blue " + name, DrivetrainConstants.MAX_TRANS_SPEED, 2.0);
+            return PathPlanner.loadPath((TelemetryConstants.FMS.RED_ALLIANCE.get() ? "Red " : "Blue ") + name, DrivetrainConstants.MAX_TRANS_SPEED, 2.0);
         }
 
         public static final PathPlannerTrajectory TEST_PATH = loadPath("Test Path");

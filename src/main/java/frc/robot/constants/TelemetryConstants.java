@@ -24,6 +24,6 @@ public class TelemetryConstants {
     public static class FMS {
         private static final NetworkTable FMS_TABLE = NetworkTableInstance.getDefault().getTable("FMSInfo");
 
-        public static final BooleanEntry RED_ALLIANCE = FMS_TABLE.getBooleanTopic("isRedAlliance").getEntry(false);
+        public static final BooleanEntry RED_ALLIANCE = FMS_TABLE.getBooleanTopic("IsRedAlliance").getEntry(false);
     }
 }
