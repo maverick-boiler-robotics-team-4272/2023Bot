@@ -10,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableType;
 import edu.wpi.first.networktables.Topic;
-import edu.wpi.first.networktables.NetworkTableInstance.NetworkMode;
 
 import static frc.robot.constants.UniversalConstants.*;
 
@@ -29,7 +28,7 @@ public final class Limelight {
 
         double[] pose = entry.getDoubleArray(new double[6]);
         if(pose.length != 6) return new double[6];
-        return pose;
+        return pose.clone();
     }
 
     public Pose2d getRobotPose() {
@@ -39,9 +38,9 @@ public final class Limelight {
     }
 
     public boolean isValidTarget() {
-        GenericEntry entry = getEntry("tv", NetworkTableType.kBoolean);
+        GenericEntry entry = getEntry("tv", NetworkTableType.kDouble);
 
-        return entry.getBoolean(false);
+        return entry.getDouble(0.0) != 0.0;
     }
 
     private GenericEntry getEntry(String name, NetworkTableType type) {
@@ -54,7 +53,10 @@ public final class Limelight {
         }
         if(!entryMap.containsKey(name)) {
             Topic topic = table.getTopic(name);
-            // if(!topic.getType().equals(type)) throw new IllegalArgumentException("Given type does not match topic type");
+            NetworkTableType t = NetworkTableType.getFromString(topic.getTypeString());
+            if(!t.equals(type)){
+                throw new IllegalArgumentException(String.format("Given type (%s) does not match topic type (%s)", type.getValueStr(), t.getValueStr()));
+            }
             GenericEntry entry = topic.getGenericEntry();
             entryMap.put(name, entry);
             return entry;
