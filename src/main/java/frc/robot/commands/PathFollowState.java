@@ -64,6 +64,7 @@ public class PathFollowState extends State<Drivetrain> {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.1);
+        Pose2d robotPose = requiredSubsystem.getRobotPose();
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, new Pose2d(robotPose.getTranslation(), requiredSubsystem.getGyroscope().getRotation()), 0.1);
     }
 }

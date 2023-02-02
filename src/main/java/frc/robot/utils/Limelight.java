@@ -10,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableType;
 import edu.wpi.first.networktables.Topic;
-import edu.wpi.first.networktables.NetworkTableInstance.NetworkMode;
 
 import static frc.robot.constants.UniversalConstants.*;
 
