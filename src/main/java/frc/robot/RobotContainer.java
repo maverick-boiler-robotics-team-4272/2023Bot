@@ -20,6 +20,8 @@ import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
 import static frc.robot.constants.AutoConstants.Paths.*;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
+import com.pathplanner.lib.server.PathPlannerServer;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,6 +40,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        PathPlannerServer.startServer(4272);
         // Run all configuration methods
         configureControllers();
         configureBindings();

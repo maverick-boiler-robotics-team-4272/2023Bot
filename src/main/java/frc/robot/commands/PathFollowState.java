@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -38,6 +39,8 @@ public class PathFollowState extends State<Drivetrain> {
         // } else {
         //     requiredSubsystem.setRobotPose(aprilTagPose);
         // }
+
+        PathPlannerServer.sendActivePath(trajectory.getStates());
     }
 
     @Override
@@ -55,6 +58,7 @@ public class PathFollowState extends State<Drivetrain> {
         Pose2d holonomicPose = new Pose2d(desiredPose.getTranslation(), desiredState.holonomicRotation);
 
         FIELD.setRobotPose(holonomicPose);
+        PathPlannerServer.sendPathFollowingData(holonomicPose, currentPose);
     }
 
     @Override
