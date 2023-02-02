@@ -10,7 +10,6 @@ import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
-import static frc.robot.constants.TelemetryConstants.Field.FIELD;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
@@ -47,18 +46,15 @@ public class PathFollowState extends State<Drivetrain> {
     public void execute() {
         PathPlannerState desiredState = (PathPlannerState) trajectory.sample(timer.get());
         Pose2d currentPose = requiredSubsystem.getRobotPose();
-        Pose2d desiredPose = desiredState.poseMeters;
+        Pose2d desiredPose = new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation);
 
         double xSpeed = X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
         double ySpeed = Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
-        double tSpeed = THETA_CONTROLLER.calculate(requiredSubsystem.getGyroscope().getRotation().getRadians(), desiredState.holonomicRotation.getRadians());
+        double tSpeed = THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
 
         requiredSubsystem.driveFieldOriented(xSpeed, -ySpeed, tSpeed);
         
-        Pose2d holonomicPose = new Pose2d(desiredPose.getTranslation(), desiredState.holonomicRotation);
-
-        FIELD.setRobotPose(holonomicPose);
-        PathPlannerServer.sendPathFollowingData(holonomicPose, currentPose);
+        PathPlannerServer.sendPathFollowingData(desiredPose, currentPose);
     }
 
     @Override
@@ -68,7 +64,6 @@ public class PathFollowState extends State<Drivetrain> {
 
     @Override
     public boolean isFinished() {
-        Pose2d robotPose = requiredSubsystem.getRobotPose();
-        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, new Pose2d(robotPose.getTranslation(), requiredSubsystem.getGyroscope().getRotation()), 0.1);
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.1);
     }
 }
