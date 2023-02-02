@@ -34,10 +34,10 @@ public class ArmSubsystem extends SubsystemBase {
 
         SparkMaxPIDController armController = armMotor.getPIDController();
 
-        armController.setP(ARM_PID_P);
-        armController.setI(ARM_PID_I);
-        armController.setD(ARM_PID_D);
-        armController.setFF(ARM_PID_F);
+        armController.setP(ROTARY_ARM_PID_P);
+        armController.setI(ROTARY_ARM_PID_I);
+        armController.setD(ROTARY_ARM_PID_D);
+        armController.setFF(ROTART_ARM_PID_F);
     }
 
     public void setElevatorPos(double height) {
