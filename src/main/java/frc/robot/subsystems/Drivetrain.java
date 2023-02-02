@@ -5,15 +5,14 @@ import frc.robot.utils.SwerveModule;
 import frc.team4272.swerve.utils.SwerveDriveBase;
 import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 
-import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 
-import static frc.robot.Constants.DrivetrainConstants.*;
-import static frc.robot.Constants.FieldViewConstants.*;
-import static frc.robot.Constants.Limelights.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
+import static frc.robot.constants.TelemetryConstants.Limelights.*;
+import static frc.robot.constants.TelemetryConstants.Field.FIELD;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.FIELD_TABLE;
 
 public class Drivetrain extends SwerveDriveBase {
     private final SwerveDriveOdometry odometry;
@@ -53,7 +52,7 @@ public class Drivetrain extends SwerveDriveBase {
     public void periodic() {
         FIELD.setRobotPose(getRobotPose());
         // Pose2d pose = THREE.getRobotPose();
-        TABLE.putBoolean("Valid", THREE.isValidTarget());
+        FIELD_TABLE.putBoolean("Valid", THREE.isValidTarget());
         // if(THREE.isValidTarget() && !pose.equals(new Pose2d(FIELD_HALF_WIDTH, FIELD_HALF_HEIGHT, new Rotation2d(0.0)))) {
         //     setRobotPose(pose);
         // }

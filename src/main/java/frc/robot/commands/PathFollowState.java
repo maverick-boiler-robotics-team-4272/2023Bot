@@ -2,14 +2,14 @@ package frc.robot.commands;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
-import static frc.robot.Constants.PathUtils.*;
-import static frc.robot.Constants.*;
+import static frc.robot.constants.AutoConstants.PathUtils.*;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
@@ -38,23 +38,23 @@ public class PathFollowState extends State<Drivetrain> {
         // } else {
         //     requiredSubsystem.setRobotPose(aprilTagPose);
         // }
+
+        PathPlannerServer.sendActivePath(trajectory.getStates());
     }
 
     @Override
     public void execute() {
         PathPlannerState desiredState = (PathPlannerState) trajectory.sample(timer.get());
         Pose2d currentPose = requiredSubsystem.getRobotPose();
-        Pose2d desiredPose = desiredState.poseMeters;
+        Pose2d desiredPose = new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation);
 
         double xSpeed = X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
         double ySpeed = Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
-        double tSpeed = THETA_CONTROLLER.calculate(requiredSubsystem.getGyroscope().getRotation().getRadians(), desiredState.holonomicRotation.getRadians());
+        double tSpeed = THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
 
         requiredSubsystem.driveFieldOriented(xSpeed, -ySpeed, tSpeed);
         
-        Pose2d holonomicPose = new Pose2d(desiredPose.getTranslation(), desiredState.holonomicRotation);
-
-        FIELD.setRobotPose(holonomicPose);
+        PathPlannerServer.sendPathFollowingData(desiredPose, currentPose);
     }
 
     @Override
