@@ -15,8 +15,8 @@ import edu.wpi.first.math.util.Units;
 import frc.team4272.globals.MathUtils;
 import frc.team4272.swerve.utils.SwerveModuleBase;
 
-import static frc.robot.Constants.SwerveModuleConstants.*;
-import static frc.robot.Constants.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.SwerveModuleConstants.*;
+import static frc.robot.constants.UniversalConstants.*;
 
 public class SwerveModule extends SwerveModuleBase {
 
@@ -83,8 +83,8 @@ public class SwerveModule extends SwerveModuleBase {
 
         rotationEncoder.setPosition(getEncoderPosition());
 
-        driveMotor.enableVoltageCompensation(VOLTAGE_COMPENSATION);
-        rotationMotor.enableVoltageCompensation(VOLTAGE_COMPENSATION);
+        driveMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
+        rotationMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
     }
 
     /**

@@ -5,7 +5,7 @@ import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
-import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 
 public class DriveState extends State<Drivetrain> {
 

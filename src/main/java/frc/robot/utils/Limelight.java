@@ -10,9 +10,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableType;
 import edu.wpi.first.networktables.Topic;
-import edu.wpi.first.networktables.NetworkTableInstance.NetworkMode;
 
-import static frc.robot.Constants.FieldSizeConstants.*;
+import static frc.robot.constants.UniversalConstants.*;
 
 public final class Limelight {
     private final Map<String, GenericEntry> entryMap = new HashMap<>();
@@ -45,15 +44,13 @@ public final class Limelight {
     }
 
     private GenericEntry getEntry(String name, NetworkTableType type) {
-        while(NetworkTableInstance.getDefault().getNetworkMode().contains(NetworkMode.kStarting)) {
-            System.out.println("Checked");
+        while(NetworkTableInstance.getDefault().getNetworkMode().contains(NetworkMode.kStarting)){
             try {
                 Thread.sleep(100);
             } catch(InterruptedException e) {
-                System.out.println("Network Tables not connected, interrupted while waiting");
+                System.out.println("Interrupted while waiting for connection");
             }
         }
-
         if(!entryMap.containsKey(name)) {
             Topic topic = table.getTopic(name);
             NetworkTableType t = NetworkTableType.getFromString(topic.getTypeString());

@@ -9,7 +9,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.Constants.PathUtils.*;
-import static frc.robot.Constants.FieldViewConstants.*;
+import static frc.robot.Constants.*;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
