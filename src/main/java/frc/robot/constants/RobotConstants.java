@@ -30,11 +30,17 @@ public class RobotConstants {
     }
 
     public static class ElevatorConstants {
-
+        public static final double ELEVATOR_PID_P = 1.0;
+        public static final double ELEVATOR_PID_I = 0.0;
+        public static final double ELEVATOR_PID_D = 0.0;
+        public static final double ELEVATOR_PID_F = 0.0;
     }
 
     public static class RotaryArmConstants {
-
+        public static final double ROTARY_ARM_PID_P = 1.0;
+        public static final double ROTARY_ARM_PID_I = 0.0;
+        public static final double ROTARY_ARM_PID_D = 0.0;
+        public static final double ROTART_ARM_PID_F = 0.0;
     }
 
     public static class ClawConstants {
