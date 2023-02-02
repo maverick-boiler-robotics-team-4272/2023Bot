@@ -6,7 +6,7 @@ import frc.robot.utils.SwerveModule;
 import frc.team4272.swerve.utils.SwerveDriveBase;
 import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 
-import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -26,6 +26,7 @@ public class Drivetrain extends SwerveDriveBase {
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), Limelight.getLimelight("limelight-three").getRobotPose());
+        setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
     }
 
     @Override

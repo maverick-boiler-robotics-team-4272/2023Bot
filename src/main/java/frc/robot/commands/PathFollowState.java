@@ -10,8 +10,8 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Limelight;
 import frc.team4272.globals.State;
 
-import static frc.robot.Constants.PathUtils.*;
-import static frc.robot.Constants.*;
+import static frc.robot.constants.AutoConstants.PathUtils.*;
+import static frc.robot.constants.UniversalConstants.*;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
