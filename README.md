@@ -4,5 +4,5 @@
 LimelightHelpers Code Source:
 https://github.com/LimelightVision/limelightlib-wpijava/blob/main/LimelightHelpers.java
 
-Cheif Delphi Post:
+Chief Delphi Post:
 https://www.chiefdelphi.com/t/introducing-limelight-lib/425660
