@@ -52,6 +52,7 @@ public final class Limelight {
                 System.out.println("Interrupted while waiting for connection");
             }
         }
+        
         if(!entryMap.containsKey(name)) {
             Topic topic = table.getTopic(name);
             NetworkTableType t = NetworkTableType.getFromString(topic.getTypeString());

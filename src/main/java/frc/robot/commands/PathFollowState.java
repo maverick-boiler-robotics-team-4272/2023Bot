@@ -48,11 +48,11 @@ public class PathFollowState extends State<Drivetrain> {
         Pose2d currentPose = requiredSubsystem.getRobotPose();
         Pose2d desiredPose = new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation);
 
-        double xSpeed = X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
-        double ySpeed = Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
-        double tSpeed = THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
+        double xSpeed =     -X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
+        double ySpeed =      Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
+        double thetaSpeed = -THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
 
-        requiredSubsystem.driveFieldOriented(xSpeed, -ySpeed, tSpeed);
+        requiredSubsystem.driveFieldOriented(xSpeed, ySpeed, thetaSpeed);
         
         PathPlannerServer.sendPathFollowingData(desiredPose, currentPose);
     }
@@ -60,11 +60,11 @@ public class PathFollowState extends State<Drivetrain> {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
+        requiredSubsystem.drive(0, 0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        Pose2d robotPose = requiredSubsystem.getRobotPose();
-        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, new Pose2d(robotPose.getTranslation(), requiredSubsystem.getGyroscope().getRotation()), 0.1);
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.05);
     }
 }

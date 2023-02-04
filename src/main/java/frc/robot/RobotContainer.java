@@ -4,13 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AprilRunCommand;
 import frc.robot.commands.DriveState;
-import frc.robot.commands.PathFollowState;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.XboxController;
@@ -18,7 +18,6 @@ import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 
 import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
-import static frc.robot.constants.AutoConstants.Paths.*;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -84,9 +83,9 @@ public class RobotContainer {
             drivetrain.setRobotPose(Limelights.THREE.getRobotPose());
         }, drivetrain));
 
-        // new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
-        //     drivetrain.getGyroscope().setRotation(new Rotation2d(0));
-        // }, drivetrain));
+        new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
+            drivetrain.getGyroscope().setRotation(new Rotation2d(0));
+        }, drivetrain));
     }
 
     private void configureOperatorBindings() {
@@ -102,7 +101,7 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
-        AUTO_CHOOSER.addOption("Test Path", new PathFollowState(drivetrain, TEST_PATH));
+        AUTO_CHOOSER.addOption("Test Path", () -> new AprilRunCommand(drivetrain));
     
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
@@ -113,6 +112,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return AUTO_CHOOSER.getSelected();
+        return AUTO_CHOOSER.getSelected().get();
     }
 }
