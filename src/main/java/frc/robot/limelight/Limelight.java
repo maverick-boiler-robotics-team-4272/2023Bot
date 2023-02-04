@@ -31,11 +31,15 @@ public final class Limelight {
     }
 
     public double[] getBotPose() {
-        return LimelightHelpers.getBotpose(tableName);
+        double[] pose = LimelightHelpers.getBotpose(tableName);
+        if(pose.length != 6) return new double[6];
+        return pose;
     }
 
     public double[] getBotPoseInTargetSpace() {
-        return LimelightHelpers.getBotPose_TargetSpace(tableName);
+        double[] pose = LimelightHelpers.getBotPose_TargetSpace(tableName);
+        if(pose.length != 6) return new double[6];
+        return pose;
     }
 
     public Pose2d getRobotPose() {
@@ -64,7 +68,7 @@ public final class Limelight {
         if(mode == null) return;
         LimelightHelpers.setLimelightNTDouble(tableName, "ledMode", mode.ordinal());
     }
-    
+
     public static Limelight getLimelight(String name) {
         if(!limelightMap.containsKey(name)) {
             limelightMap.put(name, new Limelight(name));
