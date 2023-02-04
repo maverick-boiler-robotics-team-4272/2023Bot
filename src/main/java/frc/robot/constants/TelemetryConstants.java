@@ -4,7 +4,7 @@ import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import frc.robot.utils.Limelight;
+import frc.robot.limelight.Limelight;
 import frc.robot.utils.ShuffleboardTable;
 
 public class TelemetryConstants {
@@ -14,7 +14,7 @@ public class TelemetryConstants {
     }
 
     public static class Limelights {
-        public static final Limelight THREE = Limelight.getLimelight("limelight-three");
+        public static final Limelight THREE = Limelight.getLimelight("three");
     }
 
     public static class Field {
