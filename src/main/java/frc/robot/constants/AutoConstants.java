@@ -35,12 +35,16 @@ public class AutoConstants {
 
             return globalTrajectories;
         }
+
+        public static boolean hasGlobalTrajectories() {
+            return globalTrajectories != null;
+        }
     }
 
     public static class PathUtils {
-        public static final PIDController X_CONTROLLER = new PIDController(0.4, 0.015, 0.0);
-        public static final PIDController Y_CONTROLLER = new PIDController(0.4, 0.015, 0.0);
-        public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(0.3, 0.01, 0.0, new TrapezoidProfile.Constraints(DrivetrainConstants.MAX_ROT_SPEED, 1.5));
+        public static final PIDController X_CONTROLLER = new PIDController(0.5, 0.015, 0.0);
+        public static final PIDController Y_CONTROLLER = new PIDController(0.5, 0.015, 0.0);
+        public static final ProfiledPIDController THETA_CONTROLLER = new ProfiledPIDController(0.3, 0.01, 0.0, new TrapezoidProfile.Constraints(DrivetrainConstants.MAX_ROT_SPEED, DrivetrainConstants.MAX_ROT_ACCEL));
 
         static {
             THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);

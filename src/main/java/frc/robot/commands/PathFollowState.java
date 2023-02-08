@@ -10,18 +10,25 @@ import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
+import static frc.robot.constants.TelemetryConstants.Limelights.THREE;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
+    private boolean resetOdometry;
 
     private Timer timer;
     private Pose2d endPose;
 
-    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
+    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory, boolean resetOdometry) {
         super(drivetrain);
 
         this.trajectory = trajectory;
         this.timer = new Timer();
+        this.resetOdometry = resetOdometry;
+    }
+
+    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
+        this(drivetrain, trajectory, true);
     }
 
     @Override
@@ -31,15 +38,18 @@ public class PathFollowState extends State<Drivetrain> {
 
         PathPlannerState endState = trajectory.getEndState();
         endPose = new Pose2d(endState.poseMeters.getTranslation(), endState.holonomicRotation);
-
-        // Pose2d aprilTagPose = Limelight.getLimelight("limelight-three").getRobotPose();
-        // if(!Limelight.getLimelight("limelight-three").isValidTarget()){
-        //     requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
-        // } else {
-        //     requiredSubsystem.setRobotPose(aprilTagPose);
-        // }
-
         PathPlannerServer.sendActivePath(trajectory.getStates());
+
+        if(!resetOdometry) return;
+        Pose2d aprilTagPose = THREE.getRobotPose();
+        if(!THREE.isValidTarget()){
+            requiredSubsystem.getGyroscope().setRotation(trajectory.getInitialState().holonomicRotation);
+            requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
+        } else {
+            // requiredSubsystem.getGyroscope().setRotation(aprilTagPose.getRotation());
+            requiredSubsystem.setRobotPose(aprilTagPose);
+        }
+
     }
 
     @Override
@@ -53,7 +63,7 @@ public class PathFollowState extends State<Drivetrain> {
         double thetaSpeed = -THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
 
         requiredSubsystem.driveFieldOriented(xSpeed, ySpeed, thetaSpeed);
-        
+
         PathPlannerServer.sendPathFollowingData(desiredPose, currentPose);
     }
 
@@ -65,6 +75,6 @@ public class PathFollowState extends State<Drivetrain> {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.05);
+        return timer.get() >= trajectory.getTotalTimeSeconds() && posesEqual(endPose, requiredSubsystem.getRobotPose(), 0.1);
     }
 }
