@@ -7,21 +7,21 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilRunCommand;
+import frc.robot.commands.ChargeCircleCommand;
 import frc.robot.commands.DriveState;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
-
-import com.pathplanner.lib.server.PathPlannerServer;
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -101,8 +101,10 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
-        AUTO_CHOOSER.addOption("Test Path", () -> new AprilRunCommand(drivetrain));
-    
+        AUTO_CHOOSER.addOption("Test Path", () -> new RepeatCommand(new AprilRunCommand(drivetrain)));
+        AUTO_CHOOSER.addOption("Charge Circle", () -> new RepeatCommand(new ChargeCircleCommand(drivetrain)));
+
+
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
 

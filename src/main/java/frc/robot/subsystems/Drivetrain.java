@@ -8,11 +8,12 @@ import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
-import static frc.robot.constants.TelemetryConstants.Field.FIELD;
-import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.FIELD_TABLE;
+
+import com.pathplanner.lib.server.PathPlannerServer;
 
 public class Drivetrain extends SwerveDriveBase {
     private final SwerveDriveOdometry odometry;
@@ -50,11 +51,10 @@ public class Drivetrain extends SwerveDriveBase {
 
     @Override
     public void periodic() {
-        FIELD.setRobotPose(getRobotPose());
-        // Pose2d pose = THREE.getRobotPose();
-        FIELD_TABLE.putBoolean("Valid", THREE.isValidTarget());
-        // if(THREE.isValidTarget() && !pose.equals(new Pose2d(FIELD_HALF_WIDTH, FIELD_HALF_HEIGHT, new Rotation2d(0.0)))) {
-        //     setRobotPose(pose);
-        // }
+        Pose2d robotPose = THREE.getRobotPose();
+
+        if(!DriverStation.isAutonomous()) {
+            PathPlannerServer.sendPathFollowingData(robotPose, getRobotPose());
+        }
     }
 }

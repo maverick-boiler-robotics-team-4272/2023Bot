@@ -4,15 +4,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.AutoConstants.Paths;
 import frc.robot.constants.TelemetryConstants.FMS;
-import frc.robot.constants.TelemetryConstants.Limelights;
-import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.Gyroscope;
 
 /**
@@ -63,9 +60,11 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        Paths.setGlobalTrajectories(
-            FMS.RED_ALLIANCE.get() ? Paths.RED_TRAJECTORIES : Paths.BLUE_TRAJECTORIES
-        );
+        if(!Paths.hasGlobalTrajectories()) {
+            Paths.setGlobalTrajectories(
+                FMS.RED_ALLIANCE.get() ? Paths.RED_TRAJECTORIES : Paths.BLUE_TRAJECTORIES
+            );
+        }
 
         autonomousCommand = robotContainer.getAutonomousCommand();
 
@@ -73,12 +72,6 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
         }
-
-        Drivetrain drivetrain = robotContainer.drivetrain;
-        Pose2d aprilPose = Limelights.THREE.getRobotPose();
-
-        drivetrain.getGyroscope().setRotation(aprilPose.getRotation());
-        drivetrain.setRobotPose(aprilPose);
     }
 
     /** This function is called periodically during autonomous. */
@@ -101,6 +94,7 @@ public class Robot extends TimedRobot {
                 Rotation2d.fromDegrees(FMS.RED_ALLIANCE.get() ? 180 : 0)
             )
         );
+        robotContainer.drivetrain.setRobotPose(robotContainer.drivetrain.getRobotPose());
     }
 
     /** This function is called periodically during operator control. */
