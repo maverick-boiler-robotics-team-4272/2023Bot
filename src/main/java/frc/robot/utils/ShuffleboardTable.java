@@ -86,6 +86,18 @@ public class ShuffleboardTable {
         return getBoolean(key, false);
     }
 
+    public SimpleWidget putBooleanArray(String key, boolean[] value) {
+        return putEntry(key, value);
+    }
+
+    public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
+        return getEntry(key, defaultValue).getBooleanArray(defaultValue);
+    }
+
+    public boolean[] getBooleanArray(String key) {
+        return getBooleanArray(key, new boolean[0]);
+    }
+
     public SimpleWidget putString(String key, String value){
         return putEntry(key, value);
     }
