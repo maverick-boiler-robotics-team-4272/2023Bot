@@ -110,6 +110,18 @@ public class ShuffleboardTable {
         return getString(key, "");
     }
 
+    public SimpleWidget putStringArray(String key, String[] value) {
+        return putEntry(key, value);
+    }
+
+    public String[] getStringArray(String key, String[] defaultValue) {
+        return getEntry(key, defaultValue).getStringArray(defaultValue);
+    }
+
+    public String[] getStringArray(String key) {
+        return getStringArray(key, new String[0]);
+    }
+
     public ComplexWidget putData(String key, Sendable data){
         return putEntry(key, data);
     }
