@@ -1,6 +1,7 @@
 package frc.robot.utils;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -40,5 +41,22 @@ public class MotorFactory {
         spark.setIdleMode(IdleMode.kBrake);
 
         return spark;
+    }
+
+    public CANSparkMax createSparkMax(int id, double kP, double kI, double kD, double kF) {
+        CANSparkMax spark = createSparkMax(id);
+
+        SparkMaxPIDController controller = spark.getPIDController();
+
+        controller.setP(kP);
+        controller.setI(kI);
+        controller.setD(kD);
+        controller.setFF(kF);
+
+        return spark;
+    }
+
+    public CANSparkMax createSparkMax(int id, PIDParameters parameters) {
+        return createSparkMax(id, parameters.kP, parameters.kI, parameters.kD, parameters.kF);
     }
 }
