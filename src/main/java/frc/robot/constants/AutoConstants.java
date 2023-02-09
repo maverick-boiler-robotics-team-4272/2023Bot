@@ -40,9 +40,9 @@ public class AutoConstants {
     }
 
     public static class PathUtils {
-        public static final PIDController X_CONTROLLER = new PIDController(0.5, 0.015, 0.0);
-        public static final PIDController Y_CONTROLLER = new PIDController(0.5, 0.015, 0.0);
-        public static final PIDController THETA_CONTROLLER = new PIDController(1.5, 0.015, 0.0);
+        public static final PIDController X_CONTROLLER = new PIDController(0.65, 0.015, 0.0);
+        public static final PIDController Y_CONTROLLER = new PIDController(0.65, 0.015, 0.0);
+        public static final PIDController THETA_CONTROLLER = new PIDController(1.75, 0.03, 0.0);
 
         static {
             THETA_CONTROLLER.enableContinuousInput(-Math.PI, Math.PI);
