@@ -8,6 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.THETA_CONTROLLER;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 
 public class RotationLockState extends State<Drivetrain> {
     private DoubleSupplier xSpeed;
@@ -30,8 +31,8 @@ public class RotationLockState extends State<Drivetrain> {
 
     @Override
     public void execute() {
-        double thetaSpeed = thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians());
-        requiredSubsystem.drive(xSpeed.getAsDouble(), ySpeed.getAsDouble(), thetaSpeed);
+        double thetaSpeed = -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians());
+        requiredSubsystem.drive(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed * MAX_ROT_SPEED);
     }
 
     @Override
