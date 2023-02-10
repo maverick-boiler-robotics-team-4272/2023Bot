@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,25 +14,35 @@ import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 public class RotationLockState extends State<Drivetrain> {
     private DoubleSupplier xSpeed;
     private DoubleSupplier ySpeed;
+    private Supplier<Rotation2d> thetaSupplier;
     private PIDController thetaController;
 
-    public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Rotation2d desiredAngle, PIDController thetaController) {
+    public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Supplier<Rotation2d> thetaSupplier, PIDController thetaController) {
         super(drivetrain);
 
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
+        this.thetaSupplier = thetaSupplier;
         this.thetaController = thetaController;
         this.thetaController.enableContinuousInput(-Math.PI, Math.PI);
-        this.thetaController.setSetpoint(desiredAngle.getRadians());
+    }
+
+    public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Rotation2d desiredAngle, PIDController thetaController) {
+        this(drivetrain, xSpeed, ySpeed, () -> desiredAngle, thetaController);
+    }
+
+
+    public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Supplier<Rotation2d> thetaSupplier) {
+        this(drivetrain, xSpeed, ySpeed, thetaSupplier, THETA_CONTROLLER);
     }
 
     public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Rotation2d desiredAngle) {
-        this(drivetrain, xSpeed, ySpeed, desiredAngle, THETA_CONTROLLER);
+        this(drivetrain, xSpeed, ySpeed, () -> desiredAngle);
     }
 
     @Override
     public void execute() {
-        double thetaSpeed = -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians());
+        double thetaSpeed = -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians(), thetaSupplier.get().getRadians());
         requiredSubsystem.drive(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed * MAX_ROT_SPEED);
     }
 
