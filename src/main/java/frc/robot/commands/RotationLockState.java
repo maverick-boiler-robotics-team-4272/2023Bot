@@ -43,7 +43,7 @@ public class RotationLockState extends State<Drivetrain> {
     @Override
     public void execute() {
         double thetaSpeed = -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians(), thetaSupplier.get().getRadians());
-        requiredSubsystem.drive(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed * MAX_ROT_SPEED);
+        requiredSubsystem.driveFieldOriented(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed * MAX_ROT_SPEED);
     }
 
     @Override
