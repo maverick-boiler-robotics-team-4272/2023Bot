@@ -48,6 +48,32 @@ public class ArmSubsystem extends SubsystemBase {
         // TODO: finish setArm
     }
 
+    public void inverseKinematics(double x,double y){
+        //Set Lengths
+        //static arm
+        double l = 4;
+        //rotary arm
+        double a = 3;
+
+        //offset of the arm base angle
+        double offset = Math.PI/6;
+        
+        //translate the coordinates to a verticle line
+        double x_prime = x * Math.cos(offset) - y * Math.sin(offset);
+        double y_prime = x * Math.sin(offset) + y * Math.cos(offset);
+
+        //joint math
+        double x_1 = 0;
+        double x_2 = 0.5 * l * Math.sqrt(3);
+        double y_2 = 0.5 * l;
+        double x_3 = x_prime - x_2 - x_1;
+        double theta = Math.acos(x_2/a);
+        double y_3 = a * Math.sin(theta);
+        double y_1 = y_prime - y_3 - y_2;
+
+        
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
