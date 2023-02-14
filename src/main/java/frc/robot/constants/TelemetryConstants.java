@@ -11,6 +11,7 @@ public class TelemetryConstants {
     public static class ShuffleboardTables {
         public static final ShuffleboardTable FIELD_TABLE = ShuffleboardTable.getTable("Field View");
         public static final ShuffleboardTable AUTO_TABLE = ShuffleboardTable.getTable("Auto Data");
+        public static final ShuffleboardTable TESTING_TABLE = ShuffleboardTable.getTable("Testing");
     }
 
     public static class Limelights {
