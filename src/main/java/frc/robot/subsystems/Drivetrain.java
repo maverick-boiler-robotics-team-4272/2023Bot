@@ -20,11 +20,11 @@ public class Drivetrain extends SwerveDriveBase {
 
     public Drivetrain() {
         super(
-            new Pigeon(25, -90),  // Make sure calibration of Pigeon happens before comps
-            new PositionedSwerveModule(new SwerveModule(1,  51.3), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(2,   3.5), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(3, 209.3),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(4,  59.2),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
+            new Pigeon(25, 90),  // Make sure calibration of Pigeon happens before comps
+            new PositionedSwerveModule(new SwerveModule(1, 127.0), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(2,  93.0), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(3, 261.0),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(4, 318.0),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), THREE.getRobotPose());
