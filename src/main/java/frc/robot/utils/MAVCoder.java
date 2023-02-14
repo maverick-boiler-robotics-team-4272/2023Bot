@@ -9,11 +9,10 @@ public class MAVCoder {
 
     public MAVCoder(CANSparkMax spark, double offset) {
         this.sensor = spark.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
-        this.sensor.setPositionConversionFactor(360 / 3.3);
         this.offset = offset;
     }
 
     public double getPosition() {
-        return sensor.getPosition() - offset;
+        return sensor.getPosition() * 360.0 / 3.3 - offset;
     }
 }
