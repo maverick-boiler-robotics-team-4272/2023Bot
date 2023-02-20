@@ -1,0 +1,25 @@
+package frc.robot.commands;
+
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmSubsystem.ArmSetpoints;
+import frc.team4272.globals.State;
+
+public class ElevatorSetpointState extends State<ArmSubsystem> {
+    private ArmSetpoints setpoint;
+
+    public ElevatorSetpointState(ArmSubsystem arm, ArmSetpoints setpoint) {
+        super(arm);
+
+        this.setpoint = setpoint;
+    }
+
+    @Override
+    public void initialize() {
+        requiredSubsystem.setElevatorPos(setpoint.elevatorHeightMeters);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return requiredSubsystem.isElevatorAtPosition(setpoint.elevatorHeightMeters) || setpoint.safetyOverride;
+    }
+}
