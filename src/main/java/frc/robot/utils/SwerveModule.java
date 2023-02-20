@@ -90,6 +90,10 @@ public class SwerveModule extends SwerveModuleBase {
         rotationMotor.setInverted(false);
     }
 
+    public double getMAVCoderReading() {
+        return externalRotationEncoder.getPosition();
+    }
+
     /**
      * 
      * @return offset of the module
