@@ -32,18 +32,50 @@ public class RobotConstants {
     }
 
     public static class ElevatorConstants {
-        public static final double ELEVATOR_PID_P = 1.0;
+        public static final double ELEVATOR_PID_P = 2.55;
         public static final double ELEVATOR_PID_I = 0.0;
         public static final double ELEVATOR_PID_D = 0.0;
-        public static final double ELEVATOR_PID_F = 0.0;
+        public static final double ELEVATOR_PID_F = 0.1;
+
+        public static final double ELEVATOR_PID_I_ZONE = 0.0;
+        public static final double ELEVATOR_PID_D_FILTER = 0.0;
+
+        public static final double ELEVATOR_PID_OUTPUT_MIN = -0.25;
+        public static final double ELEVATOR_PID_OUTPUT_MAX = 0.6;
+
+        public static final double SPROCKET_REV_TO_IN_RATIO = 1.92 * Math.PI;
+        public static final double MOTOR_TO_SPROCKET_RATIO = 8.0 / 1.0;
+        public static final double CASCADE_RATIO = 2.0 / 1.0;
+
+        public static final double ELEVATOR_SMART_MOTION_MAX_ACCEL = 0.1;
+        public static final double ELEVATOR_SMART_MOTION_MAX_SPEED = 0.5;
+
+        // Hardware max is 49 inches, choosing 46 inches for safety
+        public static final double MAX_ELEVATOR_DISTANCE = Units.inchesToMeters(46.0);
+        public static final double MIN_ELEVATOR_DISTANCE = 0.0;
     }
 
     public static class RotaryArmConstants {
-        public static final double ROTARY_ARM_PID_P = 1.0;
+        public static final double ROTARY_ARM_PID_P = 0.3;
         public static final double ROTARY_ARM_PID_I = 0.0;
         public static final double ROTARY_ARM_PID_D = 0.0;
-        public static final double ROTART_ARM_PID_F = 0.0;
-    }
+        public static final double ROTARY_ARM_PID_F = 0.02;
+
+        public static final double ROTARY_ARM_PID_I_ZONE = 0.0;
+        public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
+
+        public static final double ROTARY_ARM_PID_OUTPUT_MIN = -0.5;
+        public static final double ROTARY_ARM_PID_OUTPUT_MAX = 0.5;
+
+        public static final double ROTARY_ARM_SMART_MOTION_MAX_ACCEL = 0.1;
+        public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 2.0;
+
+        public static final double ARM_GEAR_RATIO = 96.0 / 1.0;
+        public static final double MAVCODER_RATIO = 58.0 /  26.0;
+
+        public static final double MIN_ARM_ANGLE = -120.0;
+        public static final double MAX_ARM_ANGLE = 0.0;
+    } 
 
     public static class ClawConstants {
 
