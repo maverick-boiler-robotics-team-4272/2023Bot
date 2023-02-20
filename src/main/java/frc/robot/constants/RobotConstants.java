@@ -81,20 +81,20 @@ public class RobotConstants {
         }
         
         public static enum ArmSetpoints {
-            LOW_CUBE(Rotation2d.fromDegrees(-54), 0.35, false),
-            HIGH_CUBE(Rotation2d.fromDegrees(-75), 0.97, false),
-            GROUND_CUBE(Rotation2d.fromDegrees(-120), 0.15, false),
-            HYBRID_CUBE(Rotation2d.fromDegrees(0), 0.0, false),
+            LOW_CUBE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(13.780), false),
+            HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
+            GROUND_CUBE(Rotation2d.fromDegrees(-120), Units.inchesToMeters(5.906), false),
+            HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
-            LOW_CONE(Rotation2d.fromDegrees(-54), 0.35, false),
-            HIGH_CONE(Rotation2d.fromDegrees(-75), 0.97, false),
-            GROUND_CONE(Rotation2d.fromDegrees(-102.5), 0.0, false),
-            HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-75), 0.90, false),
-            HYBRID_CONE(Rotation2d.fromDegrees(-100), 0.0, false),
+            LOW_CONE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(13.780), false),
+            HIGH_CONE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
+            GROUND_CONE(Rotation2d.fromDegrees(-102.5), Units.inchesToMeters(0.000), false),
+            HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(35.433), false),
+            HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
             
-            HOME(Rotation2d.fromDegrees(-15), 0, false),
-            SAFE_ARM(Rotation2d.fromDegrees(-40), 0, false);
+            HOME(Rotation2d.fromDegrees(-15), Units.inchesToMeters(0.000), false),
+            SAFE_ARM(Rotation2d.fromDegrees(-40), Units.inchesToMeters(0.000), false);
             
             public final Rotation2d armAngle;
             public final double elevatorHeightMeters;
