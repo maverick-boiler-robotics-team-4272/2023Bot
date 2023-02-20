@@ -1,5 +1,6 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 
 public class RobotConstants {
@@ -77,6 +78,36 @@ public class RobotConstants {
 
             public static final double MIN_ARM_ANGLE = -120.0;
             public static final double MAX_ARM_ANGLE = 0.0;
+        }
+        
+        public static enum ArmSetpoints {
+            LOW_CUBE(Rotation2d.fromDegrees(-54), 0.35, false),
+            HIGH_CUBE(Rotation2d.fromDegrees(-75), 0.97, false),
+            GROUND_CUBE(Rotation2d.fromDegrees(-120), 0.15, false),
+            HYBRID_CUBE(Rotation2d.fromDegrees(0), 0.0, false),
+    
+            LOW_CONE(Rotation2d.fromDegrees(-54), 0.35, false),
+            HIGH_CONE(Rotation2d.fromDegrees(-75), 0.97, false),
+            GROUND_CONE(Rotation2d.fromDegrees(-102.5), 0.0, false),
+            HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-75), 0.90, false),
+            HYBRID_CONE(Rotation2d.fromDegrees(-100), 0.0, false),
+    
+            
+            HOME(Rotation2d.fromDegrees(0), 0, false),
+            SAFE_ARM(Rotation2d.fromDegrees(-40), 0, false);
+            
+            public final Rotation2d armAngle;
+            public final double elevatorHeightMeters;
+            public final boolean safetyOverride;
+            private ArmSetpoints(Rotation2d armAngle, double elevatorHeightMeters, boolean safetyOverride) {
+                this.armAngle = armAngle;
+                this.elevatorHeightMeters = elevatorHeightMeters;
+                this.safetyOverride = safetyOverride;
+            }
+    
+            public static boolean isSetpointSafe(ArmSetpoints setpoint) {
+                return setpoint.armAngle.getDegrees() > SAFE_ARM.armAngle.getDegrees() || setpoint.safetyOverride;
+            }
         }
     }
 
