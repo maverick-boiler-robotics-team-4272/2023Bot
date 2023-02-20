@@ -27,7 +27,7 @@ import com.pathplanner.lib.server.PathPlannerServer;
 
 import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
-import static frc.robot.subsystems.ArmSubsystem.ArmSetpoints.*;
+import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

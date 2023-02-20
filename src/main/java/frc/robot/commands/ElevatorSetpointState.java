@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
+import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ArmSubsystem.ArmSetpoints;
 import frc.team4272.globals.State;
 
 public class ElevatorSetpointState extends State<ArmSubsystem> {
