@@ -93,7 +93,7 @@ public class RobotConstants {
             HYBRID_CONE(Rotation2d.fromDegrees(-100), 0.0, false),
     
             
-            HOME(Rotation2d.fromDegrees(0), 0, false),
+            HOME(Rotation2d.fromDegrees(-15), 0, false),
             SAFE_ARM(Rotation2d.fromDegrees(-40), 0, false);
             
             public final Rotation2d armAngle;
