@@ -41,6 +41,9 @@ public class SwerveModule extends SwerveModuleBase {
         this.offset = offset;
         externalRotationEncoder = new MAVCoder(rotationMotor, offset);
 
+        driveMotor.restoreFactoryDefaults();
+        rotationMotor.restoreFactoryDefaults();
+
         drivePidController.setP(DRIVE_P);
         drivePidController.setI(DRIVE_I);
         drivePidController.setD(DRIVE_D);
@@ -54,10 +57,13 @@ public class SwerveModule extends SwerveModuleBase {
         driveMotor.setIdleMode(IdleMode.kBrake);
         rotationMotor.setIdleMode(IdleMode.kBrake);
 
-        // m_driveMotor.burnFlash();
-        // m_rotationMotor.burnFlash();
+        driveMotor.setSmartCurrentLimit(40);
+        rotationMotor.setSmartCurrentLimit(40);
 
         init();
+
+        driveMotor.burnFlash();
+        rotationMotor.burnFlash();
     }
 
     /**
@@ -79,6 +85,9 @@ public class SwerveModule extends SwerveModuleBase {
 
         driveMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
         rotationMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
+    
+        driveMotor.setInverted(false);
+        rotationMotor.setInverted(false);
     }
 
     public double getMAVCoderReading() {

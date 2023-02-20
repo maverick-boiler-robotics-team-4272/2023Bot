@@ -13,6 +13,6 @@ public class MAVCoder {
     }
 
     public double getPosition() {
-        return sensor.getPosition() * 360.0 / 3.3 - offset;
+        return (sensor.getPosition() * 360.0 / 3.3) - offset;
     }
 }
