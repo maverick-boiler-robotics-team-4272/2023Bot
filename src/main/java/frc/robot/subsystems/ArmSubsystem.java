@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team4272.globals.MathUtils;
 
 import static frc.robot.constants.HardwareMap.*;
-import static frc.robot.constants.RobotConstants.ElevatorConstants.*;
-import static frc.robot.constants.RobotConstants.RotaryArmConstants.*;
+import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ElevatorConstants.*;
+import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.RotaryArmConstants.*;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 
