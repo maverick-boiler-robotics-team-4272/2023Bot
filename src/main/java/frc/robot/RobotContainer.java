@@ -98,6 +98,8 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
+        arm.setDefaultCommand(new ArmSetpointCommand(arm, HOME));
+
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(claw, operatorController.getTrigger("left")::getValue)
         );
@@ -120,10 +122,6 @@ public class RobotContainer {
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).onTrue(
             new ArmSetpointCommand(arm, HIGH_CUBE)
-        );
-
-        new Trigger(operatorController.getButton("back")::get).onTrue(
-            new ArmSetpointCommand(arm, HOME)
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
