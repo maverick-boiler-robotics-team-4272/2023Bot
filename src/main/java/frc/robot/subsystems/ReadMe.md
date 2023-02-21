@@ -70,7 +70,12 @@ This state moves the arm out to collect or score a cone or cube.
 This state moves the arm in to hold a game piece close to the robot.
 
 ## Hardware
-TODO update with the hardware
+### Elevator
+2 Neo brushless motor (1.92 pitch diameter: 1 rot = 1.92pi inches)
+Elevator: Safe 46 inches of travel. Hardmax 49 inches
+Techincal Note: Reminder cascade has a 2:1 ratio inherent in it's movement
+### Arm
+1 Neo brushless motor 96:1
 
 
 

@@ -62,6 +62,18 @@ public class ShuffleboardTable {
         return getNumber(key, 0.0);
     }
 
+    public SimpleWidget putNumberArray(String key, double[] value) {
+        return putEntry(key, value);
+    }
+
+    public double[] getNumberArray(String key, double[] defaultValue) {
+        return getEntry(key, defaultValue).getDoubleArray(defaultValue);
+    }
+
+    public double[] getNumberArray(String key) {
+        return getNumberArray(key, new double[0]);
+    }
+
     public SimpleWidget putBoolean(String key, boolean value){
         return putEntry(key, value);
     }
@@ -74,6 +86,18 @@ public class ShuffleboardTable {
         return getBoolean(key, false);
     }
 
+    public SimpleWidget putBooleanArray(String key, boolean[] value) {
+        return putEntry(key, value);
+    }
+
+    public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
+        return getEntry(key, defaultValue).getBooleanArray(defaultValue);
+    }
+
+    public boolean[] getBooleanArray(String key) {
+        return getBooleanArray(key, new boolean[0]);
+    }
+
     public SimpleWidget putString(String key, String value){
         return putEntry(key, value);
     }
@@ -84,6 +108,18 @@ public class ShuffleboardTable {
 
     public String getString(String key){
         return getString(key, "");
+    }
+
+    public SimpleWidget putStringArray(String key, String[] value) {
+        return putEntry(key, value);
+    }
+
+    public String[] getStringArray(String key, String[] defaultValue) {
+        return getEntry(key, defaultValue).getStringArray(defaultValue);
+    }
+
+    public String[] getStringArray(String key) {
+        return getStringArray(key, new String[0]);
     }
 
     public ComplexWidget putData(String key, Sendable data){
