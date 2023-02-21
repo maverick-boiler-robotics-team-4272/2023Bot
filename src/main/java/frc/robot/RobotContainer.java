@@ -13,6 +13,7 @@ import frc.robot.commands.ArmSetpointCommand;
 import frc.robot.commands.ConeGrabState;
 import frc.robot.commands.CubeGrabState;
 import frc.robot.commands.DriveState;
+import frc.robot.commands.OneConeCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
@@ -155,6 +156,7 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
+        AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, claw));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
