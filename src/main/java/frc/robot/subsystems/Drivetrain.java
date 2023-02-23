@@ -10,21 +10,22 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.DriverStation;
 
+import com.pathplanner.lib.server.PathPlannerServer;
+
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
-
-import com.pathplanner.lib.server.PathPlannerServer;
+import static frc.robot.constants.HardwareMap.*;
 
 public class Drivetrain extends SwerveDriveBase {
     private final SwerveDriveOdometry odometry;
 
     public Drivetrain() {
         super(
-            new Pigeon(25, -90),  // Make sure calibration of Pigeon happens before comps
-            new PositionedSwerveModule(new SwerveModule(1,  51.3), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(2,   3.5), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(3, 209.3),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule(new SwerveModule(4,  59.2),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
+            new Pigeon(PIGEON_ID, -90),  // Make sure calibration of Pigeon happens before comps
+            new PositionedSwerveModule(new SwerveModule(MODULE_FL_ID, 116.0), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(MODULE_FR_ID,  96.0), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(MODULE_BL_ID, 224.0),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
+            new PositionedSwerveModule(new SwerveModule(MODULE_BR_ID, 313.0),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), THREE.getRobotPose());

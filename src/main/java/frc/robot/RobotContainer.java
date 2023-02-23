@@ -11,9 +11,14 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilRunCommand;
+import frc.robot.commands.ArmSetpointCommand;
 import frc.robot.commands.ChargeCircleCommand;
+import frc.robot.commands.ConeGrabState;
+import frc.robot.commands.CubeGrabState;
 import frc.robot.commands.DriveState;
 import frc.robot.constants.TelemetryConstants.Limelights;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
@@ -22,6 +27,8 @@ import com.pathplanner.lib.server.PathPlannerServer;
 
 import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
+import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -31,6 +38,8 @@ import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public Drivetrain drivetrain = new Drivetrain();
+    public ArmSubsystem arm = new ArmSubsystem();
+    public ClawSubsystem claw = new ClawSubsystem();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
@@ -89,7 +98,55 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
+        arm.setDefaultCommand(new ArmSetpointCommand(arm, HOME));
 
+        new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new CubeGrabState(claw, operatorController.getTrigger("left")::getValue)
+        );
+
+        new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new CubeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+        );
+
+        new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, GROUND_CUBE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, LOW_CUBE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, HIGH_CUBE).repeatedly()
+        );
+
+        new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ConeGrabState(claw, operatorController.getTrigger("left")::getValue)
+        );
+
+        new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ConeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+        );
+
+        new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, GROUND_CONE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, LOW_CONE).repeatedly()
+        );
+
+        new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ArmSetpointCommand(arm, HIGH_CONE).repeatedly()
+        );
     }
 
     private void configureDemo1Bindings() {
