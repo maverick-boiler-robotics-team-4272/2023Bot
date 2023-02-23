@@ -2,6 +2,7 @@ package frc.robot.utils;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -50,6 +51,12 @@ public class MotorBuilder {
         return this;
     }
 
+    public MotorBuilder withIdleMode(IdleMode mode) {
+        spark.setIdleMode(mode);
+
+        return this;
+    }
+
     public MotorBuilder withSoftLimits(double forwardLimit, double reverseLimit) {
         spark.enableSoftLimit(SoftLimitDirection.kForward, true);
         spark.setSoftLimit(SoftLimitDirection.kForward, (float) forwardLimit);
@@ -85,6 +92,7 @@ public class MotorBuilder {
     public static MotorBuilder createWithDefaults(int id) {
         return new MotorBuilder(id)
             .withCurrentLimit(20)
-            .withVoltageCompensation(NOMINAL_VOLTAGE);
+            .withVoltageCompensation(NOMINAL_VOLTAGE)
+            .withIdleMode(IdleMode.kBrake);
     }
 }
