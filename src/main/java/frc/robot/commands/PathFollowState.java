@@ -10,7 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
-import static frc.robot.constants.TelemetryConstants.Limelights.THREE;
+import static frc.robot.constants.TelemetryConstants.Limelights.CENTER;
 
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
@@ -41,8 +41,8 @@ public class PathFollowState extends State<Drivetrain> {
         PathPlannerServer.sendActivePath(trajectory.getStates());
 
         if(!resetOdometry) return;
-        Pose2d aprilTagPose = THREE.getRobotPose();
-        if(!THREE.isValidTarget()){
+        Pose2d aprilTagPose = CENTER.getRobotPose();
+        if(!CENTER.isValidTarget()){
             requiredSubsystem.getGyroscope().setRotation(trajectory.getInitialState().holonomicRotation);
             requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
         } else {

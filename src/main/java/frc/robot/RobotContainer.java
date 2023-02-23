@@ -87,7 +87,7 @@ public class RobotContainer {
         );
 
         new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelights.THREE.getRobotPose());
+            drivetrain.setRobotPose(Limelights.CENTER.getRobotPose());
         }, drivetrain));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {

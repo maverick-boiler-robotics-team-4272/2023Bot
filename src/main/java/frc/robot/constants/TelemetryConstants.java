@@ -15,7 +15,9 @@ public class TelemetryConstants {
     }
 
     public static class Limelights {
-        public static final Limelight THREE = Limelight.getLimelight("three");
+        public static final Limelight RIGHT = Limelight.getLimelight("right");
+        public static final Limelight CENTER = Limelight.getLimelight("center");
+        public static final Limelight LEFT = Limelight.getLimelight("left");
     }
 
     public static class Field {
