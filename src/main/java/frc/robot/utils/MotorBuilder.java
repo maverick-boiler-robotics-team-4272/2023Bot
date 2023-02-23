@@ -18,6 +18,12 @@ public class MotorBuilder {
         spark.clearFaults();
     }
 
+    public CANSparkMax asFollower(CANSparkMax leader, boolean invert) {
+        spark.follow(leader, invert);
+
+        return spark;
+    }
+
     public MotorBuilder withPID(double p, double i, double d) {
         SparkMaxPIDController controller = spark.getPIDController();
 
@@ -53,6 +59,12 @@ public class MotorBuilder {
 
     public MotorBuilder withIdleMode(IdleMode mode) {
         spark.setIdleMode(mode);
+
+        return this;
+    }
+
+    public MotorBuilder withInversion(boolean inverted) {
+        spark.setInverted(false);
 
         return this;
     }
@@ -93,6 +105,7 @@ public class MotorBuilder {
         return new MotorBuilder(id)
             .withCurrentLimit(20)
             .withVoltageCompensation(NOMINAL_VOLTAGE)
-            .withIdleMode(IdleMode.kBrake);
+            .withIdleMode(IdleMode.kBrake)
+            .withInversion(false);
     }
 }
