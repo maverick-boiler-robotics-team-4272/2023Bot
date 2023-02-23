@@ -18,10 +18,10 @@ public class MotorBuilder {
         spark.clearFaults();
     }
 
-    public CANSparkMax asFollower(CANSparkMax leader, boolean invert) {
+    public MotorBuilder asFollower(CANSparkMax leader, boolean invert) {
         spark.follow(leader, invert);
 
-        return spark;
+        return this;
     }
 
     public MotorBuilder withPID(double p, double i, double d) {
@@ -41,6 +41,24 @@ public class MotorBuilder {
         controller.setI(i);
         controller.setD(d);
         controller.setFF(f);
+
+        return this;
+    }
+
+    public MotorBuilder withIZone(double iZone) {
+        spark.getPIDController().setIZone(iZone);
+
+        return this;
+    }
+
+    public MotorBuilder withDFilter(double dFilter) {
+        spark.getPIDController().setDFilter(dFilter);
+
+        return this;
+    }
+
+    public MotorBuilder withOutputRange(double min, double max) {
+        spark.getPIDController().setOutputRange(min, max);
 
         return this;
     }
