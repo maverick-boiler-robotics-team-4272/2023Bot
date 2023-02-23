@@ -91,6 +91,12 @@ public class MotorBuilder {
         return this;
     }
 
+    public MotorBuilder withPosition(double position) {
+        spark.getEncoder().setPosition(position);
+
+        return this;
+    }
+
     public CANSparkMax build() {
         spark.burnFlash();
 
