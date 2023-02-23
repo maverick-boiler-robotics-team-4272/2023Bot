@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmSetpointCommand;
+import frc.robot.commands.ArmSetpointState;
 import frc.robot.commands.ConeGrabState;
 import frc.robot.commands.CubeGrabState;
 import frc.robot.commands.DriveState;
@@ -96,7 +96,7 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
-        arm.setDefaultCommand(new ArmSetpointCommand(arm, HOME));
+        arm.setDefaultCommand(new ArmSetpointState(arm, HOME));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(claw, operatorController.getTrigger("left")::getValue)
@@ -107,19 +107,19 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, GROUND_CUBE).repeatedly()
+            new ArmSetpointState(arm, GROUND_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, LOW_CUBE).repeatedly()
+            new ArmSetpointState(arm, LOW_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HIGH_CUBE).repeatedly()
+            new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
@@ -131,19 +131,19 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, GROUND_CONE).repeatedly()
+            new ArmSetpointState(arm, GROUND_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, LOW_CONE).repeatedly()
+            new ArmSetpointState(arm, LOW_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HIGH_CONE).repeatedly()
+            new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
     }
 

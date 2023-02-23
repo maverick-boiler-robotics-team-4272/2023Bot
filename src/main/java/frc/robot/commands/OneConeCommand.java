@@ -14,13 +14,13 @@ import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 public class OneConeCommand extends SequentialCommandGroup {
     public OneConeCommand(Drivetrain drivetrain, ArmSubsystem arm, ClawSubsystem claw) {
         super(
-            new ArmSetpointCommand(arm, ArmSetpoints.HIGH_CONE),
+            new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ParallelRaceGroup(
                 new ConeGrabState(claw, () -> -0.5),
                 new WaitCommand(1)
             ),
             new ParallelCommandGroup(
-                new ArmSetpointCommand(arm, ArmSetpoints.HOME),
+                new ArmSetpointState(arm, ArmSetpoints.HOME),
                 new PathFollowState(drivetrain, getGlobalTrajectories().ONE_CONE_PATH)
             )
         );
