@@ -3,6 +3,7 @@ package frc.robot.constants;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 
+import static frc.robot.constants.UniversalConstants.IS_PRACTICE_BOT;
 public class RobotConstants {
 
     public static class DrivetrainConstants {
@@ -13,6 +14,11 @@ public class RobotConstants {
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
         public static final double MAX_TRANS_ACCEL = 1.0;
         public static final double MAX_ROT_ACCEL = 1.5;
+
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 116.0 : 211.0;
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 96.0 : 344.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 224.0 : 87.0;
+        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 313.0 : 249.0;
 
         public static class SwerveModuleConstants {
             public static final double WHEEL_RADIUS = 2.0;
