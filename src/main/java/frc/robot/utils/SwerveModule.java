@@ -53,6 +53,7 @@ public class SwerveModule extends SwerveModuleBase {
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
     }
 
+
     public double getMAVCoderReading() {
         return externalRotationEncoder.getPosition();
     }

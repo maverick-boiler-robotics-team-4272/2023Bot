@@ -50,12 +50,16 @@ Swerve Drive Specialties MK4i using </br>
 The intake's job is to collect cones/cubes from the ground or loading station. It also ejects cones/cubes for scoring.
 
 ## States
-### Idle
-The intake rollers stop spinning.
-### Collecting
-The intake roller spin inward to collect cones/cubes.
-### Ejecting
-The intake rollers spin outwards to score cones/cubes.
+### Hold State
+The intake attempts to hold whatever it's at. If a cone is detected by lidar, it will apply a very low current pull in to actively resist the cone escaping.
+### Cone Grab State
+The intake roller spin inward to collect cones. 
+### Cube Grab State
+The intake roller spin inward to collect cubes. 
+### Cone Eject State
+The intake rollers spin outwards to score cones.
+### CubeEject State
+The intake rollers spin outwards to score cubes.
 
 ## Hardware
 TODO update with the hardware
