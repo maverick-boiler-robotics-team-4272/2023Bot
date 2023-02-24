@@ -16,10 +16,10 @@ import frc.robot.commands.ChargeCircleCommand;
 import frc.robot.commands.ConeGrabState;
 import frc.robot.commands.CubeGrabState;
 import frc.robot.constants.TelemetryConstants.Limelights;
-import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
+import frc.robot.subsystems.intake.IntakeSubsytstem;
 import frc.robot.utils.XboxController;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
@@ -39,7 +39,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
-    public ClawSubsystem claw = new ClawSubsystem();
+    public IntakeSubsytstem claw = new IntakeSubsytstem();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
