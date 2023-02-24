@@ -5,14 +5,17 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ClawSubsystem;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.states.ConeGrabState;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.states.PathFollowState;
+import frc.robot.subsystems.arm.states.ArmSetpointState;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
 public class TwoConeCommand extends SequentialCommandGroup {
-    public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, ClawSubsystem claw) {
+    public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem claw) {
         super(
             new ParallelRaceGroup(
                 new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),

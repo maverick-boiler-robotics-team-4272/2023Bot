@@ -1,7 +1,7 @@
-package frc.robot.commands;
+package frc.robot.subsystems.arm.states;
 
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.team4272.globals.State;
 
 public class ArmSetpointState extends State<ArmSubsystem> {
