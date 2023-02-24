@@ -8,8 +8,8 @@ import frc.team4272.globals.State;
 public class CubeGrabState extends State<IntakeSubsystem> {
     private DoubleSupplier power;
 
-    public CubeGrabState(IntakeSubsystem claw, DoubleSupplier power) {
-        super(claw);
+    public CubeGrabState(IntakeSubsystem intake, DoubleSupplier power) {
+        super(intake);
         this.power = power;
     }
 

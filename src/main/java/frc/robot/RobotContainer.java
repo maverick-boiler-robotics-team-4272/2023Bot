@@ -38,7 +38,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
-    public IntakeSubsystem claw = new IntakeSubsystem();
+    public IntakeSubsystem intake = new IntakeSubsystem();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
@@ -100,11 +100,11 @@ public class RobotContainer {
         arm.setDefaultCommand(new ArmSetpointState(arm, HOME));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(claw, operatorController.getTrigger("left")::getValue)
+            new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
         new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+            new CubeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
@@ -124,11 +124,11 @@ public class RobotContainer {
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(claw, operatorController.getTrigger("left")::getValue)
+            new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
         new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+            new ConeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
@@ -157,8 +157,8 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
-        AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, claw));
-        AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, claw));
+        AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }

@@ -11,8 +11,8 @@ public class HardwareMap {
 
     public static final int ROTARY_ARM_ID = 6;
 
-    public static final int CLAW_LEFT_ID =  7;
-    public static final int CLAW_RIGHT_ID = 17;
+    public static final int INTAKE_LEFT_ID =  7;
+    public static final int INTAKE_RIGHT_ID = 17;
 
     public static final int CANDLE_ID = 8;
 

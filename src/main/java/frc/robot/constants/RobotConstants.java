@@ -117,7 +117,7 @@ public class RobotConstants {
         }
     }
 
-    public static class ClawConstants {
+    public static class IntakeConstants {
 
     }
 }

@@ -15,14 +15,14 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
 public class TwoConeCommand extends SequentialCommandGroup {
-    public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem claw) {
+    public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
             new ParallelRaceGroup(
                 new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
-                new ConeGrabState(claw, () -> 0.1)
+                new ConeGrabState(intake, () -> 0.1)
             ),
             new ParallelRaceGroup(
-                new ConeGrabState(claw, () -> -0.5),
+                new ConeGrabState(intake, () -> -0.5),
                 new WaitCommand(0.5)
             ),
             new ParallelCommandGroup(
