@@ -17,7 +17,7 @@ import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
-import frc.robot.subsystems.intake.IntakeSubsytstem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
 import frc.robot.utils.XboxController;
@@ -39,7 +39,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
-    public IntakeSubsytstem claw = new IntakeSubsytstem();
+    public IntakeSubsystem claw = new IntakeSubsystem();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
