@@ -54,6 +54,14 @@ public class IntakeSubsystem extends SubsystemBase {
         clawFollowerMotor.set(0);
     }
 
+    public boolean isCubeLidarTripped() {
+        return cubeLidar.getRawDutyCycle() < 0.1; // Bogus value for now. An actual value will be figured out eventually
+    }
+
+    public boolean isConeLidarTripped() {
+        return coneLidar.getRawDutyCycle() < 0.1; // Bogus value for now. An actual value will be figured out eventually
+    }
+
     @Override
     public void periodic() {
 
