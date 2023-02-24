@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.constants.HardwareMap.*;
 
-public class IntakeSubsytstem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax clawLeaderMotor = new CANSparkMax(CLAW_RIGHT_ID, MotorType.kBrushless);
     private CANSparkMax clawFollowerMotor = new CANSparkMax(CLAW_LEFT_ID, MotorType.kBrushless);
 
     /** Creates a new ClawSubsystem. */
-    public IntakeSubsytstem() {
+    public IntakeSubsystem() {
         clawLeaderMotor.restoreFactoryDefaults();
         clawFollowerMotor.restoreFactoryDefaults();
 
@@ -47,5 +47,10 @@ public class IntakeSubsytstem extends SubsystemBase {
     public void grabCube(double speed) {
         clawFollowerMotor.set(speed);
         clawLeaderMotor.set(-speed);
+    }
+    
+    public void stopMotors() {
+        clawLeaderMotor.set(0);
+        clawFollowerMotor.set(0);
     }
 }

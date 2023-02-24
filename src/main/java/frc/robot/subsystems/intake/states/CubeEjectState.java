@@ -5,11 +5,12 @@ import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.team4272.globals.State;
 
-public class CubeGrabState extends State<IntakeSubsystem> {
+public class CubeEjectState extends State<IntakeSubsystem> {
     private DoubleSupplier power;
 
-    public CubeGrabState(IntakeSubsystem claw, DoubleSupplier power) {
-        super(claw);
+    public CubeEjectState(IntakeSubsystem intake, DoubleSupplier power) {
+        super(intake);
+
         this.power = power;
     }
 
@@ -20,7 +21,7 @@ public class CubeGrabState extends State<IntakeSubsystem> {
 
     @Override
     public void execute() {
-        requiredSubsystem.grabCube(power.getAsDouble());
+        requiredSubsystem.grabCube(-power.getAsDouble());
     }
 
     @Override
