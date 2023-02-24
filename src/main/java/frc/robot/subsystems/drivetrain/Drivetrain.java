@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.drivetrain;
 
 import frc.robot.utils.Pigeon;
 import frc.robot.utils.SwerveModule;

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
@@ -13,7 +13,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.team4272.globals.MathUtils;
 
 import static frc.robot.constants.HardwareMap.*;
@@ -26,9 +25,6 @@ public class ArmSubsystem extends SubsystemBase {
     private CANSparkMax elevatorLeftFollower = new CANSparkMax(ELEVATOR_LEFT_ID, MotorType.kBrushless);
     private CANSparkMax elevatorRightLeader = new CANSparkMax(ELEVATOR_RIGHT_ID, MotorType.kBrushless);
     private CANSparkMax armMotor = new CANSparkMax(ROTARY_ARM_ID, MotorType.kBrushless);
-
-    private double elevatorSetpoint = 0.0;
-    private Rotation2d armSetpoint = new Rotation2d();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -88,11 +84,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPos(double meters) {
-        elevatorSetpoint = meters;
+        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
     }
 
     public void setArm(Rotation2d angle) {
-        armSetpoint = angle;
+        armMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
     }
 
     public boolean isElevatorAtPosition(double height) {
@@ -100,11 +96,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(Rotation2d angle) {
-        return Math.abs(MathUtils.inputModulo(armMotor.getEncoder().getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
-    }
-
-    public boolean isArmSafe() {
-        return armMotor.getEncoder().getPosition() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
+        return Math
+                .abs(MathUtils.inputModulo(armMotor.getEncoder().getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -139,14 +132,5 @@ public class ArmSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if(!isElevatorAtPosition(elevatorSetpoint) && !(armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees())) {
-            armMotor.getPIDController().setReference(ArmSetpoints.SAFE_ARM.armAngle.getDegrees(), ControlType.kPosition);
-        } else {
-            armMotor.getPIDController().setReference(armSetpoint.getDegrees(), ControlType.kPosition);
-        }
-
-        if(!isArmSafe()) {
-            elevatorRightLeader.getPIDController().setReference(elevatorSetpoint, ControlType.kPosition);
-        }
     }
 }

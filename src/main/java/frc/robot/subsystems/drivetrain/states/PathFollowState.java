@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.subsystems.drivetrain.states;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
@@ -6,7 +6,7 @@ import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
