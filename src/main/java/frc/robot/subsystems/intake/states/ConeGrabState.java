@@ -2,13 +2,13 @@ package frc.robot.subsystems.intake.states;
 
 import java.util.function.DoubleSupplier;
 
-import frc.robot.subsystems.intake.IntakeSubsytstem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.team4272.globals.State;
 
-public class ConeGrabState extends State<IntakeSubsytstem> {
+public class ConeGrabState extends State<IntakeSubsystem> {
     private DoubleSupplier power;
     
-    public ConeGrabState(IntakeSubsytstem claw, DoubleSupplier power) {
+    public ConeGrabState(IntakeSubsystem claw, DoubleSupplier power) {
         super(claw);
         this.power = power;
     }
@@ -25,6 +25,6 @@ public class ConeGrabState extends State<IntakeSubsytstem> {
 
     @Override
     public void end(boolean interrupted) {
-        requiredSubsystem.grabCone(0);
+        requiredSubsystem.stopMotors();
     }
 }

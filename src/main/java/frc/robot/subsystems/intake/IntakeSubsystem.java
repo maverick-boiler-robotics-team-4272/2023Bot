@@ -48,4 +48,9 @@ public class IntakeSubsystem extends SubsystemBase {
         clawFollowerMotor.set(speed);
         clawLeaderMotor.set(-speed);
     }
+    
+    public void stopMotors() {
+        clawLeaderMotor.set(0);
+        clawFollowerMotor.set(0);
+    }
 }
