@@ -8,12 +8,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utils.Lidar;
 
 import static frc.robot.constants.HardwareMap.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax clawLeaderMotor = new CANSparkMax(CLAW_RIGHT_ID, MotorType.kBrushless);
     private CANSparkMax clawFollowerMotor = new CANSparkMax(CLAW_LEFT_ID, MotorType.kBrushless);
+
+    private Lidar coneLidar = new Lidar(11);
+    private Lidar cubeLidar = new Lidar(10);
 
     /** Creates a new ClawSubsystem. */
     public IntakeSubsystem() {
@@ -22,11 +27,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
         clawFollowerMotor.setSmartCurrentLimit(20);
         clawLeaderMotor.setSmartCurrentLimit(20);
-    }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
     }
 
     public void setConeCurrentLimits() {
@@ -48,9 +48,14 @@ public class IntakeSubsystem extends SubsystemBase {
         clawFollowerMotor.set(speed);
         clawLeaderMotor.set(-speed);
     }
-    
+
     public void stopMotors() {
         clawLeaderMotor.set(0);
         clawFollowerMotor.set(0);
+    }
+
+    @Override
+    public void periodic() {
+
     }
 }
