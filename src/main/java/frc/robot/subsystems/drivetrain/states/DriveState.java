@@ -1,8 +1,8 @@
-package frc.robot.commands;
+package frc.robot.subsystems.drivetrain.states;
 
 import java.util.function.DoubleSupplier;
 
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.team4272.globals.State;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
