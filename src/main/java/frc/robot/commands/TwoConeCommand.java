@@ -29,7 +29,17 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ArmSetpointState(arm, ArmSetpoints.HOME),
                 new PathFollowState(drivetrain, getGlobalTrajectories().ONE_CONE_PATH)
             ),
-            new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH, false)
+            new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH, false),
+            new ParallelCommandGroup(
+                new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
+                new ConeGrabState(intake, () -> 0.5),
+                new WaitCommand(1.0)
+            ),
+            new ParallelCommandGroup(
+                new ArmSetpointState(arm, ArmSetpoints.HOME),
+                new ConeGrabState(intake, () -> 0.1),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN, false)
+            )
         );
     }
 }
