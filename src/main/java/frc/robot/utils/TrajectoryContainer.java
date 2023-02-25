@@ -5,8 +5,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_SPEED;
 
-import java.nio.file.Path;
-
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_ACCEL;
 
 public class TrajectoryContainer {
