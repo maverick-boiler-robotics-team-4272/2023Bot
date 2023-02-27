@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
@@ -29,12 +30,14 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ArmSetpointState(arm, ArmSetpoints.HOME),
                 new PathFollowState(drivetrain, getGlobalTrajectories().ONE_CONE_PATH)
             ),
-            new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH, false),
             new ParallelCommandGroup(
                 new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
-                new ConeGrabState(intake, () -> 0.5),
-                new WaitCommand(1.0)
+                new ParallelRaceGroup(
+                    new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH, false),
+                    new ConeGrabState(intake, () -> 0.5) 
+                )
             ),
+            new PrintCommand("Last part of auto"),
             new ParallelCommandGroup(
                 new ArmSetpointState(arm, ArmSetpoints.HOME),
                 new ConeGrabState(intake, () -> 0.1),
