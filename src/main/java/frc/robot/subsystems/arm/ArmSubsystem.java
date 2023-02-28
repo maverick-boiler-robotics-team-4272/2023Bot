@@ -146,6 +146,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        TESTING_TABLE.putNumber("Elevator Current", elevatorRightLeader.getEncoder().getPosition());
+        TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
+        TESTING_TABLE.putNumber("Arm Current", armMotor.getEncoder().getPosition());
+
         if(!isElevatorAtPosition(elevatorSetpoint)) {
             if(!isArmSafe() || armSetpoint.getDegrees() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
                 setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
