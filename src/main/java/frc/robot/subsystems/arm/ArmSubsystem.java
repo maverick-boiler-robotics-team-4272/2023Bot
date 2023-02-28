@@ -5,6 +5,7 @@
 package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
@@ -23,6 +24,9 @@ public class ArmSubsystem extends SubsystemBase {
     private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
+
+    private double elevatorSetpoint = 0.0;
+    private Rotation2d armSetpoint = new Rotation2d();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -53,10 +57,18 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPos(double meters) {
-        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
+        elevatorSetpoint = meters;
     }
 
     public void setArm(Rotation2d angle) {
+        armSetpoint = angle;
+    }
+
+    private void setElevatorMotor(double meters) {
+        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
+    }
+
+    private void setArmMotor(Rotation2d angle) {
         armMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
     }
 
