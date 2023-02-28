@@ -5,53 +5,52 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Lidar;
+import frc.robot.utils.MotorBuilder;
 
 import static frc.robot.constants.HardwareMap.*;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private CANSparkMax intakeLeaderMotor = new CANSparkMax(INTAKE_RIGHT_ID, MotorType.kBrushless);
-    private CANSparkMax intakeFollowerMotor = new CANSparkMax(INTAKE_LEFT_ID, MotorType.kBrushless);
+    private CANSparkMax clawLeaderMotor;
+    private CANSparkMax clawFollowerMotor;
 
     private Lidar coneLidar = new Lidar(11);
     private Lidar cubeLidar = new Lidar(10);
 
-    /** Creates a new IntakeSubsystem. */
+    /** Creates a new ClawSubsystem. */
     public IntakeSubsystem() {
-        intakeLeaderMotor.restoreFactoryDefaults();
-        intakeFollowerMotor.restoreFactoryDefaults();
-
-        intakeFollowerMotor.setSmartCurrentLimit(20);
-        intakeLeaderMotor.setSmartCurrentLimit(20);
+        clawLeaderMotor = MotorBuilder.createWithDefaults(CLAW_RIGHT_ID)
+            .build();
+        clawFollowerMotor = MotorBuilder.createWithDefaults(CLAW_LEFT_ID)
+            .build();
     }
 
     public void setConeCurrentLimits() {
-        intakeFollowerMotor.setSmartCurrentLimit(20);
-        intakeLeaderMotor.setSmartCurrentLimit(20);
+        clawFollowerMotor.setSmartCurrentLimit(20);
+        clawLeaderMotor.setSmartCurrentLimit(20);
     }
 
     public void setCubeCurrentLimits() {
-        intakeFollowerMotor.setSmartCurrentLimit(15);
-        intakeLeaderMotor.setSmartCurrentLimit(15);
+        clawFollowerMotor.setSmartCurrentLimit(5);
+        clawLeaderMotor.setSmartCurrentLimit(5);
     }
 
     public void grabCone(double speed) {
-        intakeLeaderMotor.set(speed);
-        intakeFollowerMotor.set(speed);
+        clawLeaderMotor.set(speed);
+        clawFollowerMotor.set(speed);
     }
     
     public void grabCube(double speed) {
-        intakeFollowerMotor.set(speed);
-        intakeLeaderMotor.set(-speed);
+        clawFollowerMotor.set(speed);
+        clawLeaderMotor.set(-speed);
     }
 
     public void stopMotors() {
-        intakeLeaderMotor.set(0);
-        intakeFollowerMotor.set(0);
+        clawLeaderMotor.set(0);
+        clawFollowerMotor.set(0);
     }
 
     public boolean isCubeLidarTripped() {

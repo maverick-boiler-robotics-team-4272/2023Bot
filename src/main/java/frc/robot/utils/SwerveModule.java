@@ -4,8 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -32,63 +30,29 @@ public class SwerveModule extends SwerveModuleBase {
      * @param offset - readout from encoder when the module is at 0
      */
     public SwerveModule(int moduleID, double offset){
-        driveMotor = new CANSparkMax(moduleID, MotorType.kBrushless);
+        driveMotor = MotorBuilder.createWithDefaults(moduleID)
+            .withPIDF(DRIVE_P, DRIVE_I, DRIVE_D, DRIVE_F)
+            .withCurrentLimit(40)
+            .withVelocityFactor(WHEEL_RADIUS * PI2 / (60.0 * DRIVE_RATIO * Units.metersToInches(1.0)))
+            .withPositionFactor(PI2 * WHEEL_RADIUS / (DRIVE_RATIO * Units.metersToInches(1.0)))
+            .build();
         driveEncoder = driveMotor.getEncoder();
         drivePidController = driveMotor.getPIDController();
-        rotationMotor = new CANSparkMax(moduleID + 10, MotorType.kBrushless);
+
+        rotationMotor = MotorBuilder.createWithDefaults(moduleID + 10)
+            .withPIDF(STEER_P, STEER_I, STEER_D, STEER_F)
+            .withCurrentLimit(40)
+            .withPositionFactor(360.0 / STEER_RATIO)
+            .build();
         rotationEncoder = rotationMotor.getEncoder();
         rotationPidController = rotationMotor.getPIDController();
+
         this.offset = offset;
         externalRotationEncoder = new MAVCoder(rotationMotor, offset);
-
-        driveMotor.restoreFactoryDefaults();
-        rotationMotor.restoreFactoryDefaults();
-
-        drivePidController.setP(DRIVE_P);
-        drivePidController.setI(DRIVE_I);
-        drivePidController.setD(DRIVE_D);
-        drivePidController.setFF(DRIVE_F);
-
-        rotationPidController.setP(STEER_P);
-        rotationPidController.setI(STEER_I);
-        rotationPidController.setD(STEER_D);
-        rotationPidController.setFF(STEER_F);
-
-        driveMotor.setIdleMode(IdleMode.kBrake);
-        rotationMotor.setIdleMode(IdleMode.kBrake);
-
-        driveMotor.setSmartCurrentLimit(40);
-        rotationMotor.setSmartCurrentLimit(40);
-
-        init();
-
-        driveMotor.burnFlash();
-        rotationMotor.burnFlash();
-    }
-
-    /**
-     * Initialization method for the swerve module
-     */
-    private void init(){
         
-        //360.0 is the amount of degrees in a circle. This is useful, because
-        //all our rotation math is done in degrees
-        rotationEncoder.setPositionConversionFactor(360.0 / STEER_RATIO);
-        
-        //PI2 is 2 * pi, 60.0 is the amount of seconds in a minute
-        driveEncoder.setVelocityConversionFactor(WHEEL_RADIUS * PI2 / (60.0 * DRIVE_RATIO * Units.metersToInches(1.0)));
-        driveEncoder.setPositionConversionFactor(PI2 * WHEEL_RADIUS / (DRIVE_RATIO * Units.metersToInches(1.0)));
-
-        System.out.println(externalRotationEncoder.getPosition());
-
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
-
-        driveMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
-        rotationMotor.enableVoltageCompensation(NOMINAL_VOLTAGE);
-    
-        driveMotor.setInverted(false);
-        rotationMotor.setInverted(false);
     }
+
 
     public double getMAVCoderReading() {
         return externalRotationEncoder.getPosition();

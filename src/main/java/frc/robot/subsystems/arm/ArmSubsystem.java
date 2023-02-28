@@ -5,15 +5,12 @@
 package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.utils.MotorBuilder;
 import frc.team4272.globals.MathUtils;
 
 import static frc.robot.constants.HardwareMap.*;
@@ -23,83 +20,43 @@ import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class ArmSubsystem extends SubsystemBase {
 
-    private CANSparkMax elevatorLeftFollower = new CANSparkMax(ELEVATOR_LEFT_ID, MotorType.kBrushless);
-    private CANSparkMax elevatorRightLeader = new CANSparkMax(ELEVATOR_RIGHT_ID, MotorType.kBrushless);
-    private CANSparkMax armMotor = new CANSparkMax(ROTARY_ARM_ID, MotorType.kBrushless);
-
-    private double elevatorSetpoint = 0.0;
-    private Rotation2d armSetpoint = new Rotation2d();
+    private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
+    private CANSparkMax elevatorRightLeader;
+    private CANSparkMax armMotor;
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
-        elevatorLeftFollower.restoreFactoryDefaults();
-        elevatorRightLeader.restoreFactoryDefaults();
-        armMotor.restoreFactoryDefaults();
+        elevatorRightLeader = MotorBuilder.createWithDefaults(ELEVATOR_RIGHT_ID)
+            .withCurrentLimit(40)
+            .withPositionFactor(SPROCKET_REV_TO_IN_RATIO * Units.inchesToMeters(1) / MOTOR_TO_SPROCKET_RATIO * CASCADE_RATIO)
+            .withSoftLimits(MAX_ELEVATOR_DISTANCE, MIN_ELEVATOR_DISTANCE)
+            .withPIDF(ELEVATOR_PID_P, ELEVATOR_PID_I, ELEVATOR_PID_D, ELEVATOR_PID_F)
+            .withIZone(ELEVATOR_PID_I_ZONE)
+            .withDFilter(ELEVATOR_PID_D_FILTER)
+            .withOutputRange(ELEVATOR_PID_OUTPUT_MIN, ELEVATOR_PID_OUTPUT_MAX)
+            .build();
 
-        elevatorLeftFollower.setSmartCurrentLimit(40);
-        elevatorRightLeader.setSmartCurrentLimit(40);
-        armMotor.setSmartCurrentLimit(20);
+        elevatorLeftFollower = MotorBuilder.createWithDefaults(ELEVATOR_LEFT_ID)
+            .withCurrentLimit(40)
+            .asFollower(elevatorRightLeader, true)
+            .build();
 
-        elevatorLeftFollower.follow(elevatorRightLeader, true);
-
-        elevatorRightLeader.getEncoder().setPositionConversionFactor(
-                SPROCKET_REV_TO_IN_RATIO * Units.inchesToMeters(1) / MOTOR_TO_SPROCKET_RATIO * CASCADE_RATIO);
-
-        elevatorRightLeader.enableSoftLimit(SoftLimitDirection.kForward, true);
-        elevatorRightLeader.setSoftLimit(SoftLimitDirection.kForward, (float) MAX_ELEVATOR_DISTANCE);
-        elevatorRightLeader.enableSoftLimit(SoftLimitDirection.kReverse, true);
-        elevatorRightLeader.setSoftLimit(SoftLimitDirection.kReverse, (float) MIN_ELEVATOR_DISTANCE);
-
-        SparkMaxPIDController elevatorRightController = elevatorRightLeader.getPIDController();
-
-        elevatorRightController.setP(ELEVATOR_PID_P);
-        elevatorRightController.setI(ELEVATOR_PID_I);
-        elevatorRightController.setD(ELEVATOR_PID_D);
-        elevatorRightController.setFF(ELEVATOR_PID_F);
-        elevatorRightController.setIZone(ELEVATOR_PID_I_ZONE);
-        elevatorRightController.setDFilter(ELEVATOR_PID_D_FILTER);
-        elevatorRightController.setOutputRange(ELEVATOR_PID_OUTPUT_MIN, ELEVATOR_PID_OUTPUT_MAX);
-        // elevatorRightController.setSmartMotionMaxAccel(ELEVATOR_SMART_MOTION_MAX_ACCEL,
-        // 0);
-        // elevatorRightController.setSmartMotionMaxVelocity(ELEVATOR_SMART_MOTION_MAX_SPEED,
-        // 0);
-
-        armMotor.getEncoder().setPositionConversionFactor(360.0 / ARM_GEAR_RATIO);
-        armMotor.getEncoder().setPosition(0.0);
-
-        armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-        armMotor.setSoftLimit(SoftLimitDirection.kForward, (float) MAX_ARM_ANGLE);
-        armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-        armMotor.setSoftLimit(SoftLimitDirection.kReverse, (float) MIN_ARM_ANGLE);
-
-        SparkMaxPIDController armController = armMotor.getPIDController();
-
-        armController.setP(ROTARY_ARM_PID_P);
-        armController.setI(ROTARY_ARM_PID_I);
-        armController.setD(ROTARY_ARM_PID_D);
-        armController.setFF(ROTARY_ARM_PID_F);
-        armController.setIZone(ROTARY_ARM_PID_I_ZONE);
-        armController.setDFilter(ROTARY_ARM_PID_D_FILTER);
-        armController.setOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX);
-
-        elevatorLeftFollower.burnFlash();
-        elevatorRightLeader.burnFlash();
-        armMotor.burnFlash();
+        armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
+            .withPositionFactor(360.0 / ARM_GEAR_RATIO)
+            .withPosition(0.0)
+            .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
+            .withPIDF(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D, ROTARY_ARM_PID_F)
+            .withIZone(ROTARY_ARM_PID_I_ZONE)
+            .withDFilter(ROTARY_ARM_PID_D_FILTER)
+            .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
+            .build();
     }
 
     public void setElevatorPos(double meters) {
-        elevatorSetpoint = meters;
-    }
-
-    public void setArm(Rotation2d angle) {
-        armSetpoint = angle;
-    }
-
-    private void setElevatorMotor(double meters) {
         elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
     }
 
-    private void setArmMotor(Rotation2d angle) {
+    public void setArm(Rotation2d angle) {
         armMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
     }
 

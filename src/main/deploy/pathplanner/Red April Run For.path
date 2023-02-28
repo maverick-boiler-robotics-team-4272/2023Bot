@@ -2,23 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/Blue One Cone.path
-        "x": 1.85,
-        "y": 5.0
+        "x": 14.5,
+        "y": 4.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.850000000000002,
-        "y": 5.0
-========
-        "x": 14.25,
-        "y": 1.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 14.25,
-        "y": 2.0
->>>>>>>> main:src/main/deploy/pathplanner/Red April Run Back.path
+        "x": 14.5,
+        "y": 3.4999999999999893
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -34,21 +24,12 @@
     },
     {
       "anchorPoint": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/Blue One Cone.path
-        "x": 3.9,
-        "y": 5.0
+        "x": 14.5,
+        "y": 1.0
       },
       "prevControl": {
-        "x": 2.9,
-        "y": 5.0
-========
-        "x": 14.25,
-        "y": 4.5
-      },
-      "prevControl": {
-        "x": 14.25,
-        "y": 3.5
->>>>>>>> main:src/main/deploy/pathplanner/Red April Run Back.path
+        "x": 14.5,
+        "y": 2.0
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -59,7 +40,7 @@
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
+        "waitBehavior": "minimum",
         "waitTime": 0
       }
     }
