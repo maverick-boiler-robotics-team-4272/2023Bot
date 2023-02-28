@@ -7,8 +7,6 @@ import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_S
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_ACCEL;
 
 public class TrajectoryContainer {
-    public static TrajectoryContainer GLOBAL_SELECTED_TRAJECTORIES = null;
-
     public final PathPlannerTrajectory ONE_CONE_PATH;
     public final PathPlannerTrajectory TWO_CONE_PATH;
     public final PathPlannerTrajectory TWO_CONE_PICKUP_PATH;
