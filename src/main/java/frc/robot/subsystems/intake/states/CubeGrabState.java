@@ -1,14 +1,14 @@
-package frc.robot.commands;
+package frc.robot.subsystems.intake.states;
 
 import java.util.function.DoubleSupplier;
 
-import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.team4272.globals.State;
 
-public class CubeGrabState extends State<ClawSubsystem> {
+public class CubeGrabState extends State<IntakeSubsystem> {
     private DoubleSupplier power;
 
-    public CubeGrabState(ClawSubsystem claw, DoubleSupplier power) {
+    public CubeGrabState(IntakeSubsystem claw, DoubleSupplier power) {
         super(claw);
         this.power = power;
     }
@@ -25,6 +25,6 @@ public class CubeGrabState extends State<ClawSubsystem> {
 
     @Override
     public void end(boolean interrupted) {
-        requiredSubsystem.grabCube(0);
+        requiredSubsystem.stopMotors();
     }
 }
