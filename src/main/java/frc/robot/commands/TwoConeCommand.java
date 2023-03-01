@@ -15,6 +15,12 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
+import java.util.List;
+import java.util.Map;
+
+import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+
 public class TwoConeCommand extends SequentialCommandGroup {
     public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
@@ -26,23 +32,38 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ConeGrabState(intake, () -> -0.5),
                 new WaitCommand(0.5)
             ),
-            new ParallelCommandGroup(
-                new ArmSetpointState(arm, ArmSetpoints.HOME),
-                new PathFollowState(drivetrain, getGlobalTrajectories().ONE_CONE_PATH)
-            ),
-            new ParallelCommandGroup(
-                new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
-                new ParallelRaceGroup(
-                    new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH, false),
-                    new ConeGrabState(intake, () -> 0.5) 
+            new ArmSetpointState(arm, ArmSetpoints.HOME),
+            new ParallelRaceGroup(
+                new ConeGrabState(intake, () -> 0.8),
+                new FollowPathWithEvents(
+                    new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH), 
+                    getGlobalTrajectories().TWO_CONE_PATH.getMarkers(), 
+                    Map.of(
+                        "Drop Intake",
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE)
+                    )
                 )
             ),
-            new PrintCommand("Last part of auto"),
             new ParallelCommandGroup(
                 new ArmSetpointState(arm, ArmSetpoints.HOME),
-                new ConeGrabState(intake, () -> 0.1),
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN, false)
-            )
+                new ParallelRaceGroup(
+                    new ConeGrabState(intake, () -> 0.1),
+                    new FollowPathWithEvents(
+                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN, false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() +  0.5),
+                        getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
+                        Map.of(
+                            "ResetOd",
+                            new PrintCommand("Reset Odometry")
+                        )
+                    )
+                )
+            ),
+            new ParallelRaceGroup(
+                new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
+                new ConeGrabState(intake, () -> 0.1)
+            ),
+            new ConeGrabState(intake, () -> -0.5).withTimeout(0.5),
+            new ArmSetpointState(arm, ArmSetpoints.HOME)
         );
     }
 }
