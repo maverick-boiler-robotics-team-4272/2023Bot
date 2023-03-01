@@ -22,9 +22,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     /** Creates a new ClawSubsystem. */
     public IntakeSubsystem() {
-        clawLeaderMotor = MotorBuilder.createWithDefaults(CLAW_RIGHT_ID)
+        clawLeaderMotor = MotorBuilder.createWithDefaults(INTAKE_RIGHT_ID)
             .build();
-        clawFollowerMotor = MotorBuilder.createWithDefaults(CLAW_LEFT_ID)
+        clawFollowerMotor = MotorBuilder.createWithDefaults(INTAKE_LEFT_ID)
             .build();
     }
 
