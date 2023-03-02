@@ -63,5 +63,9 @@ public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
         if(!DriverStation.isAutonomous()) {
             PathPlannerServer.sendPathFollowingData(robotPose, getRobotPose());
         }
+        
+        for(int i = 0; i < modules.length; i++) {
+            modules[i].ensureCorrect();
+        }
     }
 }
