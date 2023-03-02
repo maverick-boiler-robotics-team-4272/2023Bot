@@ -122,6 +122,10 @@ public class RobotConstants {
     }
 
     public static class IntakeConstants {
-
+        public static final int CONE_FRONT_LIMIT = 20;
+        public static final int CONE_BACK_LIMIT = 20;
+        
+        public static final int CUBE_FRONT_LIMIT = 25;
+        public static final int CUBE_BACK_LIMIT = 8;
     }
 }
