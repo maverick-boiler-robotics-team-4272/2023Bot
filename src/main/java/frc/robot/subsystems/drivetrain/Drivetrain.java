@@ -14,6 +14,9 @@ import com.pathplanner.lib.server.PathPlannerServer;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
+
+import java.util.List;
+
 import static frc.robot.constants.HardwareMap.*;
 
 public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
@@ -21,11 +24,14 @@ public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
 
     public Drivetrain() {
         super(
-            new Pigeon(PIGEON_ID, -90),  // Make sure calibration of Pigeon happens before comps
-            new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_FL_ID,  FRONT_LEFT_OFFSET), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_FR_ID, FRONT_RIGHT_OFFSET), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
-            new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_BL_ID,   BACK_LEFT_OFFSET),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
-            new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_BR_ID,  BACK_RIGHT_OFFSET),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
+            new Pigeon(PIGEON_ID, -90), // Make sure calibration of Pigeon happens before comps
+            SwerveModule.class,
+            List.of(
+                new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_FL_ID,  FRONT_LEFT_OFFSET), -WHEEL_DISTANCE,  WHEEL_DISTANCE),
+                new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_FR_ID, FRONT_RIGHT_OFFSET), -WHEEL_DISTANCE, -WHEEL_DISTANCE),
+                new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_BL_ID,   BACK_LEFT_OFFSET),  WHEEL_DISTANCE,  WHEEL_DISTANCE),
+                new PositionedSwerveModule<SwerveModule>(new SwerveModule(MODULE_BR_ID,  BACK_RIGHT_OFFSET),  WHEEL_DISTANCE, -WHEEL_DISTANCE)
+            )
         );
 
         odometry = new SwerveDriveOdometry(kinematics, gyroscope.getRotation(), getPositions(), CENTER.getRobotPose());
