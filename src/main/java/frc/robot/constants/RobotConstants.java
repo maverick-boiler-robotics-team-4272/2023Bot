@@ -92,7 +92,7 @@ public class RobotConstants {
         public static enum ArmSetpoints {
             LOW_CUBE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(11.780), false),
             HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
-            GROUND_CUBE(Rotation2d.fromDegrees(-106), Units.inchesToMeters(10.0), false),
+            GROUND_CUBE(Rotation2d.fromDegrees(-120), Units.inchesToMeters(5), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
             LOW_CONE(Rotation2d.fromDegrees(-65), Units.inchesToMeters(17.780), false),
