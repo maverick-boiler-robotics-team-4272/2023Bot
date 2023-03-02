@@ -4,15 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.CommonInstantCommands;
 import frc.robot.commands.OneConeCommand;
 import frc.robot.commands.TwoConeCommand;
-import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -97,13 +96,13 @@ public class RobotContainer {
         new Trigger(() -> leftAxes.getDeadzonedMagnitude() != 0.0).or(() -> rightAxes.getDeadzonedX() != 0.0).whileTrue(
                 new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
 
-        new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelights.CENTER.getRobotPose());
-        }, drivetrain));
+        new Trigger(driveController.getButton("a")::get).onTrue(
+            CommonInstantCommands.setRobotPos(drivetrain)
+        );
 
-        new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.getGyroscope().setRotation(new Rotation2d(0));
-        }, drivetrain));
+        new Trigger(driveController.getButton("b")::get).onTrue(
+            CommonInstantCommands.resetGyro(drivetrain)
+        );
     }
 
     private void configureOperatorBindings() {

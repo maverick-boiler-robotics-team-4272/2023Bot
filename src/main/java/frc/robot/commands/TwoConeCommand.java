@@ -25,23 +25,23 @@ public class TwoConeCommand extends SequentialCommandGroup {
     public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
             new ParallelRaceGroup(
-                new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
-                new ConeGrabState(intake, () -> 0.1)
+                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
+                    new ConeGrabState(intake, () -> 0.1)
             ),
             new ParallelRaceGroup(
                 new ConeGrabState(intake, () -> -0.5),
-                new WaitCommand(0.5)
+                new WaitCommand(0.75)
             ),
             new ArmSetpointState(arm, ArmSetpoints.HOME),
             new ParallelRaceGroup(
                 new ConeGrabState(intake, () -> 0.8),
                 new FollowPathWithEvents(
-                    new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH), 
-                    getGlobalTrajectories().TWO_CONE_PATH.getMarkers(), 
-                    Map.of(
-                        "Drop Intake",
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE)
-                    )
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH),
+                getGlobalTrajectories().TWO_CONE_PATH.getMarkers(),
+                Map.of(
+                    "Drop Intake",
+                    new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE)
+                )
                 )
             ),
             new ParallelCommandGroup(
@@ -49,12 +49,12 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                     new ConeGrabState(intake, () -> 0.1),
                     new FollowPathWithEvents(
-                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN, false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() +  0.5),
-                        getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
-                        Map.of(
-                            "ResetOd",
-                            new PrintCommand("Reset Odometry")
-                        )
+                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN,false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() + 0.3),
+                            getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
+                            Map.of(
+                                "ResetOd",
+                                CommonInstantCommands.setRobotPos(drivetrain)
+                            )
                     )
                 )
             ),

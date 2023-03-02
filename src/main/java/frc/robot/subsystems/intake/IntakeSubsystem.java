@@ -34,8 +34,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setCubeCurrentLimits() {
-        clawFollowerMotor.setSmartCurrentLimit(5);
-        clawLeaderMotor.setSmartCurrentLimit(5);
+        clawFollowerMotor.setSmartCurrentLimit(8);
+        clawLeaderMotor.setSmartCurrentLimit(15);
     }
 
     public void grabCone(double speed) {
