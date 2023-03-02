@@ -6,6 +6,9 @@ import edu.wpi.first.math.util.Units;
 import static frc.robot.constants.UniversalConstants.IS_PRACTICE_BOT;
 public class RobotConstants {
 
+    public static final int NOMINAL_VOLTAGE = 11;
+    public static final int DEFAULT_CURRENT_LIMIT = 20;
+
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
 
