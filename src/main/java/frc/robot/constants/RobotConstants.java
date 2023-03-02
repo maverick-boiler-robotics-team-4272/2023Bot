@@ -18,10 +18,10 @@ public class RobotConstants {
         public static final double MAX_TRANS_ACCEL = 1.0;
         public static final double MAX_ROT_ACCEL = 1.5;
 
-        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 116.0 : 211.0;
-        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 96.0 : 344.0;
-        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 224.0 : 87.0;
-        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 313.0 : 249.0;
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 116.0 : 210.0;
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 97.0 : 344.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 227.0 : 86.0;
+        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 313.0 : 250.0;
 
         public static class SwerveModuleConstants {
             public static final double WHEEL_RADIUS = 2.0;
