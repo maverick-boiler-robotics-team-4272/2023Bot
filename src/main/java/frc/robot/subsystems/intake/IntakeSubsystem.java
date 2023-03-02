@@ -11,7 +11,7 @@ import frc.robot.utils.Lidar;
 import frc.robot.utils.MotorBuilder;
 
 import static frc.robot.constants.HardwareMap.*;
-import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
+import static frc.robot.constants.RobotConstants.IntakeConstants.*;
 
 public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax clawLeaderMotor;
@@ -22,20 +22,20 @@ public class IntakeSubsystem extends SubsystemBase {
 
     /** Creates a new ClawSubsystem. */
     public IntakeSubsystem() {
-        clawLeaderMotor = MotorBuilder.createWithDefaults(CLAW_RIGHT_ID)
+        clawLeaderMotor = MotorBuilder.createWithDefaults(INTAKE_RIGHT_ID)
             .build();
-        clawFollowerMotor = MotorBuilder.createWithDefaults(CLAW_LEFT_ID)
+        clawFollowerMotor = MotorBuilder.createWithDefaults(INTAKE_LEFT_ID)
             .build();
     }
 
     public void setConeCurrentLimits() {
-        clawFollowerMotor.setSmartCurrentLimit(20);
-        clawLeaderMotor.setSmartCurrentLimit(20);
+        clawLeaderMotor.setSmartCurrentLimit(CONE_FRONT_LIMIT);
+        clawFollowerMotor.setSmartCurrentLimit(CONE_BACK_LIMIT);
     }
 
     public void setCubeCurrentLimits() {
-        clawFollowerMotor.setSmartCurrentLimit(5);
-        clawLeaderMotor.setSmartCurrentLimit(5);
+        clawLeaderMotor.setSmartCurrentLimit(CUBE_FRONT_LIMIT);
+        clawFollowerMotor.setSmartCurrentLimit(CUBE_BACK_LIMIT);
     }
 
     public void grabCone(double speed) {

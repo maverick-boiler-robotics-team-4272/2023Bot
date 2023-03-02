@@ -5,10 +5,12 @@
 package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.utils.MotorBuilder;
 import frc.team4272.globals.MathUtils;
 
@@ -22,6 +24,9 @@ public class ArmSubsystem extends SubsystemBase {
     private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
+
+    private double elevatorSetpoint = 0.0;
+    private Rotation2d armSetpoint = new Rotation2d();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -52,10 +57,18 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPos(double meters) {
-        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
+        elevatorSetpoint = meters;
     }
 
     public void setArm(Rotation2d angle) {
+        armSetpoint = angle;
+    }
+
+    private void setElevatorMotor(double meters) {
+        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
+    }
+
+    private void setArmMotor(Rotation2d angle) {
         armMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
     }
 
@@ -64,8 +77,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(Rotation2d angle) {
-        return Math
-                .abs(MathUtils.inputModulo(armMotor.getEncoder().getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
+        return Math.abs(MathUtils.inputModulo(armMotor.getEncoder().getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
+    }
+
+    public boolean isArmSafe() {
+        return armMotor.getEncoder().getPosition() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
     }
 
     public void inverseKinematics(double x, double y) {
@@ -99,6 +115,22 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+        TESTING_TABLE.putNumber("Elevator Current", elevatorRightLeader.getEncoder().getPosition());
+        TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
+        TESTING_TABLE.putNumber("Arm Current", armMotor.getEncoder().getPosition());
+
+        if(!isElevatorAtPosition(elevatorSetpoint)) {
+            if(!isArmSafe() || armSetpoint.getDegrees() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
+                setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
+                if(isArmSafe()) {
+                    setElevatorMotor(elevatorSetpoint);
+                }
+            } else {
+                setArmMotor(armSetpoint);
+                setElevatorMotor(elevatorSetpoint);
+            }
+        } else {
+            setArmMotor(armSetpoint);
+        }
     }
 }

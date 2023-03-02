@@ -1,15 +1,19 @@
 package frc.robot.utils;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import static frc.robot.constants.UniversalConstants.NOMINAL_VOLTAGE;
+import static frc.robot.constants.RobotConstants.NOMINAL_VOLTAGE;
+import static frc.robot.constants.RobotConstants.DEFAULT_CURRENT_LIMIT;;
 
 public class MotorBuilder {
     private CANSparkMax spark;
+    private RelativeEncoder encoder;
+    private SparkMaxPIDController controller;
 
     private MotorBuilder(int id) {
         spark = new CANSparkMax(id, MotorType.kBrushless);
@@ -25,7 +29,7 @@ public class MotorBuilder {
     }
 
     public MotorBuilder withPID(double p, double i, double d) {
-        SparkMaxPIDController controller = spark.getPIDController();
+        if(controller == null) controller = spark.getPIDController(); 
 
         controller.setP(p);
         controller.setI(i);
@@ -35,7 +39,7 @@ public class MotorBuilder {
     }
 
     public MotorBuilder withPIDF(double p, double i, double d, double f) {
-        SparkMaxPIDController controller = spark.getPIDController();
+        if(controller == null) controller = spark.getPIDController();
 
         controller.setP(p);
         controller.setI(i);
@@ -46,19 +50,25 @@ public class MotorBuilder {
     }
 
     public MotorBuilder withIZone(double iZone) {
-        spark.getPIDController().setIZone(iZone);
+        if(controller == null) controller = spark.getPIDController();
+
+        controller.setIZone(iZone);
 
         return this;
     }
 
     public MotorBuilder withDFilter(double dFilter) {
-        spark.getPIDController().setDFilter(dFilter);
+        if(controller == null) controller = spark.getPIDController();
+
+        controller.setDFilter(dFilter);
 
         return this;
     }
 
     public MotorBuilder withOutputRange(double min, double max) {
-        spark.getPIDController().setOutputRange(min, max);
+        if(controller == null) controller = spark.getPIDController();
+
+        controller.setOutputRange(min, max);
 
         return this;
     }
@@ -98,19 +108,25 @@ public class MotorBuilder {
     }
 
     public MotorBuilder withPositionFactor(double factor) {
-        spark.getEncoder().setPositionConversionFactor(factor);
+        if(encoder == null) encoder = spark.getEncoder();
+
+        encoder.setPositionConversionFactor(factor);
 
         return this;
     }
 
     public MotorBuilder withVelocityFactor(double factor) {
-        spark.getEncoder().setVelocityConversionFactor(factor);
+        if(encoder == null) encoder = spark.getEncoder();
+
+        encoder.setVelocityConversionFactor(factor);
 
         return this;
     }
 
     public MotorBuilder withPosition(double position) {
-        spark.getEncoder().setPosition(position);
+        if(encoder == null) encoder = spark.getEncoder();
+
+        encoder.setPosition(position);
 
         return this;
     }
@@ -127,7 +143,7 @@ public class MotorBuilder {
 
     public static MotorBuilder createWithDefaults(int id) {
         return new MotorBuilder(id)
-            .withCurrentLimit(20)
+            .withCurrentLimit(DEFAULT_CURRENT_LIMIT)
             .withVoltageCompensation(NOMINAL_VOLTAGE)
             .withIdleMode(IdleMode.kBrake)
             .withInversion(false);

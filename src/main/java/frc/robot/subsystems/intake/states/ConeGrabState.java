@@ -8,8 +8,8 @@ import frc.team4272.globals.State;
 public class ConeGrabState extends State<IntakeSubsystem> {
     private DoubleSupplier power;
     
-    public ConeGrabState(IntakeSubsystem claw, DoubleSupplier power) {
-        super(claw);
+    public ConeGrabState(IntakeSubsystem intake, DoubleSupplier power) {
+        super(intake);
         this.power = power;
     }
 

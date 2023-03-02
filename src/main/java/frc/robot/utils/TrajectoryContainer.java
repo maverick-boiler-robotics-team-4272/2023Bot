@@ -3,20 +3,17 @@ package frc.robot.utils;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
-import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_SPEED;
+import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_TRANS_ACCEL;
 
 public class TrajectoryContainer {
-    public static TrajectoryContainer GLOBAL_SELECTED_TRAJECTORIES = null;
-
-    public final PathPlannerTrajectory FORWARD_PATH;
-    public final PathPlannerTrajectory BACKWARD_PATH;
-    public final PathPlannerTrajectory CHARGE_CIRCLE;
-    public final PathPlannerTrajectory CHARGE_END;
+    public final PathPlannerTrajectory ONE_CONE_PATH;
+    public final PathPlannerTrajectory TWO_CONE_PATH;
+    public final PathPlannerTrajectory TWO_CONE_PICKUP_PATH;
 
     public TrajectoryContainer(String prefix) {
-        FORWARD_PATH = PathPlanner.loadPath(prefix + " April Run For", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
-        BACKWARD_PATH = PathPlanner.loadPath(prefix + " April Run Back", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
-        CHARGE_CIRCLE = PathPlanner.loadPath(prefix + " Charge Circle", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
-        CHARGE_END = PathPlanner.loadPath(prefix + " Charge End", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
+        ONE_CONE_PATH = PathPlanner.loadPath(prefix + " One Cone", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
+        TWO_CONE_PATH = PathPlanner.loadPath(prefix + " Two Cone", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
+        TWO_CONE_PICKUP_PATH = PathPlanner.loadPath(prefix + " Two Cone Pickup", 0.75, 1.0);
     }
 }

@@ -7,14 +7,13 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AprilRunCommand;
-import frc.robot.commands.ArmSetpointCommand;
-import frc.robot.commands.ChargeCircleCommand;
+import frc.robot.commands.OneConeCommand;
+import frc.robot.commands.TwoConeCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
@@ -39,7 +38,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
-    public IntakeSubsystem claw = new IntakeSubsystem();
+    public IntakeSubsystem intake = new IntakeSubsystem();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
@@ -89,7 +88,7 @@ public class RobotContainer {
         );
 
         new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelights.THREE.getRobotPose());
+            drivetrain.setRobotPose(Limelights.CENTER.getRobotPose());
         }, drivetrain));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
@@ -98,54 +97,54 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
-        arm.setDefaultCommand(new ArmSetpointCommand(arm, HOME));
+        arm.setDefaultCommand(new ArmSetpointState(arm, HOME));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(claw, operatorController.getTrigger("left")::getValue)
+            new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
         new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+            new CubeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, GROUND_CUBE).repeatedly()
+            new ArmSetpointState(arm, GROUND_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, LOW_CUBE).repeatedly()
+            new ArmSetpointState(arm, LOW_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HIGH_CUBE).repeatedly()
+            new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(claw, operatorController.getTrigger("left")::getValue)
+            new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
         new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(claw, () -> -operatorController.getTrigger("right").getValue())
+            new ConeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
         new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, GROUND_CONE).repeatedly()
+            new ArmSetpointState(arm, GROUND_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HUMAN_PLAYER_CONE).repeatedly()
+            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, LOW_CONE).repeatedly()
+            new ArmSetpointState(arm, LOW_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointCommand(arm, HIGH_CONE).repeatedly()
+            new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
     }
 
@@ -158,9 +157,8 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
-        AUTO_CHOOSER.addOption("Test Path", () -> new RepeatCommand(new AprilRunCommand(drivetrain)));
-        AUTO_CHOOSER.addOption("Charge Circle", () -> new RepeatCommand(new ChargeCircleCommand(drivetrain)));
-
+        AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }

@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import frc.team4272.globals.MathUtils;
 import frc.team4272.swerve.utils.SwerveModuleBase;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.SwerveModuleConstants.*;
@@ -99,5 +100,14 @@ public class SwerveModule extends SwerveModuleBase {
      */
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(driveEncoder.getPosition(), Rotation2d.fromDegrees(180).minus(getHeading()));
+    }
+
+    public void ensureCorrect() {
+        double err = rotationEncoder.getPosition() - getMAVCoderReading();
+        err = MathUtils.inputModulo(err, -180, 180);
+        err = Math.abs(err);
+        if(err > 5.0) {
+            rotationEncoder.setPosition(getMAVCoderReading());
+        }
     }
 }

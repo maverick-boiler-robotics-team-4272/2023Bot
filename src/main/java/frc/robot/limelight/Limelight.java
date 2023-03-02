@@ -32,13 +32,13 @@ public final class Limelight {
 
     public double[] getBotPose() {
         double[] pose = LimelightHelpers.getBotpose(tableName);
-        if(pose.length != 6) return new double[6];
+        if(pose.length != 7) return new double[7];
         return pose;
     }
 
     public double[] getBotPoseInTargetSpace() {
         double[] pose = LimelightHelpers.getBotPose_TargetSpace(tableName);
-        if(pose.length != 6) return new double[6];
+        if(pose.length != 7) return new double[7];
         return pose;
     }
 
