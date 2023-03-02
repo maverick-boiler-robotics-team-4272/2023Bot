@@ -6,7 +6,7 @@ import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 public class CommonInstantCommands {
-    public static InstantCommand setRobotPos(Drivetrain drivetrain){
+    public static InstantCommand resetRobotPos(Drivetrain drivetrain){
         return new InstantCommand(() -> drivetrain.setRobotPose(Limelights.CENTER.getRobotPose()));
     }
     

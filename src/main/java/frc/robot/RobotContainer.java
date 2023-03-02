@@ -97,7 +97,7 @@ public class RobotContainer {
                 new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
 
         new Trigger(driveController.getButton("a")::get).onTrue(
-            CommonInstantCommands.setRobotPos(drivetrain)
+            CommonInstantCommands.resetRobotPos(drivetrain)
         );
 
         new Trigger(driveController.getButton("b")::get).onTrue(

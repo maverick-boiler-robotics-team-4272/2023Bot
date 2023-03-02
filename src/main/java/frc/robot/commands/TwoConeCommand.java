@@ -53,7 +53,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                             getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
                             Map.of(
                                 "ResetOd",
-                                CommonInstantCommands.setRobotPos(drivetrain)
+                                CommonInstantCommands.resetRobotPos(drivetrain)
                             )
                     )
                 )
