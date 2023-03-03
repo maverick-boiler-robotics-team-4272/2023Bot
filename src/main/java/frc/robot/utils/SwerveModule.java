@@ -51,6 +51,8 @@ public class SwerveModule extends SwerveModuleBase {
         this.offset = offset;
         externalRotationEncoder = new MAVCoder(rotationMotor, offset);
         
+        System.out.println(externalRotationEncoder.getUnoffsetPosition());
+
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
     }
 
@@ -103,11 +105,6 @@ public class SwerveModule extends SwerveModuleBase {
     }
 
     public void ensureCorrect() {
-        double err = rotationEncoder.getPosition() - getMAVCoderReading();
-        err = MathUtils.inputModulo(err, -180, 180);
-        err = Math.abs(err);
-        if(err > 5.0) {
-            rotationEncoder.setPosition(getMAVCoderReading());
-        }
+        rotationEncoder.setPosition(getMAVCoderReading());
     }
 }

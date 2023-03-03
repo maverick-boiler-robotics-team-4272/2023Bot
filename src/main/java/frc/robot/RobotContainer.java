@@ -94,6 +94,8 @@ public class RobotContainer {
         new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
             drivetrain.getGyroscope().setRotation(new Rotation2d(0));
         }, drivetrain));
+
+        new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
     }
 
     private void configureOperatorBindings() {
