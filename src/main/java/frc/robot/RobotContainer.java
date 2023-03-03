@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,6 +15,7 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
+import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
@@ -91,9 +91,7 @@ public class RobotContainer {
             drivetrain.setRobotPose(Limelights.CENTER.getRobotPose());
         }, drivetrain));
 
-        new Trigger(driveController.getButton("b")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.getGyroscope().setRotation(new Rotation2d(0));
-        }, drivetrain));
+        new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
         new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
     }
