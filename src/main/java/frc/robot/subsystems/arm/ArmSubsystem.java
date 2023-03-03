@@ -7,10 +7,13 @@ package frc.robot.subsystems.arm;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.utils.MAVCoder;
 import frc.robot.utils.MotorBuilder;
 import frc.team4272.globals.MathUtils;
 
@@ -25,16 +28,21 @@ public class ArmSubsystem extends SubsystemBase {
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
 
+    private MAVCoder armEncoder;
+    private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
+    private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
+
     private double elevatorSetpoint = 0.0;
     private Rotation2d armSetpoint = new Rotation2d();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
         elevatorRightLeader = MotorBuilder.createWithDefaults(ELEVATOR_RIGHT_ID)
+            .withInversion(true)
             .withCurrentLimit(40)
             .withPositionFactor(SPROCKET_REV_TO_IN_RATIO * Units.inchesToMeters(1) / MOTOR_TO_SPROCKET_RATIO * CASCADE_RATIO)
             .withSoftLimits(MAX_ELEVATOR_DISTANCE, MIN_ELEVATOR_DISTANCE)
-            .withPIDF(ELEVATOR_PID_P, ELEVATOR_PID_I, ELEVATOR_PID_D, ELEVATOR_PID_F)
+            .withPID(ELEVATOR_PID_P, ELEVATOR_PID_I, ELEVATOR_PID_D)
             .withIZone(ELEVATOR_PID_I_ZONE)
             .withDFilter(ELEVATOR_PID_D_FILTER)
             .withOutputRange(ELEVATOR_PID_OUTPUT_MIN, ELEVATOR_PID_OUTPUT_MAX)
@@ -47,13 +55,15 @@ public class ArmSubsystem extends SubsystemBase {
 
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
-            .withPosition(0.0)
-            .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
-            .withPIDF(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D, ROTARY_ARM_PID_F)
-            .withIZone(ROTARY_ARM_PID_I_ZONE)
-            .withDFilter(ROTARY_ARM_PID_D_FILTER)
+            // .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
             .build();
+
+        armEncoder = new MAVCoder(armMotor, 121.0);
+    }
+
+    private double getArmPosition() {
+        return armEncoder.getPosition() / 27.0 * 26.0;
     }
 
     public void setElevatorPos(double meters) {
@@ -65,11 +75,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void setElevatorMotor(double meters) {
-        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition);
+        elevatorRightLeader.getPIDController().setReference(meters, ControlType.kPosition, 0, ELEVATOR_PID_F);
     }
 
     private void setArmMotor(Rotation2d angle) {
-        armMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
+        armController.setSetpoint(angle.getDegrees());
     }
 
     public boolean isElevatorAtPosition(double height) {
@@ -77,11 +87,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(Rotation2d angle) {
-        return Math.abs(MathUtils.inputModulo(armMotor.getEncoder().getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
+        return Math.abs(MathUtils.inputModulo(armEncoder.getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
     }
 
     public boolean isArmSafe() {
-        return armMotor.getEncoder().getPosition() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
+        return armEncoder.getPosition() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
     }
 
     public void inverseKinematics(double x, double y) {
@@ -115,10 +125,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        TESTING_TABLE.putNumber("Elevator Current", elevatorRightLeader.getEncoder().getPosition());
-        TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
-        TESTING_TABLE.putNumber("Arm Current", armMotor.getEncoder().getPosition());
-
         if(!isElevatorAtPosition(elevatorSetpoint)) {
             if(!isArmSafe() || armSetpoint.getDegrees() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
                 setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
@@ -132,5 +138,10 @@ public class ArmSubsystem extends SubsystemBase {
         } else {
             setArmMotor(armSetpoint);
         }
+        
+        double armOutput = 0;
+        armOutput = -armController.calculate(armEncoder.getPosition());
+        armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
+        armMotor.set(armOutput);
     }
 }
