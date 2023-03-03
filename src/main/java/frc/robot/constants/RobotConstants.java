@@ -1,3 +1,4 @@
+
 package frc.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -12,16 +13,16 @@ public class RobotConstants {
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
 
-        public static final double MAX_TRANS_SPEED = 3.5; // 2.5 meters per second
+        public static final double MAX_TRANS_SPEED = 4.0; // 2.5 meters per second
         public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 3.5; // 1.5 rotations per second
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
         public static final double MAX_TRANS_ACCEL = 1.0;
         public static final double MAX_ROT_ACCEL = 1.5;
 
-        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 116.0 : 210.0;
-        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 97.0 : 344.0;
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 112.0 : 210.0;
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 93.0 : 344.0;
         public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 227.0 : 86.0;
-        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 313.0 : 250.0;
+        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 317.0 : 250.0;
 
         public static class SwerveModuleConstants {
             public static final double WHEEL_RADIUS = 2.0;
@@ -44,10 +45,10 @@ public class RobotConstants {
     public static class ArmSubsystemConstants {
 
         public static class ElevatorConstants {
-            public static final double ELEVATOR_PID_P = 2.55;
+            public static final double ELEVATOR_PID_P = 3.5;
             public static final double ELEVATOR_PID_I = 0.0;
             public static final double ELEVATOR_PID_D = 0.0;
-            public static final double ELEVATOR_PID_F = 0.1;
+            public static final double ELEVATOR_PID_F = 0.8;
 
             public static final double ELEVATOR_PID_I_ZONE = 0.0;
             public static final double ELEVATOR_PID_D_FILTER = 0.0;
@@ -68,10 +69,10 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_PID_P = 0.88105;
-            public static final double ROTARY_ARM_PID_I = 0.01;
-            public static final double ROTARY_ARM_PID_D = 0.091835;
-            public static final double ROTARY_ARM_PID_F = 0.07427467;
+            public static final double ROTARY_ARM_PID_P = 0.011;
+            public static final double ROTARY_ARM_PID_I = 0.001;
+            public static final double ROTARY_ARM_PID_D = 0.0;
+            public static final double ROTARY_ARM_PID_F = 0.05;
 
             public static final double ROTARY_ARM_PID_I_ZONE = 12.0;
             public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
@@ -83,10 +84,9 @@ public class RobotConstants {
             public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 2.0;
 
             public static final double ARM_GEAR_RATIO = 96.0 / 1.0;
-            public static final double MAVCODER_RATIO = 58.0 / 26.0;
 
-            public static final double MIN_ARM_ANGLE = -132.0;
-            public static final double MAX_ARM_ANGLE = 0.0;
+            public static final double MIN_ARM_ANGLE = -120.0;
+            public static final double MAX_ARM_ANGLE = 15.0;
         }
         
         public static enum ArmSetpoints {
@@ -102,7 +102,7 @@ public class RobotConstants {
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
             
-            HOME(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
+            HOME(Rotation2d.fromDegrees(-90), Units.inchesToMeters(0.000), false),
             SAFE_ARM(Rotation2d.fromDegrees(-40), Units.inchesToMeters(0.000), false),
             ZERO(Rotation2d.fromDegrees(0), 0, false);
             
