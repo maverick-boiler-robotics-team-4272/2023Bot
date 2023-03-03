@@ -69,6 +69,8 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 121.0 : 0.0;
+
             public static final double ROTARY_ARM_PID_P = 0.011;
             public static final double ROTARY_ARM_PID_I = 0.001;
             public static final double ROTARY_ARM_PID_D = 0.0;

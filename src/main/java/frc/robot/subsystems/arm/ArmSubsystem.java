@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
             .build();
 
-        armEncoder = new MAVCoder(armMotor, 121.0);
+        armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
     }
 
     private double getArmPosition() {
