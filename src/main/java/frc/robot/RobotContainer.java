@@ -16,6 +16,7 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
+import frc.robot.subsystems.drivetrain.states.ResetPoseState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
@@ -87,9 +88,7 @@ public class RobotContainer {
             new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
         );
 
-        new Trigger(driveController.getButton("a")::get).onTrue(new InstantCommand(() -> {
-            drivetrain.setRobotPose(Limelights.CENTER.getRobotPose());
-        }, drivetrain));
+        new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
