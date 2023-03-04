@@ -125,7 +125,7 @@ public class ArmSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if(!isElevatorAtPosition(elevatorSetpoint)) {
-            if(!isArmSafe() || armSetpoint.getDegrees() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
+            if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
                 setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
                 if(isArmSafe()) {
                     setElevatorMotor(elevatorSetpoint);
