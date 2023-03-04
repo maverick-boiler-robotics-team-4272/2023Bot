@@ -21,6 +21,10 @@ public class DriveState extends State<Drivetrain> {
         this.thetaSpeed = thetaSpeed;
     }
 
+    public DriveState(Drivetrain drivetrain, double xSpeed, double ySpeed, double thetaSpeed){
+        this(drivetrain, () -> xSpeed, () -> ySpeed, () -> thetaSpeed); 
+    }
+
     @Override
     public void execute() {
         requiredSubsystem.driveFieldOriented(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed.getAsDouble() * MAX_ROT_SPEED);

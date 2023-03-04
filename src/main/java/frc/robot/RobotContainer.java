@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.LaunchCubeCommand;
+import frc.robot.commands.OneConeCharge;
 import frc.robot.commands.OneConeCommand;
 import frc.robot.commands.TwoConeCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
@@ -96,8 +97,10 @@ public class RobotContainer {
 
         new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
         
+        new Trigger(driveController.getButton("rightBumper")::get).onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+
         //TODO: Move to other controller when buttons are available
-        new Trigger(driveController.getButton("rightBumper")::get).whileTrue(
+        new Trigger(driveController.getButton("leftBumper")::get).whileTrue(
             new LaunchCubeCommand(arm, intake)
         );
     }
@@ -165,6 +168,7 @@ public class RobotContainer {
     private void configureAutoSendable() {
         AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Charge Station", () -> new OneConeCharge(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
