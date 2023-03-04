@@ -13,8 +13,8 @@ public class RobotConstants {
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
 
-        public static final double MAX_TRANS_SPEED = 4.0; // 2.5 meters per second
-        public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 3.5; // 1.5 rotations per second
+        public static final double MAX_TRANS_SPEED = 4.0; // 4.0 meters per second
+        public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 2.0; // 1.5 rotations per second
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
         public static final double MAX_TRANS_ACCEL = 1.0;
         public static final double MAX_ROT_ACCEL = 1.5;
@@ -69,12 +69,12 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 121.0 : 0.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 304.0 : 307.0;
 
-            public static final double ROTARY_ARM_PID_P = 0.011;
-            public static final double ROTARY_ARM_PID_I = 0.001;
-            public static final double ROTARY_ARM_PID_D = 0.0;
-            public static final double ROTARY_ARM_PID_F = 0.05;
+            public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.011 : 0.012;
+            public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.001;
+            public static final double ROTARY_ARM_PID_D = IS_PRACTICE_BOT ? 0.0 : 0.0;
+            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.04;
 
             public static final double ROTARY_ARM_PID_I_ZONE = 12.0;
             public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
@@ -92,21 +92,24 @@ public class RobotConstants {
         }
         
         public static enum ArmSetpoints {
-            LOW_CUBE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(11.780), false),
-            HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
-            GROUND_CUBE(Rotation2d.fromDegrees(-120), Units.inchesToMeters(5), false),
+            LOW_CUBE(Rotation2d.fromDegrees(-79), Units.inchesToMeters(0.000), false),
+            HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(30.000), false),
+            GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
             LOW_CONE(Rotation2d.fromDegrees(-65), Units.inchesToMeters(17.780), false),
             HIGH_CONE(Rotation2d.fromDegrees(-60), Units.inchesToMeters(38.000), false),
-            GROUND_CONE(Rotation2d.fromDegrees(-95), Units.inchesToMeters(7.000), false),
+            GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
+            // GROUND_CONE(Rotation2d.fromDegrees(25), Units.inchesToMeters(12.000), false),
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
             
-            HOME(Rotation2d.fromDegrees(-90), Units.inchesToMeters(0.000), false),
+            HOME(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
             SAFE_ARM(Rotation2d.fromDegrees(-40), Units.inchesToMeters(0.000), false),
-            ZERO(Rotation2d.fromDegrees(0), 0, false);
+            ZERO(Rotation2d.fromDegrees(0), 0, false),
+            TEST_FORWARD(Rotation2d.fromDegrees(-20), 0, false),
+            TEST_BACKWARD(Rotation2d.fromDegrees(-90), 0, false);
             
             public final Rotation2d armAngle;
             public final double elevatorHeightMeters;
