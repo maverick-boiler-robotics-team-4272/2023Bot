@@ -6,8 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCommand;
 import frc.robot.commands.TwoConeCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
@@ -93,6 +95,11 @@ public class RobotContainer {
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
         new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
+        
+        //TODO: Move to other controller when buttons are available
+        new Trigger(driveController.getButton("rightBumper")::get).whileTrue(
+            new LaunchCubeCommand(arm, intake)
+        );
     }
 
     private void configureOperatorBindings() {

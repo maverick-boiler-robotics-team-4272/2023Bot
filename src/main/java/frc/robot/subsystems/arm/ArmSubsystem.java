@@ -58,8 +58,7 @@ public class ArmSubsystem extends SubsystemBase {
             // .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
             .build();
-
-        armEncoder = new MAVCoder(armMotor, 121.0);
+        armEncoder = new MAVCoder(armMotor, 304.0);
     }
 
     private double getArmPosition() {
@@ -91,7 +90,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees();
     }
 
     public void inverseKinematics(double x, double y) {
@@ -143,5 +142,7 @@ public class ArmSubsystem extends SubsystemBase {
         armOutput = -armController.calculate(armEncoder.getPosition());
         armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
         armMotor.set(armOutput);
+
+        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
     }
 }

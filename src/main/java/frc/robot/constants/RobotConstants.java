@@ -92,7 +92,7 @@ public class RobotConstants {
         public static enum ArmSetpoints {
             LOW_CUBE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(11.780), false),
             HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
-            GROUND_CUBE(Rotation2d.fromDegrees(-120), Units.inchesToMeters(5), false),
+            GROUND_CUBE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(5.000), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
             LOW_CONE(Rotation2d.fromDegrees(-65), Units.inchesToMeters(17.780), false),
@@ -101,9 +101,10 @@ public class RobotConstants {
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
-            
+            LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
+
             HOME(Rotation2d.fromDegrees(-90), Units.inchesToMeters(0.000), false),
-            SAFE_ARM(Rotation2d.fromDegrees(-40), Units.inchesToMeters(0.000), false),
+            SAFE_ARM(Rotation2d.fromDegrees(-40.0), Units.inchesToMeters(0.000), false),
             ZERO(Rotation2d.fromDegrees(0), 0, false);
             
             public final Rotation2d armAngle;
