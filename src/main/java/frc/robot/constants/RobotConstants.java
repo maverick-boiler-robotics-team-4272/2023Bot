@@ -104,6 +104,7 @@ public class RobotConstants {
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
+            LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
             
             HOME(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
             SAFE_ARM(Rotation2d.fromDegrees(-40), Units.inchesToMeters(0.000), false),
