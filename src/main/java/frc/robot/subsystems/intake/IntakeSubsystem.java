@@ -44,7 +44,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     
     public void grabCube(double speed) {
-        clawFollowerMotor.set(speed);
+        clawFollowerMotor.set(speed * CUBE_BACK_SPEED_MULT);
         clawLeaderMotor.set(-speed);
     }
 

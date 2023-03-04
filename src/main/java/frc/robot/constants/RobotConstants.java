@@ -132,5 +132,7 @@ public class RobotConstants {
         
         public static final int CUBE_FRONT_LIMIT = 25;
         public static final int CUBE_BACK_LIMIT = 8;
+
+        public static final double CUBE_BACK_SPEED_MULT = 0.6;
     }
 }
