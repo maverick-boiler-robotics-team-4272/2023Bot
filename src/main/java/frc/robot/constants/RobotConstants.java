@@ -98,7 +98,7 @@ public class RobotConstants {
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
             LOW_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
-            HIGH_CONE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(43.000), false),
+            HIGH_CONE(Rotation2d.fromDegrees(-32), Units.inchesToMeters(43.000), false),
             GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
