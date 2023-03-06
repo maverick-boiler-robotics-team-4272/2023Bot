@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.TelemetryConstants;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.utils.MAVCoder;
 import frc.robot.utils.MotorBuilder;
@@ -135,7 +136,6 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(!isElevatorAtPosition(elevatorSetpoint)) {
             if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
-
                 setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
                 if(isArmSafe()) {
                     setElevatorMotor(elevatorSetpoint);
