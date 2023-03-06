@@ -131,6 +131,7 @@ public class ArmSubsystem extends SubsystemBase {
     public void periodic() {
         TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
+        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
 
         if(!isElevatorAtPosition(elevatorSetpoint)) {
             if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
@@ -151,7 +152,5 @@ public class ArmSubsystem extends SubsystemBase {
         armOutput = -armController.calculate(armEncoder.getPosition());
         armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
         armMotor.set(armOutput);
-
-        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
     }
 }

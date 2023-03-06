@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -28,10 +29,15 @@ public class OneConeCharge extends SequentialCommandGroup{
                 new PathFollowState(drivetrain, getGlobalTrajectories().CHARGE_STATION),
                 new WaitCommand(4.0)
             ),
-            new ParallelRaceGroup(
-                new DriveState(drivetrain, 0.0, 0.1, 0.00),
-                new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() < 2)
+            new ParallelDeadlineGroup(
+                new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() < -4),
+                new DriveState(drivetrain, 0.0, 0.05, 0.00)
             ),
+            // new ParallelDeadlineGroup(
+            //     new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() > -1), 
+            //     new DriveState(drivetrain, 0.0, -0.035, 0.00)
+            // ),
+            new DriveState(drivetrain, 0.0, -0.05, 0.0).withTimeout(1.5),
             new InstantCommand(
                 drivetrain::xConfig, drivetrain
             )

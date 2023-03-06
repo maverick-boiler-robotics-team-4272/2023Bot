@@ -43,7 +43,7 @@ public class SwerveModule extends SwerveModuleBase {
             .withPIDF(STEER_P, STEER_I, STEER_D, STEER_F)
             .withCurrentLimit(40)
             .withPositionFactor(360.0 / STEER_RATIO)
-            .build();
+            .getUnburntSpark();
         rotationEncoder = rotationMotor.getEncoder();
         rotationPidController = rotationMotor.getPIDController();
 
@@ -53,6 +53,8 @@ public class SwerveModule extends SwerveModuleBase {
         System.out.println(externalRotationEncoder.getUnoffsetPosition());
 
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
+
+        rotationMotor.burnFlash();
     }
 
 
