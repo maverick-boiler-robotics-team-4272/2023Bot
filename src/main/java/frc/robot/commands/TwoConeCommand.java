@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
@@ -17,10 +16,8 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
-import java.util.List;
 import java.util.Map;
 
-import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 public class TwoConeCommand extends SequentialCommandGroup {
