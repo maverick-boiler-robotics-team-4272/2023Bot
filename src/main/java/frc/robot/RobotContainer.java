@@ -6,8 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.LaunchCubeCommand;
+import frc.robot.commands.OneConeCharge;
 import frc.robot.commands.OneConeCommand;
 import frc.robot.commands.TwoConeCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
@@ -77,7 +80,7 @@ public class RobotContainer {
         JoystickAxes driveRightAxes = driveController.getAxes("right");
 
         driveLeftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
-        driveRightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
+        driveRightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(3.0).setDeadzone(0.15);
     }
 
     private void configureDriverBindings() {
@@ -93,6 +96,13 @@ public class RobotContainer {
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
         new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
+        
+        new Trigger(driveController.getButton("rightBumper")::get).onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+
+        //TODO: Move to other controller when buttons are available
+        new Trigger(driveController.getButton("leftBumper")::get).whileTrue(
+            new LaunchCubeCommand(arm, intake)
+        );
     }
 
     private void configureOperatorBindings() {
@@ -115,7 +125,7 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, LOW_CUBE).repeatedly()
+            new ArmSetpointState(arm, MID_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
@@ -139,7 +149,7 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, LOW_CONE).repeatedly()
+            new ArmSetpointState(arm, MID_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
@@ -158,6 +168,7 @@ public class RobotContainer {
     private void configureAutoSendable() {
         AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Charge Station", () -> new OneConeCharge(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }

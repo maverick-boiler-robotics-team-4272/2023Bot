@@ -1,13 +1,17 @@
 package frc.robot.subsystems.drivetrain;
 
+import frc.robot.constants.TelemetryConstants;
 import frc.robot.utils.Pigeon;
 import frc.robot.utils.SwerveModule;
+import frc.robot.utils.TrajectoryContainer;
 import frc.team4272.swerve.utils.SwerveDriveBase;
 import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -63,11 +67,21 @@ public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
         if(!DriverStation.isAutonomous()) {
             PathPlannerServer.sendPathFollowingData(robotPose, getRobotPose());
         }
+        TelemetryConstants.ShuffleboardTables.TESTING_TABLE.putNumber("Pitch", gyroscope.getPitch());
     }
 
     public void resetModules() {
         for(int i = 0; i < modules.length; i++) {
             modules[i].ensureCorrect();
         }
+    }
+
+    public void xConfig() {
+        setStates(
+            new SwerveModuleState(0.1, Rotation2d.fromDegrees(135)),
+            new SwerveModuleState(0.1, Rotation2d.fromDegrees(-135)),
+            new SwerveModuleState(0.1, Rotation2d.fromDegrees(45)),
+            new SwerveModuleState(0.1, Rotation2d.fromDegrees(-45))
+        );
     }
 }
