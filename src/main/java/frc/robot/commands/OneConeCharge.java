@@ -30,15 +30,15 @@ import java.util.Set;
 public class OneConeCharge extends SequentialCommandGroup{
     public OneConeCharge(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
-            new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
+            //new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ParallelRaceGroup(
                 new ConeGrabState(intake, () -> -0.5),
                 new WaitCommand(1.0)
             ),
+            //new ArmSetpointState(arm, ArmSetpoints.HOME),
             new ParallelCommandGroup(
                 new PathFollowState(drivetrain, getGlobalTrajectories().CHARGE_STATION),
-                new WaitCommand(0.1),
-                new ArmSetpointState(arm, ArmSetpoints.HOME)
+                new WaitCommand(0.1)
             ),
             new ParallelRaceGroup(
                 new DriveState(drivetrain, 0.0, 0.1, 0.00),
@@ -52,7 +52,7 @@ public class OneConeCharge extends SequentialCommandGroup{
 
                     @Override
                     public boolean isFinished() {
-                        return drivetrain.getGyroscope().getPitch() < 10;
+                        return drivetrain.getGyroscope().getPitch() < 3;
                     }
                 }
             ),
