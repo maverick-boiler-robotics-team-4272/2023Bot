@@ -13,8 +13,8 @@ public class RobotConstants {
     public static class DrivetrainConstants {
         public static final double WHEEL_DISTANCE = Units.feetToMeters(1.0);
 
-        public static final double MAX_TRANS_SPEED = 4.0; // 2.5 meters per second
-        public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 3.5; // 1.5 rotations per second
+        public static final double MAX_TRANS_SPEED = 4.0; // 4.0 meters per second
+        public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 2.0; // 1.5 rotations per second
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
         public static final double MAX_TRANS_ACCEL = 1.0;
         public static final double MAX_ROT_ACCEL = 1.5;
@@ -69,10 +69,12 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_PID_P = 0.011;
-            public static final double ROTARY_ARM_PID_I = 0.001;
-            public static final double ROTARY_ARM_PID_D = 0.0;
-            public static final double ROTARY_ARM_PID_F = 0.05;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 304.0 : 307.0;
+
+            public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.011 : 0.012;
+            public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.001;
+            public static final double ROTARY_ARM_PID_D = IS_PRACTICE_BOT ? 0.0 : 0.0;
+            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.04;
 
             public static final double ROTARY_ARM_PID_I_ZONE = 12.0;
             public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
@@ -130,5 +132,7 @@ public class RobotConstants {
         
         public static final int CUBE_FRONT_LIMIT = 25;
         public static final int CUBE_BACK_LIMIT = 8;
+
+        public static final double CUBE_BACK_SPEED_MULT = 0.6;
     }
 }

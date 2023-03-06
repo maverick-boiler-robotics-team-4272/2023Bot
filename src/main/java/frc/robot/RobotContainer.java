@@ -80,7 +80,7 @@ public class RobotContainer {
         JoystickAxes driveRightAxes = driveController.getAxes("right");
 
         driveLeftAxes.setDeadzoneMode(DeadzoneMode.kMagnitude).setPowerScale(3.0).setDeadzone(0.15);
-        driveRightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(2.5).setDeadzone(0.15);
+        driveRightAxes.setDeadzoneMode(DeadzoneMode.kXAxis).setPowerScale(3.0).setDeadzone(0.15);
     }
 
     private void configureDriverBindings() {
