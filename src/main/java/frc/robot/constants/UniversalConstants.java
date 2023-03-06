@@ -10,5 +10,5 @@ public class UniversalConstants {
     public static final double FIELD_HALF_WIDTH = FIELD_WIDTH_METERS / 2.0;
     public static final double FIELD_HALF_HEIGHT = FIELD_HEIGHT_METERS / 2.0;
 
-    public static final boolean IS_PRACTICE_BOT = true;
+    public static final boolean IS_PRACTICE_BOT = false;
 }

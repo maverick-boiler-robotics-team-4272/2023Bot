@@ -90,22 +90,24 @@ public class RobotConstants {
         }
         
         public static enum ArmSetpoints {
-            LOW_CUBE(Rotation2d.fromDegrees(-54), Units.inchesToMeters(11.780), false),
-            HIGH_CUBE(Rotation2d.fromDegrees(-75), Units.inchesToMeters(38.189), false),
-            GROUND_CUBE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(5.000), false),
+            LOW_CUBE(Rotation2d.fromDegrees(-79), Units.inchesToMeters(0.000), false),
+            HIGH_CUBE(Rotation2d.fromDegrees(-70), Units.inchesToMeters(24.000), false),
+            GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
-            LOW_CONE(Rotation2d.fromDegrees(-65), Units.inchesToMeters(17.780), false),
-            HIGH_CONE(Rotation2d.fromDegrees(-60), Units.inchesToMeters(38.000), false),
-            GROUND_CONE(Rotation2d.fromDegrees(-95), Units.inchesToMeters(7.000), false),
+            LOW_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
+            HIGH_CONE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(43.000), false),
+            GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
             LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
-
-            HOME(Rotation2d.fromDegrees(-90), Units.inchesToMeters(0.000), false),
-            SAFE_ARM(Rotation2d.fromDegrees(-40.0), Units.inchesToMeters(0.000), false),
-            ZERO(Rotation2d.fromDegrees(0), 0, false);
+            
+            HOME(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
+            SAFE_ARM(Rotation2d.fromDegrees(-60), Units.inchesToMeters(0.000), false),
+            ZERO(Rotation2d.fromDegrees(0), 0, false),
+            TEST_FORWARD(Rotation2d.fromDegrees(-20), 0, false),
+            TEST_BACKWARD(Rotation2d.fromDegrees(-90), 0, false);
             
             public final Rotation2d armAngle;
             public final double elevatorHeightMeters;
