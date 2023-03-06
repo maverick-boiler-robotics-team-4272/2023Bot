@@ -52,7 +52,7 @@ public class OneConeCharge extends SequentialCommandGroup{
 
                     @Override
                     public boolean isFinished() {
-                        return drivetrain.getGyroscope().getPitch() < 3;
+                        return drivetrain.getGyroscope().getPitch() < 2;
                     }
                 }
             ),
