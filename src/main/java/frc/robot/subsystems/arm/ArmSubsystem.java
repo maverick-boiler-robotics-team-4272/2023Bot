@@ -44,6 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
             .withInversion(true)
             .withCurrentLimit(40)
             .withPositionFactor(SPROCKET_REV_TO_IN_RATIO * Units.inchesToMeters(1) / MOTOR_TO_SPROCKET_RATIO * CASCADE_RATIO)
+            .withPosition(0.0)
             .withSoftLimits(MAX_ELEVATOR_DISTANCE, MIN_ELEVATOR_DISTANCE)
             .withPID(ELEVATOR_PID_P, ELEVATOR_PID_I, ELEVATOR_PID_D)
             .withIZone(ELEVATOR_PID_I_ZONE)

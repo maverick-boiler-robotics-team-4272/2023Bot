@@ -1,4 +1,3 @@
-
 package frc.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -92,15 +91,15 @@ public class RobotConstants {
         }
         
         public static enum ArmSetpoints {
-            LOW_CUBE(Rotation2d.fromDegrees(-79), Units.inchesToMeters(0.000), false),
-            HIGH_CUBE(Rotation2d.fromDegrees(-70), Units.inchesToMeters(24.000), false),
+            MID_CUBE(Rotation2d.fromDegrees(-80), Units.inchesToMeters(0.000), false),
+            HIGH_CUBE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(30.000), false),
             GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
     
-            LOW_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
-            HIGH_CONE(Rotation2d.fromDegrees(-32), Units.inchesToMeters(43.000), false),
+            MID_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
+            HIGH_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(41.000), false),
             GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
-            HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-73), Units.inchesToMeters(34.071), false),
+            HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(37.000), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
             LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
