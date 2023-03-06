@@ -125,7 +125,7 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, LOW_CUBE).repeatedly()
+            new ArmSetpointState(arm, MID_CUBE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
@@ -149,7 +149,7 @@ public class RobotContainer {
         );
 
         new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, LOW_CONE).repeatedly()
+            new ArmSetpointState(arm, MID_CONE).repeatedly()
         );
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
