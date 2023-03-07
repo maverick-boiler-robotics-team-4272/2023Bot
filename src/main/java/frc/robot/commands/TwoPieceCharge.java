@@ -31,26 +31,29 @@ public class TwoPieceCharge extends SequentialCommandGroup {
             ),
             new ArmSetpointState(arm, ArmSetpoints.HOME),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE), 
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE).withTimeout(10), 
                 getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(), 
                 Map.of(
                     "dropArm",
                     new ParallelCommandGroup(
                         new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
-                        new ConeGrabState(intake, () -> 1.0)
+                        new ConeGrabState(intake, () -> 1.0).withTimeout(3.0)
                     ), 
                     "liftArm",
-                    new ArmSetpointState(arm, ArmSetpoints.HOME)
+                    new ParallelCommandGroup(
+                        new ArmSetpointState(arm, ArmSetpoints.HOME),
+                        new ConeGrabState(intake, () -> 0.2).withTimeout(3.0)
+                    )
                 )
-            )//,
-            // new ParallelDeadlineGroup(
-            //     new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() < 4), 
-            //     new DriveState(drivetrain, 0.0, -0.05, 0.00)
-            // ),
-            // new DriveState(drivetrain, 0.0, 0.05, 0.0).withTimeout(1.5),
-            // new InstantCommand(
-            //     drivetrain::xConfig, drivetrain
-            // )
+            ),
+            new ParallelDeadlineGroup(
+                new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() > 1), 
+                new DriveState(drivetrain, 0.0, -0.075, 0.00)
+            ),
+            new DriveState(drivetrain, 0.0, 0.05, 0.0).withTimeout(1.9),
+            new InstantCommand(
+                drivetrain::xConfig, drivetrain
+            )
         );
     }
 }
