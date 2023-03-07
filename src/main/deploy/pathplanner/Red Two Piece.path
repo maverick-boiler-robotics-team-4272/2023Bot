@@ -39,12 +39,14 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "reset od"
+        ],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "minimum",
+        "waitTime": 0.75
       }
     },
     {
@@ -131,12 +133,6 @@
       "position": 2.2,
       "names": [
         "stow"
-      ]
-    },
-    {
-      "position": 0.46545454545452736,
-      "names": [
-        "event"
       ]
     }
   ]
