@@ -25,6 +25,6 @@ public class TrajectoryContainer {
         CHARGE_STATION = PathPlanner.loadPath(prefix + " Charge Station", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
         CHARGE_STATION_CROSSOVER = PathPlanner.loadPath(prefix + " Charge Crossover", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
         TWO_PIECE_PATH = PathPlanner.loadPath(prefix + " Two Piece", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
-        TWO_PIECE_CHARGE = PathPlanner.loadPath(prefix + " Two cone charge", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
+        TWO_PIECE_CHARGE = PathPlanner.loadPath(prefix + " Two Charge", MAX_TRANS_SPEED, MAX_TRANS_ACCEL);
     }
 }
