@@ -68,7 +68,7 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 274.0 : 307.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 254.0 : 307.0;
 
             public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.011 : 0.012;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.001;
@@ -105,7 +105,7 @@ public class RobotConstants {
             LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
             
             HOME(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
-            SAFE_ARM(Rotation2d.fromDegrees(-60), Units.inchesToMeters(0.000), false),
+            SAFE_ARM(Rotation2d.fromDegrees(-70), Units.inchesToMeters(0.000), false),
             ZERO(Rotation2d.fromDegrees(0), 0, false),
             TEST_FORWARD(Rotation2d.fromDegrees(-20), 0, false),
             TEST_BACKWARD(Rotation2d.fromDegrees(-90), 0, false);
