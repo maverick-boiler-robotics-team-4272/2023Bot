@@ -14,6 +14,7 @@ import frc.robot.commands.OneConeCharge;
 import frc.robot.commands.OneConeCommand;
 import frc.robot.commands.TwoConeCommand;
 import frc.robot.commands.TwoPieceCommand;
+import frc.robot.commands.TwoPieceCharge;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -172,6 +173,7 @@ public class RobotContainer {
         AUTO_CHOOSER.addOption("Charge Station", () -> new OneConeCharge(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Community Charge Station", () -> new ChargeStationExit(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Two Piece Charge", () -> new TwoPieceCharge(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
