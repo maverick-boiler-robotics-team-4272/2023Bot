@@ -14,6 +14,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.states.ConeEjectState;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
@@ -25,15 +26,13 @@ public class TwoPieceCharge extends SequentialCommandGroup {
     public TwoPieceCharge(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake){
         super(
             new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
-            new ParallelRaceGroup(
-                new ConeGrabState(intake, () -> -0.5),
-                new WaitCommand(0.5)
-            ),
-            new ArmSetpointState(arm, ArmSetpoints.HOME),
+            new ConeEjectState(intake, () -> 0.5).withTimeout(0.5),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE).withTimeout(10), 
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE, false).withTimeout(10), 
                 getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(), 
                 Map.of(
+                    "Home",
+                    new ArmSetpointState(arm, ArmSetpoints.HOME),
                     "dropArm",
                     new ParallelCommandGroup(
                         new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
@@ -47,8 +46,8 @@ public class TwoPieceCharge extends SequentialCommandGroup {
                 )
             ),
             new ParallelDeadlineGroup(
-                new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() > 1), 
-                new DriveState(drivetrain, 0.0, -0.075, 0.00)
+                new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() > -4), 
+                new DriveState(drivetrain, 0.0, -0.125, 0.00)
             ),
             new DriveState(drivetrain, 0.0, 0.05, 0.0).withTimeout(1.9),
             new InstantCommand(
