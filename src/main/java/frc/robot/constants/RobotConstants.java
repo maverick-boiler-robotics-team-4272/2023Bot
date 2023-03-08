@@ -15,8 +15,9 @@ public class RobotConstants {
         public static final double MAX_TRANS_SPEED = 4.0; // 4.0 meters per second
         public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 2.0; // 1.5 rotations per second
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
-        public static final double MAX_TRANS_ACCEL = 1.0;
-        public static final double MAX_ROT_ACCEL = 1.5;
+
+        public static final double MAX_AUTO_SPEED = 4.0;
+        public static final double MAX_AUTO_ACCEL = 3.0;
 
         public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 112.0 : 210.0;
         public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 93.0 : 344.0;
