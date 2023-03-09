@@ -43,14 +43,9 @@ public class TwoPieceCommand extends SequentialCommandGroup {
             ),
             new ArmSetpointState(arm, HOME),
             new ParallelRaceGroup(
-                new SequentialCommandGroup(
-                    new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE),
-                    new ArmSetpointState(arm, HIGH_CONE)
-                ),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE),
                 new ConeGrabState(intake, () -> 0.1)
-            ),
-            new ConeEjectState(intake, () -> 0.5),
-            new ArmSetpointState(arm, HOME)
+            )
         );
     }
 }
