@@ -11,8 +11,8 @@ Operator Controls:
     B + bumper: Human Player Setpoint
     X + bumper: Middle Setpoint
     Y + bumper: High Setpoint
-    Left Trigger: Intake
-    Right Trigger: Outtake
+    Left Trigger + bumper: Intake
+    Right Trigger + bumper: Outtake
 
     Left Bumper: Cone Versions of all the above controls
     Right Bumper: Cube Versions of all the above controls
@@ -23,4 +23,3 @@ Default Actions:
     Drivetrain: Nothing. You must hold a direction on the joysticks to run the drivetrain
     Arm/Elevator: Stowed state. Elevator all the way down, arm slightly behind vertical
     Intake: Nothing. You must hold a bumper and either intake or outtake triggers to run the intake
-    
