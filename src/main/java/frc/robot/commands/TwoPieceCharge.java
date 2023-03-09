@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -27,12 +28,11 @@ public class TwoPieceCharge extends SequentialCommandGroup {
         super(
             new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ConeEjectState(intake, () -> 0.5).withTimeout(0.5),
+            new ArmSetpointState(arm, ArmSetpoints.HOME).withTimeout(1.0),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE, false).withTimeout(10), 
-                getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(), 
+                getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(),
                 Map.of(
-                    "Home",
-                    new ArmSetpointState(arm, ArmSetpoints.HOME),
                     "dropArm",
                     new ParallelCommandGroup(
                         new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE),
