@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.525569283917667,
-        "y": 1.1519797861448462
+        "x": 14.068237447638792,
+        "y": 0.49506569321927313
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -56,81 +56,25 @@
         "x": 10.63398506104557,
         "y": 1.0186928687396573
       },
-      "nextControl": {
-        "x": 10.63398506104557,
-        "y": 1.0186928687396573
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": true,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 11.878523804553547,
-        "y": 0.8568444690333563
-      },
-      "prevControl": {
-        "x": 11.231130205728347,
-        "y": 0.818762492631873
-      },
-      "nextControl": {
-        "x": 12.583428223571214,
-        "y": 0.898309434857926
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 14.75,
-        "y": 0.6378731047248319
-      },
-      "prevControl": {
-        "x": 13.912196519167388,
-        "y": 0.7045165634274275
-      },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
         "waitTime": 0
       }
     }
   ],
   "markers": [
     {
-      "position": 1.9490909090908741,
+      "position": 1.7890909090909106,
       "names": [
         "drop intake"
-      ]
-    },
-    {
-      "position": 2.5599999999999796,
-      "names": [
-        "stow"
       ]
     }
   ]
