@@ -19,10 +19,10 @@ public class RobotConstants {
         public static final double MAX_AUTO_SPEED = 4.0;
         public static final double MAX_AUTO_ACCEL = 3.0;
 
-        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 112.0 : 210.0;
-        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 93.0 : 344.0;
-        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 227.0 : 86.0;
-        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 317.0 : 250.0;
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 112.0;
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 91.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 229.0;
+        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 316.0;
 
         public static class SwerveModuleConstants {
             public static final double WHEEL_RADIUS = 2.0;
@@ -69,13 +69,13 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 307.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 293.0;
 
             public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.012 : 0.014;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.001;
             public static final double ROTARY_ARM_PID_D = IS_PRACTICE_BOT ? 0.0 : 0.0;
-            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.04;
-
+            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.045;
+            
             public static final double ROTARY_ARM_PID_I_ZONE = 12.0;
             public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
 
