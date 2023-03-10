@@ -64,6 +64,8 @@ public class ArmSubsystem extends SubsystemBase {
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
+
+        armController.setIntegratorRange(-0.01, 0.01);
     }
 
     private double getArmPosition() {
@@ -95,7 +97,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees() + 5.0;
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees() + 10.0;
     }
 
     public void inverseKinematics(double x, double y) {
