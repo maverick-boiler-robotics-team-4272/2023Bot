@@ -98,7 +98,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees() + 5.0;
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 5.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -136,8 +136,8 @@ public class ArmSubsystem extends SubsystemBase {
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
 
         if(!isElevatorAtPosition(elevatorSetpoint)) {
-            if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
+            if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle());
                 if(isArmSafe()) {
                     setElevatorMotor(elevatorSetpoint);
                 }

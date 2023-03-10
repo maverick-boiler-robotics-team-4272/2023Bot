@@ -111,9 +111,9 @@ public class RobotConstants {
             TEST_FORWARD(Rotation2d.fromDegrees(-20), 0, false),
             TEST_BACKWARD(Rotation2d.fromDegrees(-90), 0, false);
             
-            public final Rotation2d armAngle;
-            public final double elevatorHeightMeters;
-            public final boolean safetyOverride;
+            private final Rotation2d armAngle;
+            private final double elevatorHeightMeters;
+            private final boolean safetyOverride;
             private ArmSetpoints(Rotation2d armAngle, double elevatorHeightMeters, boolean safetyOverride) {
                 this.armAngle = armAngle;
                 this.elevatorHeightMeters = elevatorHeightMeters;
