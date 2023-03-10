@@ -17,7 +17,7 @@ public class OneConeBackCommand extends SequentialCommandGroup {
         addCommands(
             new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ConeEjectState(intake, () -> 0.1).withTimeout(0.5),
-            new ArmSetpointState(arm, ArmSetpoints.HOME),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED),
             new InstantCommand(() -> {
                 drivetrain.getGyroscope().setRotation(Rotation2d.fromDegrees(TelemetryConstants.FMS.RED_ALLIANCE.get() ? 0 : 180));
             }, drivetrain),

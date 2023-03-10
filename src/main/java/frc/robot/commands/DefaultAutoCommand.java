@@ -12,7 +12,7 @@ public class DefaultAutoCommand extends SequentialCommandGroup {
         addCommands(
             new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ConeEjectState(intake, () -> 0.1).withTimeout(0.5),
-            new ArmSetpointState(arm, ArmSetpoints.HOME)
+            new ArmSetpointState(arm, ArmSetpoints.STOWED)
         );
     }
 }

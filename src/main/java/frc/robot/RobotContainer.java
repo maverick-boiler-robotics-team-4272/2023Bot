@@ -107,7 +107,7 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
-        arm.setDefaultCommand(new ArmSetpointState(arm, HOME));
+        arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
