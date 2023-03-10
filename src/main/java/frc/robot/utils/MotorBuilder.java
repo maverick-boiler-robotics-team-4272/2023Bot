@@ -137,6 +137,10 @@ public class MotorBuilder {
         return spark;
     }
 
+    public CANSparkMax getUnburntSpark() {
+        return spark;
+    }
+
     public static MotorBuilder createEmpty(int id) {
         return new MotorBuilder(id);
     }

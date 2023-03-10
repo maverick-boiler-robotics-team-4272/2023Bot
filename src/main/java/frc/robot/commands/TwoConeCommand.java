@@ -17,10 +17,8 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
-import java.util.List;
 import java.util.Map;
 
-import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 public class TwoConeCommand extends SequentialCommandGroup {

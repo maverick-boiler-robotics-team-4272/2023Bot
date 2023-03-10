@@ -41,14 +41,14 @@ public class PathFollowState extends State<Drivetrain> {
         PathPlannerServer.sendActivePath(trajectory.getStates());
 
         if(!resetOdometry) return;
-        Pose2d aprilTagPose = CENTER.getRobotPose();
-        if(!CENTER.isValidTarget()){
+        // Pose2d aprilTagPose = CENTER.getRobotPose();
+        // if(!CENTER.isValidTarget()){
             requiredSubsystem.getGyroscope().setRotation(trajectory.getInitialState().holonomicRotation);
             requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
-        } else {
-            // requiredSubsystem.getGyroscope().setRotation(aprilTagPose.getRotation());
-            requiredSubsystem.setRobotPose(aprilTagPose);
-        }
+        // } else {
+        //     // requiredSubsystem.getGyroscope().setRotation(aprilTagPose.getRotation());
+        //     requiredSubsystem.setRobotPose(aprilTagPose);
+        // }
 
     }
 

@@ -1,0 +1,99 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+<<<<<<<< HEAD:src/main/deploy/pathplanner/Blue Two Charge.path
+        "x": 1.0,
+        "y": 3.0
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0,
+        "y": 3.0
+========
+        "x": 14.7,
+        "y": 3.3
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 15.699999999999996,
+        "y": 3.3
+>>>>>>>> main:src/main/deploy/pathplanner/Red Charge Station.path
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+<<<<<<<< HEAD:src/main/deploy/pathplanner/Blue Two Charge.path
+        "x": 3.0,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 3.0,
+        "y": 4.0
+      },
+      "nextControl": {
+        "x": 3.0,
+        "y": 4.0
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.0,
+        "y": 3.0
+      },
+      "prevControl": {
+        "x": 4.0,
+        "y": 3.0
+========
+        "x": 12.9,
+        "y": 3.3
+      },
+      "prevControl": {
+        "x": 11.526859568794384,
+        "y": 3.3
+>>>>>>>> main:src/main/deploy/pathplanner/Red Charge Station.path
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+<<<<<<<< HEAD:src/main/deploy/pathplanner/Blue Two Charge.path
+========
+  "maxVelocity": 4.75,
+  "maxAcceleration": 4.75,
+  "isReversed": null,
+>>>>>>>> main:src/main/deploy/pathplanner/Red Charge Station.path
+  "markers": []
+}

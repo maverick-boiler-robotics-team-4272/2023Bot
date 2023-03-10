@@ -1,0 +1,25 @@
+Driver Controls:
+    Left Joystick: Driving Translation
+    Right Joystick X: Driving Rotation
+    A: Reset Odometry based on Limelight (Odometry never used except by auto, so not necessary yet)
+    B: Reset Robot Heading (Whichever direction the robot is facing is now the new forward direction)
+    rightBumper: X Config of modules
+    leftBumper: Cube Launch (Will be moved as soon as we find a good button for it on the operator controller)
+
+Operator Controls:
+    A + bumper: Ground Setpoint
+    B + bumper: Human Player Setpoint
+    X + bumper: Middle Setpoint
+    Y + bumper: High Setpoint
+    Left Trigger + bumper: Intake
+    Right Trigger + bumper: Outtake
+
+    Left Bumper: Cone Versions of all the above controls
+    Right Bumper: Cube Versions of all the above controls
+
+    Must be holding both the bumper and the button to use a specific command
+
+Default Actions:
+    Drivetrain: Nothing. You must hold a direction on the joysticks to run the drivetrain
+    Arm/Elevator: Stowed state. Elevator all the way down, arm slightly behind vertical
+    Intake: Nothing. You must hold a bumper and either intake or outtake triggers to run the intake
