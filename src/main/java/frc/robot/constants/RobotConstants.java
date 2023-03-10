@@ -107,7 +107,8 @@ public class RobotConstants {
             
             STOWED(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
             SAFE_ARM(Rotation2d.fromDegrees(-70), Units.inchesToMeters(0.000), false),
-            ZERO(Rotation2d.fromDegrees(0), 0, false);
+            ZERO(Rotation2d.fromDegrees(0), 0, false),
+            BACK(Rotation2d.fromDegrees(-120), Units.inchesToMeters(0), false);
             
             public final Rotation2d armAngle;
             public final double elevatorHeightMeters;
