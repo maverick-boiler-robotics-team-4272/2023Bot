@@ -22,7 +22,7 @@ public class TwoPieceCommand extends SequentialCommandGroup {
     public TwoPieceCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
             new ArmSetpointState(arm, HIGH_CONE),
-            new ConeEjectState(intake, () -> 0.5).withTimeout(0.2),
+            new ConeEjectState(intake, () -> 0.9).withTimeout(0.5),
             new ArmSetpointState(arm, HOME),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB),
@@ -32,19 +32,19 @@ public class TwoPieceCommand extends SequentialCommandGroup {
                     new SequentialCommandGroup(
                         new ParallelCommandGroup(
                             new ArmSetpointState(arm, GROUND_CONE),
-                            new ConeGrabState(intake, () -> 0.5).withTimeout(0.75)
+                            new ConeGrabState(intake, () -> 1.0).withTimeout(2.0)
                         ),
                         new ParallelCommandGroup(
                             new ArmSetpointState(arm, HOME),
-                            new ConeGrabState(intake, () -> 0.1)
+                            new ConeGrabState(intake, () -> 0.3)
                         )
                     )
                 )
             ),
             new ArmSetpointState(arm, HOME),
             new ParallelRaceGroup(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE),
-                new ConeGrabState(intake, () -> 0.1)
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false),
+                new ConeGrabState(intake, () -> 0.3)
             )
         );
     }
