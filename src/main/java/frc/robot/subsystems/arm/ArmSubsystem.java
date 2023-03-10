@@ -47,20 +47,17 @@ public class ArmSubsystem extends SubsystemBase {
             .withIZone(ELEVATOR_PID_I_ZONE)
             .withDFilter(ELEVATOR_PID_D_FILTER)
             .withOutputRange(ELEVATOR_PID_OUTPUT_MIN, ELEVATOR_PID_OUTPUT_MAX)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         elevatorLeftFollower = MotorBuilder.createWithDefaults(ELEVATOR_LEFT_ID)
             .withCurrentLimit(40)
             .asFollower(elevatorRightLeader, true)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
             // .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
@@ -154,5 +151,7 @@ public class ArmSubsystem extends SubsystemBase {
         armOutput = -armController.calculate(armEncoder.getPosition());
         armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
         armMotor.set(armOutput);
+
+        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
     }
 }

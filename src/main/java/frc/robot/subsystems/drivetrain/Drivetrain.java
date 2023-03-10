@@ -3,6 +3,7 @@ package frc.robot.subsystems.drivetrain;
 import frc.robot.constants.TelemetryConstants;
 import frc.robot.utils.Pigeon;
 import frc.robot.utils.SwerveModule;
+import frc.robot.utils.TrajectoryContainer;
 import frc.team4272.swerve.utils.SwerveDriveBase;
 import frc.team4272.swerve.utils.SwerveModuleBase.PositionedSwerveModule;
 
