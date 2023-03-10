@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.TelemetryConstants;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.utils.ArmSetpoint;
 import frc.robot.utils.MAVCoder;
 import frc.robot.utils.MotorBuilder;
 import frc.team4272.globals.MathUtils;
@@ -27,6 +28,34 @@ import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class ArmSubsystem extends SubsystemBase {
 
+    private static class SetpointContainer implements ArmSetpoint {
+        private double elevatorHeight = 0.0;
+        private Rotation2d armAngle = new Rotation2d();
+
+        @Override
+        public double getElevatorHeight() {
+            return elevatorHeight;
+        }
+
+        @Override
+        public Rotation2d getArmAngle() {
+            return armAngle;
+        }
+
+        @Override
+        public boolean getSafetyOverride() {
+            return false;
+        }
+
+        public void setElevatorHeight(double elevatorHeight) {
+            this.elevatorHeight = elevatorHeight;
+        }
+
+        public void setArmAngle(Rotation2d armAngle) {
+            this.armAngle = armAngle;
+        }
+    }
+
     private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
@@ -35,8 +64,7 @@ public class ArmSubsystem extends SubsystemBase {
     private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
     private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
 
-    private double elevatorSetpoint = 0.0;
-    private Rotation2d armSetpoint = new Rotation2d();
+    private SetpointContainer setpoint =  new SetpointContainer();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -74,11 +102,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPos(double meters) {
-        elevatorSetpoint = meters;
+        setpoint.setElevatorHeight(meters);
     }
 
     public void setArm(Rotation2d angle) {
-        armSetpoint = angle;
+
     }
 
     private void setElevatorMotor(double meters) {
