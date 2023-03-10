@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.OneConeBackCommand;
 import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCharge;
@@ -171,7 +172,8 @@ public class RobotContainer {
         // AUTO_CHOOSER.addOption("Community Charge Station", () -> new ChargeStationExit(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
         // AUTO_CHOOSER.addOption("One Half Charge", () -> new TwoPieceCharge(drivetrain, arm, intake));
-        AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }
