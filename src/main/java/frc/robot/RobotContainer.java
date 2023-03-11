@@ -91,11 +91,11 @@ public class RobotContainer {
             new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
         );
 
-        new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
+        // new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
-        new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
+        // new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
         
         new Trigger(driveController.getButton("rightBumper")::get).onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
 
