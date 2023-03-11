@@ -155,6 +155,10 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
+
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
+            new ArmSetpointState(arm, BACK).repeatedly()
+        );
     }
 
     private void configureDemo1Bindings() {
