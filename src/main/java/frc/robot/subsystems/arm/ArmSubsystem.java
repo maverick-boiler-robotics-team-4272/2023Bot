@@ -6,7 +6,6 @@ package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -14,7 +13,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.TelemetryConstants;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.utils.ArmSetpoint;
 import frc.robot.utils.MAVCoder;
@@ -78,20 +76,16 @@ public class ArmSubsystem extends SubsystemBase {
             .withIZone(ELEVATOR_PID_I_ZONE)
             .withDFilter(ELEVATOR_PID_D_FILTER)
             .withOutputRange(ELEVATOR_PID_OUTPUT_MIN, ELEVATOR_PID_OUTPUT_MAX)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         elevatorLeftFollower = MotorBuilder.createWithDefaults(ELEVATOR_LEFT_ID)
             .withCurrentLimit(40)
             .asFollower(elevatorRightLeader, true)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
-            // .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
-            // .withIdleMode(IdleMode.kCoast)
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
