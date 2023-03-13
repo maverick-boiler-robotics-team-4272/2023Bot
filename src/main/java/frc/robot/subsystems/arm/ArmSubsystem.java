@@ -106,7 +106,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setArm(Rotation2d angle) {
-
+        setpoint.setArmAngle(angle);
     }
 
     private void setElevatorMotor(double meters) {
@@ -163,18 +163,18 @@ public class ArmSubsystem extends SubsystemBase {
         TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
 
-        if(!isElevatorAtPosition(elevatorSetpoint)) {
-            if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
+        if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
+            if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
                 setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle());
                 if(isArmSafe()) {
-                    setElevatorMotor(elevatorSetpoint);
+                    setElevatorMotor(setpoint.getElevatorHeight());
                 }
             } else {
-                setArmMotor(armSetpoint);
-                setElevatorMotor(elevatorSetpoint);
+                setArmMotor(setpoint.getArmAngle());
+                setElevatorMotor(setpoint.getElevatorHeight());
             }
         } else {
-            setArmMotor(armSetpoint);
+            setArmMotor(setpoint.getArmAngle());
         }
         
         if(DriverStation.isDisabled()) return;
