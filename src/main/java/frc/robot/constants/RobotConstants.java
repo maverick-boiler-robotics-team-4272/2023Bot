@@ -2,6 +2,7 @@ package frc.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import frc.robot.utils.ArmSetpoint;
 
 import static frc.robot.constants.UniversalConstants.IS_PRACTICE_BOT;
 public class RobotConstants {
@@ -91,7 +92,7 @@ public class RobotConstants {
             public static final double MAX_ARM_ANGLE = 15.0;
         }
         
-        public static enum ArmSetpoints {
+        public static enum ArmSetpoints implements ArmSetpoint {
             MID_CUBE(Rotation2d.fromDegrees(-80), Units.inchesToMeters(0.000), false),
             HIGH_CUBE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(30.000), false),
             GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
@@ -110,13 +111,33 @@ public class RobotConstants {
             ZERO(Rotation2d.fromDegrees(0), 0, false),
             BACK(Rotation2d.fromDegrees(-120), Units.inchesToMeters(0), false);
             
-            public final Rotation2d armAngle;
-            public final double elevatorHeightMeters;
-            public final boolean safetyOverride;
+            private final Rotation2d armAngle;
+            private final double elevatorHeightMeters;
+            private final boolean safetyOverride;
             private ArmSetpoints(Rotation2d armAngle, double elevatorHeightMeters, boolean safetyOverride) {
                 this.armAngle = armAngle;
                 this.elevatorHeightMeters = elevatorHeightMeters;
                 this.safetyOverride = safetyOverride;
+            }
+
+            @Override
+            public double getElevatorHeight() {
+                return elevatorHeightMeters;
+            }
+
+            @Override
+            public Rotation2d getArmAngle() {
+                return armAngle;
+            }
+
+            @Override
+            public boolean getSafetyOverride() {
+                return safetyOverride;
+            }
+
+            @Override
+            public String toString() {
+                return String.format("%s(height = %.2f, angle = %.2fdeg)", name(), elevatorHeightMeters, armAngle.getDegrees());
             }
     
             public static boolean isSetpointSafe(ArmSetpoints setpoint) {

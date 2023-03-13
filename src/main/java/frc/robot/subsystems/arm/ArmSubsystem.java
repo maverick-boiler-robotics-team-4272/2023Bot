@@ -13,6 +13,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.utils.ArmSetpoint;
 import frc.robot.utils.MAVCoder;
 import frc.robot.utils.MotorBuilder;
 import frc.team4272.globals.MathUtils;
@@ -24,6 +25,34 @@ import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class ArmSubsystem extends SubsystemBase {
 
+    private static class SetpointContainer implements ArmSetpoint {
+        private double elevatorHeight = 0.0;
+        private Rotation2d armAngle = new Rotation2d();
+
+        @Override
+        public double getElevatorHeight() {
+            return elevatorHeight;
+        }
+
+        @Override
+        public Rotation2d getArmAngle() {
+            return armAngle;
+        }
+
+        @Override
+        public boolean getSafetyOverride() {
+            return false;
+        }
+
+        public void setElevatorHeight(double elevatorHeight) {
+            this.elevatorHeight = elevatorHeight;
+        }
+
+        public void setArmAngle(Rotation2d armAngle) {
+            this.armAngle = armAngle;
+        }
+    }
+
     private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
@@ -32,8 +61,7 @@ public class ArmSubsystem extends SubsystemBase {
     private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
     private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
 
-    private double elevatorSetpoint = 0.0;
-    private Rotation2d armSetpoint = new Rotation2d();
+    private SetpointContainer setpoint =  new SetpointContainer();
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -56,7 +84,6 @@ public class ArmSubsystem extends SubsystemBase {
 
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
-            // .withSoftLimits(MAX_ARM_ANGLE, MIN_ARM_ANGLE)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
             .build();
 
@@ -70,11 +97,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPos(double meters) {
-        elevatorSetpoint = meters;
+        setpoint.setElevatorHeight(meters);
     }
 
     public void setArm(Rotation2d angle) {
-        armSetpoint = angle;
+        setpoint.setArmAngle(angle);
     }
 
     private void setElevatorMotor(double meters) {
@@ -94,7 +121,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.armAngle.getDegrees() + 10.0;
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -132,18 +159,18 @@ public class ArmSubsystem extends SubsystemBase {
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
         TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
 
-        if(!isElevatorAtPosition(elevatorSetpoint)) {
-            if(!isArmSafe() || armSetpoint.getDegrees() > ArmSetpoints.SAFE_ARM.armAngle.getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.armAngle);
+        if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
+            if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle());
                 if(isArmSafe()) {
-                    setElevatorMotor(elevatorSetpoint);
+                    setElevatorMotor(setpoint.getElevatorHeight());
                 }
             } else {
-                setArmMotor(armSetpoint);
-                setElevatorMotor(elevatorSetpoint);
+                setArmMotor(setpoint.getArmAngle());
+                setElevatorMotor(setpoint.getElevatorHeight());
             }
         } else {
-            setArmMotor(armSetpoint);
+            setArmMotor(setpoint.getArmAngle());
         }
         
         if(DriverStation.isDisabled()) return;
