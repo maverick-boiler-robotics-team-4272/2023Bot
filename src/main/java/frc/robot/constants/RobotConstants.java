@@ -134,6 +134,11 @@ public class RobotConstants {
             public boolean getSafetyOverride() {
                 return safetyOverride;
             }
+
+            @Override
+            public String toString() {
+                return String.format("%s(height = %.2f, angle = %.2fdeg)", name(), elevatorHeightMeters, armAngle.getDegrees());
+            }
     
             public static boolean isSetpointSafe(ArmSetpoints setpoint) {
                 return setpoint.armAngle.getDegrees() > SAFE_ARM.armAngle.getDegrees() || setpoint.safetyOverride;
