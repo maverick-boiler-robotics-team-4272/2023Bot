@@ -23,7 +23,7 @@ public class TwoPieceCommand extends SequentialCommandGroup {
         super(
             new ArmSetpointState(arm, HIGH_CONE),
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.5),
-            new ArmSetpointState(arm, HOME),
+            new ArmSetpointState(arm, STOWED),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB),
                 getGlobalTrajectories().TWO_PIECE_GRAB.getMarkers(),
@@ -35,13 +35,13 @@ public class TwoPieceCommand extends SequentialCommandGroup {
                             new ConeGrabState(intake, () -> 1.0).withTimeout(2.0)
                         ),
                         new ParallelCommandGroup(
-                            new ArmSetpointState(arm, HOME),
+                            new ArmSetpointState(arm, STOWED),
                             new ConeGrabState(intake, () -> 0.3)
                         )
                     )
                 )
             ),
-            new ArmSetpointState(arm, HOME),
+            new ArmSetpointState(arm, STOWED),
             new ParallelRaceGroup(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false),
                 new ConeGrabState(intake, () -> 0.3)

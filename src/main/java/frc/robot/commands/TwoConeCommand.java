@@ -32,7 +32,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ConeGrabState(intake, () -> -0.5),
                 new WaitCommand(0.75)
             ),
-            new ArmSetpointState(arm, ArmSetpoints.HOME),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED),
             new ParallelRaceGroup(
                 new ConeGrabState(intake, () -> 0.8),
                 new FollowPathWithEvents(
@@ -45,7 +45,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 )
             ),
             new ParallelCommandGroup(
-                new ArmSetpointState(arm, ArmSetpoints.HOME),
+                new ArmSetpointState(arm, ArmSetpoints.STOWED),
                 new ParallelRaceGroup(
                     new ConeGrabState(intake, () -> 0.1),
                     new FollowPathWithEvents(
@@ -63,7 +63,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ConeGrabState(intake, () -> 0.1)
             ),
             new ConeGrabState(intake, () -> -0.5).withTimeout(0.5),
-            new ArmSetpointState(arm, ArmSetpoints.HOME)
+            new ArmSetpointState(arm, ArmSetpoints.STOWED)
         );
     }
 }

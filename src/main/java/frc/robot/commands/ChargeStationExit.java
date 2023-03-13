@@ -25,7 +25,7 @@ public class ChargeStationExit extends SequentialCommandGroup {
                 new ConeGrabState(intake, () -> -0.5),
                 new WaitCommand(0.5)
             ),
-            new ArmSetpointState(arm, ArmSetpoints.HOME),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED),
             new PathFollowState(drivetrain, getGlobalTrajectories().CHARGE_STATION_CROSSOVER),
             new ParallelDeadlineGroup(
                 new WaitUntilCommand(() -> drivetrain.getGyroscope().getPitch() > -1),

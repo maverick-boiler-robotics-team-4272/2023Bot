@@ -28,7 +28,7 @@ public class TwoPieceCharge extends SequentialCommandGroup {
         super(
             new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
             new ConeEjectState(intake, () -> 0.5).withTimeout(0.5),
-            new ArmSetpointState(arm, ArmSetpoints.HOME).withTimeout(1.0),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED).withTimeout(1.0),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE, false).withTimeout(10), 
                 getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(),
@@ -40,7 +40,7 @@ public class TwoPieceCharge extends SequentialCommandGroup {
                     ), 
                     "liftArm",
                     new ParallelCommandGroup(
-                        new ArmSetpointState(arm, ArmSetpoints.HOME),
+                        new ArmSetpointState(arm, ArmSetpoints.STOWED),
                         new ConeGrabState(intake, () -> 0.2).withTimeout(3.0)
                     )
                 )

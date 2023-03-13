@@ -1,7 +1,6 @@
 Driver Controls:
     Left Joystick: Driving Translation
     Right Joystick X: Driving Rotation
-    A: Reset Odometry based on Limelight (Odometry never used except by auto, so not necessary yet)
     B: Reset Robot Heading (Whichever direction the robot is facing is now the new forward direction)
     rightBumper: X Config of modules
     leftBumper: Cube Launch (Will be moved as soon as we find a good button for it on the operator controller)

@@ -26,7 +26,7 @@ public class OneConeCommand extends SequentialCommandGroup {
                 new WaitCommand(0.5)
             ),
             new ParallelCommandGroup(
-                new ArmSetpointState(arm, ArmSetpoints.HOME),
+                new ArmSetpointState(arm, ArmSetpoints.STOWED),
                 new PathFollowState(drivetrain, getGlobalTrajectories().ONE_CONE_PATH)
             )
         );

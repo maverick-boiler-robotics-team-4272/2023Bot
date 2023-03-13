@@ -22,5 +22,7 @@ public class XboxController extends Controller {
 
         addTrigger("left", 2);
         addTrigger("right", 3);
+
+        addPOV("d-pad", 0);
     }
 }
