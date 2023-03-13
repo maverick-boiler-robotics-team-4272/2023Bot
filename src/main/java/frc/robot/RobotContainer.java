@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.OneConeBackCommand;
+import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCharge;
-import frc.robot.commands.OneConeCommand;
-import frc.robot.commands.TwoConeCommand;
+import frc.robot.commands.TwoPieceCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -90,11 +91,11 @@ public class RobotContainer {
             new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
         );
 
-        new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
+        // new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
-        new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
+        // new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
         
         new Trigger(driveController.getButton("rightBumper")::get).onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
 
@@ -105,7 +106,7 @@ public class RobotContainer {
     }
 
     private void configureOperatorBindings() {
-        arm.setDefaultCommand(new ArmSetpointState(arm, HOME));
+        arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
@@ -154,6 +155,10 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
+
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
+            new ArmSetpointState(arm, BACK).repeatedly()
+        );
     }
 
     private void configureDemo1Bindings() {
@@ -165,9 +170,14 @@ public class RobotContainer {
     }
 
     private void configureAutoSendable() {
-        AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
-        AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
+        // AUTO_CHOOSER.addOption("One Cone", () -> new OneConeCommand(drivetrain, arm, intake));
+        // AUTO_CHOOSER.addOption("Two Cone", () -> new TwoConeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Charge Station", () -> new OneConeCharge(drivetrain, arm, intake));
+        // AUTO_CHOOSER.addOption("Community Charge Station", () -> new ChargeStationExit(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
+        // AUTO_CHOOSER.addOption("One Half Charge", () -> new TwoPieceCharge(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
     }

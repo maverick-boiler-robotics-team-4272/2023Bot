@@ -16,13 +16,14 @@ public class RobotConstants {
         public static final double MAX_TRANS_SPEED = 4.0; // 4.0 meters per second
         public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 2.0; // 1.5 rotations per second
         public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
-        public static final double MAX_TRANS_ACCEL = 1.0;
-        public static final double MAX_ROT_ACCEL = 1.5;
 
-        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 112.0 : 210.0;
-        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 93.0 : 344.0;
-        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 227.0 : 86.0;
-        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 317.0 : 250.0;
+        public static final double MAX_AUTO_SPEED = 4.0;
+        public static final double MAX_AUTO_ACCEL = 3.0;
+
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 112.0;
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 91.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 229.0;
+        public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 316.0;
 
         public static class SwerveModuleConstants {
             public static final double WHEEL_RADIUS = 2.0;
@@ -69,13 +70,13 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 304.0 : 307.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 293.0;
 
-            public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.011 : 0.012;
+            public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.012 : 0.014;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.001;
             public static final double ROTARY_ARM_PID_D = IS_PRACTICE_BOT ? 0.0 : 0.0;
-            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.04;
-
+            public static final double ROTARY_ARM_PID_F = IS_PRACTICE_BOT ? 0.05 : 0.045;
+            
             public static final double ROTARY_ARM_PID_I_ZONE = 12.0;
             public static final double ROTARY_ARM_PID_D_FILTER = 0.0;
 
@@ -105,11 +106,10 @@ public class RobotConstants {
     
             LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
             
-            HOME(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
-            SAFE_ARM(Rotation2d.fromDegrees(-60), Units.inchesToMeters(0.000), false),
+            STOWED(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
+            SAFE_ARM(Rotation2d.fromDegrees(-70), Units.inchesToMeters(0.000), false),
             ZERO(Rotation2d.fromDegrees(0), 0, false),
-            TEST_FORWARD(Rotation2d.fromDegrees(-20), 0, false),
-            TEST_BACKWARD(Rotation2d.fromDegrees(-90), 0, false);
+            BACK(Rotation2d.fromDegrees(-120), Units.inchesToMeters(0), false);
             
             private final Rotation2d armAngle;
             private final double elevatorHeightMeters;

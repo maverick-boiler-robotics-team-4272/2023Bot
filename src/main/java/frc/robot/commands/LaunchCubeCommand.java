@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
@@ -12,7 +11,6 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.CubeEjectState;
-import frc.robot.subsystems.intake.states.CubeGrabState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,7 +23,7 @@ public class LaunchCubeCommand extends SequentialCommandGroup {
     addCommands(
       new ParallelRaceGroup(
         new ArmSetpointState(arm, ArmSetpoints.LAUNCH_CUBE),
-        new CubeGrabState(intake, () -> -1.5)
+        new CubeEjectState(intake, () -> 1.5)
       )
     );
   }

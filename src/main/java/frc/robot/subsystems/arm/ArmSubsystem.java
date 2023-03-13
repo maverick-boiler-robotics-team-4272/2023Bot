@@ -6,7 +6,6 @@ package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
-
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -89,6 +88,8 @@ public class ArmSubsystem extends SubsystemBase {
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
+
+        armController.setIntegratorRange(-0.01, 0.01);
     }
 
     private double getArmPosition() {
@@ -120,7 +121,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 5.0;
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -156,6 +157,7 @@ public class ArmSubsystem extends SubsystemBase {
     public void periodic() {
         TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
+        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
