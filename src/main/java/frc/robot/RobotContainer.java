@@ -17,6 +17,8 @@ import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.candle.Candle;
+import frc.robot.subsystems.candle.states.ConeSignalState;
+import frc.robot.subsystems.candle.states.CubeSignalState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
@@ -160,6 +162,14 @@ public class RobotContainer {
 
         new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
             new ArmSetpointState(arm, BACK).repeatedly()
+        );
+
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).whileTrue(
+            new ConeSignalState(candle)
+        );
+
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 270).whileTrue(
+            new CubeSignalState(candle)
         );
     }
 
