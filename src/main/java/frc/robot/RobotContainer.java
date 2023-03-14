@@ -16,6 +16,7 @@ import frc.robot.commands.TwoPieceCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
+import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
@@ -43,6 +44,7 @@ public class RobotContainer {
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
     public IntakeSubsystem intake = new IntakeSubsystem();
+    public Candle candle = new Candle();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
