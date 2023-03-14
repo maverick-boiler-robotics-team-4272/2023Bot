@@ -15,6 +15,6 @@ public class ConeSignalState extends State<Candle> {
 
     @Override
     public void end(boolean interrupted) {
-        requiredSubsystem.setAllLEDs(0);
+        requiredSubsystem.turnOffLEDs();
     }
 }

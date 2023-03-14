@@ -12,4 +12,9 @@ public class CubeSignalState extends State<Candle> {
     public void initialize() {
         requiredSubsystem.setAllLEDs(128, 0, 128);
     }
+    
+    @Override
+    public void end(boolean interrupted) {
+        requiredSubsystem.turnOffLEDs();
+    }
 }

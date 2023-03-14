@@ -16,4 +16,9 @@ public class RainbowState extends State<Candle> {
             new RainbowAnimation()
         );
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        requiredSubsystem.turnOffLEDs();
+    }
 }
