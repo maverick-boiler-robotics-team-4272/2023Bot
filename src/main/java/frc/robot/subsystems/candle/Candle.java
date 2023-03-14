@@ -40,5 +40,9 @@ public class Candle extends SubsystemBase {
 
     public void animate(Animation animation) {
         candle.animate(animation);
-    } 
+    }
+
+    public void turnOffLEDs() {
+        candle.setLEDs(0, 0, 0, 0, 0, 8);
+    }
 }
