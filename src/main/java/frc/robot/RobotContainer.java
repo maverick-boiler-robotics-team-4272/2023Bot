@@ -19,6 +19,7 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.candle.states.ConeSignalState;
 import frc.robot.subsystems.candle.states.CubeSignalState;
+import frc.robot.subsystems.candle.states.RainbowState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
@@ -111,6 +112,7 @@ public class RobotContainer {
 
     private void configureOperatorBindings() {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
+        candle.setDefaultCommand(new RainbowState(candle));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
