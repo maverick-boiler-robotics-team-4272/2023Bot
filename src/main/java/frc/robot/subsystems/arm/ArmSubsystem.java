@@ -7,7 +7,6 @@ package frc.robot.subsystems.arm;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -61,11 +60,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     private MAVCoder armEncoder;
     private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
-    private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
-    private ProfiledPIDController armProfiledController = new ProfiledPIDController(
-        ROTARY_ARM_PID_D_FILTER,
+    private ProfiledPIDController armController = new ProfiledPIDController(
+        ROTARY_ARM_PID_P,
+        ROTARY_ARM_PID_I,
         ROTARY_ARM_PID_D,
-        ROTARY_ARM_OFFSET,
         new Constraints(ROTARY_ARM_SMART_MOTION_MAX_SPEED, ROTARY_ARM_SMART_MOTION_MAX_ACCEL)
     );
 
@@ -97,7 +95,10 @@ public class ArmSubsystem extends SubsystemBase {
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
 
-        armController.setIntegratorRange(-0.01, 0.01);
+        setpoint.setElevatorHeight(ArmSetpoints.STOWED.getElevatorHeight());
+        setpoint.setArmAngle(ArmSetpoints.STOWED.getArmAngle());
+
+        armController.reset(getArmPosition());
     }
 
     private double getArmPosition() {
@@ -117,7 +118,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void setArmMotor(Rotation2d angle) {
-        armController.setSetpoint(angle.getDegrees());
+        armController.setGoal(angle.getDegrees());
     }
 
     public boolean isElevatorAtPosition(double height) {
