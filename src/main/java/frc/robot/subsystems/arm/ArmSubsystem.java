@@ -8,7 +8,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -60,6 +62,12 @@ public class ArmSubsystem extends SubsystemBase {
     private MAVCoder armEncoder;
     private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
     private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
+    private ProfiledPIDController armProfiledController = new ProfiledPIDController(
+        ROTARY_ARM_PID_D_FILTER,
+        ROTARY_ARM_PID_D,
+        ROTARY_ARM_OFFSET,
+        new Constraints(ROTARY_ARM_SMART_MOTION_MAX_SPEED, ROTARY_ARM_SMART_MOTION_MAX_ACCEL)
+    );
 
     private SetpointContainer setpoint =  new SetpointContainer();
 
