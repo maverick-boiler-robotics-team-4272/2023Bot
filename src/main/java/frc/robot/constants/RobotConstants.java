@@ -54,7 +54,7 @@ public class RobotConstants {
             public static final double ELEVATOR_PID_I_ZONE = 0.0;
             public static final double ELEVATOR_PID_D_FILTER = 0.0;
 
-            public static final double ELEVATOR_PID_OUTPUT_MIN = -0.25;
+            public static final double ELEVATOR_PID_OUTPUT_MIN = -0.5;
             public static final double ELEVATOR_PID_OUTPUT_MAX = 0.6;
 
             public static final double SPROCKET_REV_TO_IN_RATIO = 1.92 * Math.PI;
