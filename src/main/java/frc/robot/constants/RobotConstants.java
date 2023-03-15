@@ -83,8 +83,8 @@ public class RobotConstants {
             public static final double ROTARY_ARM_PID_OUTPUT_MIN = -0.5;
             public static final double ROTARY_ARM_PID_OUTPUT_MAX = 0.5;
 
-            public static final double ROTARY_ARM_SMART_MOTION_MAX_ACCEL = 0.1;
-            public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 2.0;
+            public static final double ROTARY_ARM_SMART_MOTION_MAX_ACCEL = 200.0;
+            public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 100.0;
 
             public static final double ARM_GEAR_RATIO = 96.0 / 1.0;
 
