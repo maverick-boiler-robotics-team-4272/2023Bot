@@ -6,6 +6,8 @@ package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -62,6 +64,8 @@ public class ArmSubsystem extends SubsystemBase {
     private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
 
     private SetpointContainer setpoint =  new SetpointContainer();
+
+    private boolean zeroed = false;
 
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
@@ -173,6 +177,13 @@ public class ArmSubsystem extends SubsystemBase {
             setArmMotor(setpoint.getArmAngle());
         }
         
+        if(!zeroed) {
+            if(elevatorLeftFollower.getForwardLimitSwitch(Type.kNormallyOpen).isPressed()) {
+                elevatorRightLeader.getEncoder().setPosition(0.0);
+                zeroed = true;
+            }
+        }
+
         if(DriverStation.isDisabled()) return;
         double armOutput = 0;
         armOutput = -armController.calculate(armEncoder.getPosition());
