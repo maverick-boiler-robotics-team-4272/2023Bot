@@ -18,6 +18,10 @@ Operator Controls:
 
     Must be holding both the bumper and the button to use a specific command
 
+    Up on d-pad: Arm all the way back
+    Right on d-pad: Cone signal
+    Left on d-pad Cube signal
+
 Default Actions:
     Drivetrain: Nothing. You must hold a direction on the joysticks to run the drivetrain
     Arm/Elevator: Stowed state. Elevator all the way down, arm slightly behind vertical
