@@ -55,7 +55,7 @@ public class RobotConstants {
             public static final double ELEVATOR_PID_D_FILTER = 0.0;
 
             public static final double ELEVATOR_PID_OUTPUT_MIN = -0.5;
-            public static final double ELEVATOR_PID_OUTPUT_MAX = 0.6;
+            public static final double ELEVATOR_PID_OUTPUT_MAX = 1.0;
 
             public static final double SPROCKET_REV_TO_IN_RATIO = 1.92 * Math.PI;
             public static final double MOTOR_TO_SPROCKET_RATIO = 8.0 / 1.0;
@@ -83,8 +83,8 @@ public class RobotConstants {
             public static final double ROTARY_ARM_PID_OUTPUT_MIN = -0.5;
             public static final double ROTARY_ARM_PID_OUTPUT_MAX = 0.5;
 
-            public static final double ROTARY_ARM_SMART_MOTION_MAX_ACCEL = 300.0;
-            public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 120.0;
+            public static final double ROTARY_ARM_SMART_MOTION_MAX_ACCEL = 600.0;
+            public static final double ROTARY_ARM_SMART_MOTION_MAX_SPEED = 800.0;
 
             public static final double ARM_GEAR_RATIO = 96.0 / 1.0;
 
