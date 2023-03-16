@@ -17,4 +17,9 @@ public class CubeSignalState extends State<Candle> {
     public void end(boolean interrupted) {
         requiredSubsystem.turnOffLEDs();
     }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
 }
