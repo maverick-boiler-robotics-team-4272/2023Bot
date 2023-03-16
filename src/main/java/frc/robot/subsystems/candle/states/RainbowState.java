@@ -13,12 +13,12 @@ public class RainbowState extends State<Candle> {
     @Override
     public void initialize() {
         requiredSubsystem.animate(
-            new RainbowAnimation()
+            new RainbowAnimation(0.5, 1.0, 8)
         );
     }
 
     @Override
     public void end(boolean interrupted) {
-        requiredSubsystem.turnOffLEDs();
+        requiredSubsystem.animate(null);
     }
 }
