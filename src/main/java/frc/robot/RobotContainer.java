@@ -16,6 +16,10 @@ import frc.robot.commands.TwoPieceCommand;
 import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
+import frc.robot.subsystems.candle.Candle;
+import frc.robot.subsystems.candle.states.ConeSignalState;
+import frc.robot.subsystems.candle.states.CubeSignalState;
+import frc.robot.subsystems.candle.states.RainbowState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
@@ -43,6 +47,7 @@ public class RobotContainer {
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
     public IntakeSubsystem intake = new IntakeSubsystem();
+    public Candle candle = new Candle();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
@@ -107,6 +112,7 @@ public class RobotContainer {
 
     private void configureOperatorBindings() {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
+        candle.setDefaultCommand(new RainbowState(candle));
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
@@ -131,6 +137,10 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
+        
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new CubeSignalState(candle)
+        );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
@@ -154,6 +164,10 @@ public class RobotContainer {
 
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CONE).repeatedly()
+        );
+        
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("leftBumper")::get).whileTrue(
+            new ConeSignalState(candle)
         );
 
         new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(

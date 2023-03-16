@@ -12,11 +12,14 @@ Operator Controls:
     Y + bumper: High Setpoint
     Left Trigger + bumper: Intake
     Right Trigger + bumper: Outtake
+    Right on d-pad + bumper: Candle Signaling
 
     Left Bumper: Cone Versions of all the above controls
     Right Bumper: Cube Versions of all the above controls
 
     Must be holding both the bumper and the button to use a specific command
+
+    Up on d-pad: Arm all the way back
 
 Default Actions:
     Drivetrain: Nothing. You must hold a direction on the joysticks to run the drivetrain
