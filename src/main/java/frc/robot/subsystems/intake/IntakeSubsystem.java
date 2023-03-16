@@ -55,11 +55,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isCubeLidarTripped() {
-        return cubeLidar.getRawDutyCycle() < 0.05; // Bogus value for now. An actual value will be figured out eventually
+        return cubeLidar.getRawDutyCycle() < 0.05;
     }
 
     public boolean isConeLidarTripped() {
-        return coneLidar.getRawDutyCycle() < 0.05; // Bogus value for now. An actual value will be figured out eventually
+        return coneLidar.getRawDutyCycle() < 0.038;
     }
 
     @Override
