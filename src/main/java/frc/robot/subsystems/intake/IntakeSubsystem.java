@@ -12,6 +12,7 @@ import frc.robot.utils.MotorBuilder;
 
 import static frc.robot.constants.HardwareMap.*;
 import static frc.robot.constants.RobotConstants.IntakeConstants.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax clawLeaderMotor;
@@ -54,15 +55,18 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isCubeLidarTripped() {
-        return cubeLidar.getRawDutyCycle() < 0.1; // Bogus value for now. An actual value will be figured out eventually
+        return cubeLidar.getRawDutyCycle() < 0.05;
     }
 
     public boolean isConeLidarTripped() {
-        return coneLidar.getRawDutyCycle() < 0.1; // Bogus value for now. An actual value will be figured out eventually
+        return coneLidar.getRawDutyCycle() < 0.038;
     }
 
     @Override
     public void periodic() {
-
+        TESTING_TABLE.putNumber("Cone Lidar", coneLidar.getRawDutyCycle());
+        TESTING_TABLE.putNumber("Cube Lidar", cubeLidar.getRawDutyCycle());
+        TESTING_TABLE.putBoolean("Has Cube", isCubeLidarTripped());
+        TESTING_TABLE.putBoolean("Has Cone", isConeLidarTripped());
     }
 }
