@@ -5,7 +5,10 @@
 package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -63,6 +66,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     private SetpointContainer setpoint =  new SetpointContainer();
 
+    private boolean zeroed = false;
+    private SparkMaxLimitSwitch limit;
+
     /** Creates a new ArmSubsystem. */
     public ArmSubsystem() {
         elevatorRightLeader = MotorBuilder.createWithDefaults(ELEVATOR_RIGHT_ID)
@@ -88,6 +94,10 @@ public class ArmSubsystem extends SubsystemBase {
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
+
+        limit = elevatorRightLeader.getReverseLimitSwitch(Type.kNormallyOpen);
+        limit.enableLimitSwitch(true);
+
 
         armController.setIntegratorRange(-0.01, 0.01);
     }
@@ -173,6 +183,13 @@ public class ArmSubsystem extends SubsystemBase {
             setArmMotor(setpoint.getArmAngle());
         }
         
+        if(!zeroed) {
+            if(limit.isPressed()) {
+                elevatorRightLeader.getEncoder().setPosition(0.0);
+                zeroed = true;
+            }
+        }
+
         if(DriverStation.isDisabled()) return;
         double armOutput = 0;
         armOutput = -armController.calculate(armEncoder.getPosition());
