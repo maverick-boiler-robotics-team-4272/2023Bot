@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -20,7 +22,7 @@ import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoi
 
 public class TwoPieceCommand extends SequentialCommandGroup {
     public TwoPieceCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
-        super(
+        addCommands(
             new ArmSetpointState(arm, HIGH_CONE),
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.5),
             new ArmSetpointState(arm, STOWED),
@@ -42,6 +44,11 @@ public class TwoPieceCommand extends SequentialCommandGroup {
                 )
             ),
             new ArmSetpointState(arm, STOWED),
+            new InstantCommand(() -> {
+                if(!intake.isConeLidarTripped()) {
+                    CommandScheduler.getInstance().cancel(this);
+                }
+            }),
             new ParallelRaceGroup(
                 new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false),
                 new ConeGrabState(intake, () -> 0.3)
