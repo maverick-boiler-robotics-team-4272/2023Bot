@@ -137,6 +137,10 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
+        
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("rightBumper")::get).whileTrue(
+            new CubeSignalState(candle)
+        );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
@@ -161,17 +165,13 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
-
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
-            new ArmSetpointState(arm, BACK).repeatedly()
-        );
-
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).whileTrue(
+        
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeSignalState(candle)
         );
 
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 270).whileTrue(
-            new CubeSignalState(candle)
+        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
+            new ArmSetpointState(arm, BACK).repeatedly()
         );
     }
 
