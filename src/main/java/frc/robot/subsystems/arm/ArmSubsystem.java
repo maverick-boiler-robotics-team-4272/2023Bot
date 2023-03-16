@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -121,6 +122,10 @@ public class ArmSubsystem extends SubsystemBase {
         armController.setGoal(angle.getDegrees());
     }
 
+    private void setArmMotor(Rotation2d angle, double speed) {
+        armController.setGoal(new State(angle.getDegrees(), speed));
+    }
+
     public boolean isElevatorAtPosition(double height) {
         return Math.abs(elevatorRightLeader.getEncoder().getPosition() - height) < 0.03;
     }
@@ -170,7 +175,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle());
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), ROTARY_ARM_SMART_MOTION_MAX_SPEED);
                 if(isArmSafe()) {
                     setElevatorMotor(setpoint.getElevatorHeight());
                 }
