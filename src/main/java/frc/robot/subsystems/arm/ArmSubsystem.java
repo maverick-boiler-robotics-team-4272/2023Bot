@@ -10,8 +10,10 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -62,7 +64,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     private MAVCoder armEncoder;
     private ArmFeedforward armFeedforward = new ArmFeedforward(0, ROTARY_ARM_PID_F, 0, 0);
-    private PIDController armController = new PIDController(ROTARY_ARM_PID_P, ROTARY_ARM_PID_I, ROTARY_ARM_PID_D);
+    private ProfiledPIDController armController = new ProfiledPIDController(
+        ROTARY_ARM_PID_P,
+        ROTARY_ARM_PID_I,
+        ROTARY_ARM_PID_D,
+        new Constraints(ROTARY_ARM_SMART_MOTION_MAX_SPEED, ROTARY_ARM_SMART_MOTION_MAX_ACCEL)
+    );
 
     private SetpointContainer setpoint =  new SetpointContainer();
 
@@ -95,11 +102,13 @@ public class ArmSubsystem extends SubsystemBase {
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
 
+        setpoint.setElevatorHeight(ArmSetpoints.STOWED.getElevatorHeight());
+        setpoint.setArmAngle(ArmSetpoints.STOWED.getArmAngle());
+
+        armController.reset(getArmPosition());
+        
         limit = elevatorRightLeader.getReverseLimitSwitch(Type.kNormallyOpen);
         limit.enableLimitSwitch(true);
-
-
-        armController.setIntegratorRange(-0.01, 0.01);
     }
 
     private double getArmPosition() {
@@ -119,7 +128,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void setArmMotor(Rotation2d angle) {
-        armController.setSetpoint(angle.getDegrees());
+        armController.setGoal(angle.getDegrees());
+    }
+
+    private void setArmMotor(Rotation2d angle, double speed) {
+        armController.setGoal(new State(angle.getDegrees(), speed));
     }
 
     public boolean isElevatorAtPosition(double height) {
@@ -171,7 +184,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle());
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), ROTARY_ARM_SMART_MOTION_MAX_SPEED);
                 if(isArmSafe()) {
                     setElevatorMotor(setpoint.getElevatorHeight());
                 }
