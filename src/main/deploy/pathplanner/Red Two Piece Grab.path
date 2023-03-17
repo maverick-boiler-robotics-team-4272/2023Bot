@@ -122,9 +122,15 @@
   ],
   "markers": [
     {
-      "position": 3.025454545454571,
+      "position": 2.8218181818181787,
       "names": [
         "drop intake"
+      ]
+    },
+    {
+      "position": 0.058181818181855874,
+      "names": [
+        "stow intake"
       ]
     }
   ]
