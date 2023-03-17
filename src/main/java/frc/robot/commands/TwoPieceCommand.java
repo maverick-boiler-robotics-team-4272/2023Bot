@@ -50,7 +50,7 @@ public class TwoPieceCommand extends SequentialCommandGroup {
                 }
             }),
             new ParallelRaceGroup(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false, false),
                 new ConeGrabState(intake, () -> 0.3)
             )
         );

@@ -55,7 +55,7 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
                 }
             }),
             new ParallelRaceGroup(
-                new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_PLACE, false),
+                new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_PLACE, false, false),
                 new CubeGrabState(intake, () -> 0.3)
             ),
             new SequentialCommandGroup(
