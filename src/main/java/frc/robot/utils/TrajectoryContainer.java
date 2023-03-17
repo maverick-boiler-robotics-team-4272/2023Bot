@@ -26,6 +26,6 @@ public class TrajectoryContainer {
         TWO_PIECE_GRAB = PathPlanner.loadPath(prefix + " Two Piece Grab", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         TWO_PIECE_PLACE = PathPlanner.loadPath(prefix + " Two Piece Place", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         TWO_PIECE_CHARGE = PathPlanner.loadPath(prefix + " Two Charge", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
-        CUBE_PLACE = PathPlanner.loadPath(prefix + " Cube Place", null);
+        CUBE_PLACE = PathPlanner.loadPath(prefix + " Cube Place", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
     }
 }
