@@ -20,8 +20,8 @@ import frc.robot.subsystems.intake.states.CubeGrabState;
 import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints.*;
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
-public class ConeCubeCommand extends SequentialCommandGroup {
-    public ConeCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
+public class ConeMultiCubeCommand extends SequentialCommandGroup {
+    public ConeMultiCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         addCommands(
             new ArmSetpointState(arm, HIGH_CONE),
             new CubeEjectState(intake, () -> 0.9).withTimeout(0.5),
