@@ -11,6 +11,7 @@ import frc.team4272.globals.MathUtils;
 
 public class AutoConstants {
     public static final SendableChooser<Supplier<Command>> AUTO_CHOOSER = new SendableChooser<>();
+    public static final SendableChooser<TrajectoryContainer> CONTAINER_CHOOSER = new SendableChooser<>();
 
     public static class Paths {
         public static final TrajectoryContainer RED_TRAJECTORIES = new TrajectoryContainer("Red");
