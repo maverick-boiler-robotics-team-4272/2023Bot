@@ -43,11 +43,11 @@ public class TwoConeCommand extends SequentialCommandGroup {
                         new CubeGrabState(intake, () -> 0.1).withTimeout(3.0)
                     ),
                     "cubeSet",
-                    new ArmSetpointState(arm, ArmSetpoints.MID_CUBE)
+                    new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
+                    "SHOOT!",
+                    new CubeEjectState(intake, () -> 1.0)
                 )
-           ),
-           new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
-           new CubeEjectState(intake, () -> 0.75).withTimeout(0.3)
+           )
         );
     }
 }

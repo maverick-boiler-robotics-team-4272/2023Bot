@@ -99,12 +99,12 @@
     },
     {
       "anchorPoint": {
-        "x": 15.6,
-        "y": 4.45
+        "x": 15.45,
+        "y": 4.5
       },
       "prevControl": {
-        "x": 15.207015608092432,
-        "y": 4.45
+        "x": 15.057015608092431,
+        "y": 4.5
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -146,6 +146,12 @@
       "position": 3.3,
       "names": [
         "cubeSet"
+      ]
+    },
+    {
+      "position": 3.9,
+      "names": [
+        "SHOOT!"
       ]
     }
   ]

@@ -41,16 +41,25 @@ public class ThreePieceAuto extends TwoConeCommand {
                     "prepare",
                     new ArmSetpointState(
                         arm,
-                        ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-120.0))
+                        ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-90.0))
                     ),
                     "highCube",
-                    new SequentialCommandGroup(
-                        new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
-                        new CubeEjectState(intake, () -> 0.75)
-                    )
+                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
+                    "SHOOT!",
+                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.3)
                 )
             ),
-            new FollowPathWithEvents(null, null, null)
+            new FollowPathWithEvents(
+                new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
+                getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
+                Map.of(
+                "liftArm",
+                new ArmSetpointState(arm, ArmSetpoints.STOWED),
+                "dropArm",
+                new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                )
+            ),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED)
         );
     }
 }
