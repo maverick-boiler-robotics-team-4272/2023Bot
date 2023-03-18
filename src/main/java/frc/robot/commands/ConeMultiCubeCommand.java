@@ -30,7 +30,7 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
             new ArmSetpointState(arm, MID_CONE),
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.3),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB, true, true),
                 getGlobalTrajectories().TWO_PIECE_GRAB.getMarkers(),
                 Map.of(
                     "stow intake",
@@ -54,19 +54,15 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
                     CommandScheduler.getInstance().cancel(this);
                 }
             }),
-            new ParallelRaceGroup(
+            new ParallelDeadlineGroup(
                 new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_PLACE, false, false),
+                new ArmSetpointState(arm, MID_CUBE),
                 new CubeGrabState(intake, () -> 0.3)
             ),
-            new SequentialCommandGroup(
-                new ParallelDeadlineGroup(
-                    new ArmSetpointState(arm, MID_CUBE),
-                    new CubeGrabState(intake, () -> 0.5),
-                    new ResetPoseState(drivetrain, CENTER)
-                ),
-                new CubeEjectState(intake, () -> 0.4).withTimeout(0.2)
-            ),
-            new ArmSetpointState(arm, STOWED)
+            new ResetPoseState(drivetrain, CENTER),
+            new CubeEjectState(intake, () -> 1.0).withTimeout(0.4),
+            new ArmSetpointState(arm, STOWED),
+            new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_GRAB, true, false)
         );
     }
 }
