@@ -46,7 +46,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     "highCube",
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
                     "SHOOT!",
-                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.3)
+                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.5)
                 )
             ),
             new FollowPathWithEvents(
