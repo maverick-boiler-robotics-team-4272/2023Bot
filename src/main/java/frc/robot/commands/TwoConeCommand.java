@@ -10,6 +10,8 @@ import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
+import frc.robot.subsystems.intake.states.CubeGrabState;
+import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.drivetrain.states.ResetPoseState;
@@ -25,7 +27,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
     public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
             new ParallelRaceGroup(
-                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
+                    new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
                     new ConeGrabState(intake, () -> 0.1)
             ),
             new ParallelRaceGroup(
@@ -33,37 +35,26 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new WaitCommand(0.75)
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED),
-            new ParallelRaceGroup(
-                new ConeGrabState(intake, () -> 0.8),
-                new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH),
+            new FollowPathWithEvents(
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH,false),
                 getGlobalTrajectories().TWO_CONE_PATH.getMarkers(),
                 Map.of(
-                    "Drop Intake",
-                    new ArmSetpointState(arm, ArmSetpoints.GROUND_CONE)
-                )
-                )
-            ),
-            new ParallelCommandGroup(
-                new ArmSetpointState(arm, ArmSetpoints.STOWED),
-                new ParallelRaceGroup(
-                    new ConeGrabState(intake, () -> 0.1),
-                    new FollowPathWithEvents(
-                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN,false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() + 0.3),
-                            getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
-                            Map.of(
-                                "ResetOd",
-                                new ResetPoseState(drivetrain, Limelights.CENTER)
-                            )
+                    "dropArm",
+                    new ParallelCommandGroup(
+                        new CubeGrabState(intake, () -> 0.5),
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                    ),
+                    "liftArm",
+                    new SequentialCommandGroup(
+                        new ParallelCommandGroup(
+                            new ArmSetpointState(arm, ArmSetpoints.STOWED),
+                            new CubeGrabState(intake, () -> 0.1)
+                        ),
+                        new CubeGrabState(intake, () -> 0.1).withTimeout(3)
                     )
                 )
-            ),
-            new ParallelRaceGroup(
-                new ArmSetpointState(arm, ArmSetpoints.HIGH_CONE),
-                new ConeGrabState(intake, () -> 0.1)
-            ),
-            new ConeGrabState(intake, () -> -0.5).withTimeout(0.5),
-            new ArmSetpointState(arm, ArmSetpoints.STOWED)
+           ),
+           new ArmSetpointState(arm, ArmSetpoints.MID_CUBE)
         );
     }
 }
