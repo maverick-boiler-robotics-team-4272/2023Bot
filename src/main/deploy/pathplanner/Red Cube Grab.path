@@ -37,7 +37,7 @@
       },
       "holonomicAngle": 0,
       "isReversal": false,
-      "velOverride": 0.9,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -62,7 +62,7 @@
       },
       "holonomicAngle": 0,
       "isReversal": false,
-      "velOverride": 0.9,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -107,7 +107,7 @@
         "y": 1.5613610324607827
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 134.99999999999997,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
