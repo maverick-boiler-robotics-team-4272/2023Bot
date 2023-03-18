@@ -18,6 +18,7 @@ public class TrajectoryContainer {
     public final PathPlannerTrajectory TWO_PIECE_CHARGE;
     public final PathPlannerTrajectory CUBE_PLACE;
     public final PathPlannerTrajectory CUBE_GRAB;
+    public final PathPlannerTrajectory CUBE_NON_CABLE;
 
     public TrajectoryContainer(String prefix) {
         ONE_CONE_PATH = PathPlanner.loadPath(prefix + " One Cone", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
@@ -29,5 +30,6 @@ public class TrajectoryContainer {
         TWO_PIECE_CHARGE = PathPlanner.loadPath(prefix + " Two Charge", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         CUBE_PLACE = PathPlanner.loadPath(prefix + " Cube Place", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         CUBE_GRAB = PathPlanner.loadPath(prefix + " Cube Grab", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
+        CUBE_NON_CABLE = PathPlanner.loadPath(prefix + " Cube Non Cable", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
     }
 }
