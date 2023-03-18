@@ -16,6 +16,7 @@ import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCharge;
 import frc.robot.commands.OneConeCommand;
+import frc.robot.commands.ThreePieceAuto;
 import frc.robot.commands.TwoConeCommand;
 import frc.robot.commands.TwoPieceCharge;
 import frc.robot.commands.TwoPieceCommand;
@@ -209,6 +210,7 @@ public class RobotContainer {
         AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
+        AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
 

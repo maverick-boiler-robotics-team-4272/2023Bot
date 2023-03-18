@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -25,34 +27,36 @@ import java.util.Map;
 
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
-public class TwoConeCommand extends SequentialCommandGroup {
-    public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
-        super(
-            new ParallelRaceGroup(
-                    new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
-                    new ConeGrabState(intake, () -> 0.1)
-            ),
-            new ConeEjectState(intake, () -> 0.5).withTimeout(0.2),
+public class ThreePieceAuto extends TwoConeCommand {
+    public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
+        super(drivetrain, arm, intake);
+        addCommands(
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH,true, true),
-                getGlobalTrajectories().TWO_CONE_PATH.getMarkers(),
+                new PathFollowState(drivetrain, getGlobalTrajectories().THIRD_CUBE,true,false), 
+                getGlobalTrajectories().THIRD_CUBE.getMarkers(), 
                 Map.of(
-                    "dropArm",
-                    new ParallelCommandGroup(
-                        new CubeGrabState(intake, () -> 0.75),
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
-                    ),
                     "liftArm",
                     new ParallelCommandGroup(
                         new ArmSetpointState(arm, ArmSetpoints.STOWED),
-                        new CubeGrabState(intake, () -> 0.1).withTimeout(3.0)
+                        new CubeGrabState(intake, () -> 0.1)
                     ),
-                    "cubeSet",
-                    new ArmSetpointState(arm, ArmSetpoints.MID_CUBE)
+                    "dropArm",
+                    new ParallelCommandGroup(
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE),
+                        new CubeGrabState(intake, () -> 0.75)
+                    ),
+                    "prepare",
+                    new ArmSetpointState(
+                        arm,
+                        ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-120.0))
+                    ),
+                    "highCube",
+                    new ParallelCommandGroup(
+                        // new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
+                        // new CubeEjectState(intake, () -> 0.75)
+                    )
                 )
-           ),
-           new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
-           new CubeEjectState(intake, () -> 0.75).withTimeout(1.0)
+            )
         );
     }
 }
