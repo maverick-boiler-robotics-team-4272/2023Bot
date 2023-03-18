@@ -181,6 +181,7 @@ public class ArmSubsystem extends SubsystemBase {
         TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
         TESTING_TABLE.putNumber("Arm Degrees", armEncoder.getPosition());
         TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
+        TESTING_TABLE.putNumber("Arm Setpoint", armController.getSetpoint().position);
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {

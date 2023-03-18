@@ -5,8 +5,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_AUTO_SPEED;
 
-import java.nio.file.Path;
-
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_AUTO_ACCEL;
 
 public class TrajectoryContainer {
@@ -22,6 +20,7 @@ public class TrajectoryContainer {
     public final PathPlannerTrajectory CUBE_GRAB;
     public final PathPlannerTrajectory CUBE_NON_CABLE;
     public final PathPlannerTrajectory THIRD_CUBE;
+    public final PathPlannerTrajectory FOURTH_CUBE;
 
     public TrajectoryContainer(String prefix) {
         ONE_CONE_PATH = PathPlanner.loadPath(prefix + " One Cone", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
@@ -34,5 +33,6 @@ public class TrajectoryContainer {
         CUBE_GRAB = PathPlanner.loadPath(prefix + " Cube Grab", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         CUBE_NON_CABLE = PathPlanner.loadPath(prefix + " Cube Non Cable", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         THIRD_CUBE = PathPlanner.loadPath(prefix + " Third Cube", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
+        FOURTH_CUBE = PathPlanner.loadPath(prefix + " Fourth Cube", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
     }
 }

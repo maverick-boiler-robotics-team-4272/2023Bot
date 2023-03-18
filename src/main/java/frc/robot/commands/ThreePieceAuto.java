@@ -3,9 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.states.CubeEjectState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
 import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -42,12 +44,13 @@ public class ThreePieceAuto extends TwoConeCommand {
                         ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-120.0))
                     ),
                     "highCube",
-                    new ParallelCommandGroup(
-                        // new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
-                        // new CubeEjectState(intake, () -> 0.75)
+                    new SequentialCommandGroup(
+                        new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
+                        new CubeEjectState(intake, () -> 0.75)
                     )
                 )
-            )
+            ),
+            new FollowPathWithEvents(null, null, null)
         );
     }
 }
