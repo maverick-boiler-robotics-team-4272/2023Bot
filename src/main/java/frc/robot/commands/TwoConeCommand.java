@@ -36,7 +36,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH,false),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH,false, false),
                 getGlobalTrajectories().TWO_CONE_PATH.getMarkers(),
                 Map.of(
                     "dropArm",

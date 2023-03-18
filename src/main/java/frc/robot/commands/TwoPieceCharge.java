@@ -30,7 +30,7 @@ public class TwoPieceCharge extends SequentialCommandGroup {
             new ConeEjectState(intake, () -> 0.5).withTimeout(0.5),
             new ArmSetpointState(arm, ArmSetpoints.STOWED).withTimeout(1.0),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE, false).withTimeout(10), 
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_CHARGE, false, false).withTimeout(10), 
                 getGlobalTrajectories().TWO_PIECE_CHARGE.getMarkers(),
                 Map.of(
                     "dropArm",

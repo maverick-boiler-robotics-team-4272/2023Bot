@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.OneConeBackCommand;
 import frc.robot.commands.ChargeStationExit;
+import frc.robot.commands.ConeMultiCubeCommand;
 import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCharge;
@@ -36,7 +38,7 @@ import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import com.pathplanner.lib.server.PathPlannerServer;
 
-import static frc.robot.constants.AutoConstants.AUTO_CHOOSER;
+import static frc.robot.constants.AutoConstants.*;
 import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints.*;
 
@@ -205,9 +207,15 @@ public class RobotContainer {
         AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("One Half Charge", () -> new TwoPieceCharge(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
+
+        CONTAINER_CHOOSER.setDefaultOption("Red", Paths.RED_TRAJECTORIES);
+        CONTAINER_CHOOSER.addOption("Blue", Paths.BLUE_TRAJECTORIES);
+
+        AUTO_TABLE.putData("Side Chooser", CONTAINER_CHOOSER).withWidget(BuiltInWidgets.kSplitButtonChooser);
     }
 
     /**
@@ -216,6 +224,10 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+        if(!Paths.hasGlobalTrajectories()) {
+            Paths.setGlobalTrajectories(CONTAINER_CHOOSER.getSelected());
+        }
+
         return AUTO_CHOOSER.getSelected().get();
     }
 }

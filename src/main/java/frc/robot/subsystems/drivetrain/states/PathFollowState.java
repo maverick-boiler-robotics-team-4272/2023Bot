@@ -15,11 +15,12 @@ import static frc.robot.constants.TelemetryConstants.Limelights.CENTER;
 public class PathFollowState extends State<Drivetrain> {
     private PathPlannerTrajectory trajectory;
     private boolean resetOdometry;
+    private boolean forcePath;
 
     private Timer timer;
     private Pose2d endPose;
 
-    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory, boolean resetOdometry) {
+    public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory, boolean resetOdometry, boolean forcePath) {
         super(drivetrain);
 
         this.trajectory = trajectory;
@@ -28,7 +29,7 @@ public class PathFollowState extends State<Drivetrain> {
     }
 
     public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
-        this(drivetrain, trajectory, true);
+        this(drivetrain, trajectory, true, false);
     }
 
     @Override
@@ -41,14 +42,14 @@ public class PathFollowState extends State<Drivetrain> {
         PathPlannerServer.sendActivePath(trajectory.getStates());
 
         if(!resetOdometry) return;
-        // Pose2d aprilTagPose = CENTER.getRobotPose();
-        // if(!CENTER.isValidTarget()){
+        Pose2d aprilTagPose = CENTER.getRobotPose();
+        if(!CENTER.isValidTarget() || forcePath){
             requiredSubsystem.getGyroscope().setRotation(trajectory.getInitialState().holonomicRotation);
             requiredSubsystem.setRobotPose(trajectory.getInitialHolonomicPose());
-        // } else {
-        //     // requiredSubsystem.getGyroscope().setRotation(aprilTagPose.getRotation());
-        //     requiredSubsystem.setRobotPose(aprilTagPose);
-        // }
+        } else {
+            // requiredSubsystem.getGyroscope().setRotation(aprilTagPose.getRotation());
+            requiredSubsystem.setRobotPose(aprilTagPose);
+        }
 
     }
 

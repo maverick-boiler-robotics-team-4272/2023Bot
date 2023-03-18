@@ -93,7 +93,7 @@ public class RobotConstants {
         }
         
         public static enum ArmSetpoints implements ArmSetpoint {
-            MID_CUBE(Rotation2d.fromDegrees(-80), Units.inchesToMeters(0.000), false),
+            MID_CUBE(Rotation2d.fromDegrees(-83), Units.inchesToMeters(0.000), false),
             HIGH_CUBE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(30.000), false),
             GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),

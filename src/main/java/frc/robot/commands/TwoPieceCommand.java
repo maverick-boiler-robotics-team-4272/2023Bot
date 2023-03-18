@@ -27,7 +27,7 @@ public class TwoPieceCommand extends SequentialCommandGroup {
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.5),
             new ArmSetpointState(arm, STOWED),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_GRAB, true, true),
                 getGlobalTrajectories().TWO_PIECE_GRAB.getMarkers(),
                 Map.of(
                     "drop intake",
@@ -43,14 +43,13 @@ public class TwoPieceCommand extends SequentialCommandGroup {
                     )
                 )
             ),
-            new ArmSetpointState(arm, STOWED),
             new InstantCommand(() -> {
                 if(!intake.isConeLidarTripped()) {
                     CommandScheduler.getInstance().cancel(this);
                 }
             }),
             new ParallelRaceGroup(
-                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false),
+                new PathFollowState(drivetrain, getGlobalTrajectories().TWO_PIECE_PLACE, false, false),
                 new ConeGrabState(intake, () -> 0.3)
             )
         );
