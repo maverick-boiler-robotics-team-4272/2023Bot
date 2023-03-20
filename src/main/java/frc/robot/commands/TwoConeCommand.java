@@ -45,7 +45,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                     "cubeSet",
                     new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
                     "SHOOT!",
-                    new CubeEjectState(intake, () -> 1.0).withTimeout(.5)
+                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.7)
                 )
            )
         );

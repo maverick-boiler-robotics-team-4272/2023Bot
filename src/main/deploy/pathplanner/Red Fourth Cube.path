@@ -72,13 +72,13 @@
   ],
   "markers": [
     {
-      "position": 0.05,
+      "position": 0.01,
       "names": [
         "liftArm"
       ]
     },
     {
-      "position": 1.6363636363636351,
+      "position": 0.800000000000044,
       "names": [
         "dropArm"
       ]

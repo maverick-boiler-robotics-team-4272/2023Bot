@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.750000000000002,
-        "y": 4.43
+        "x": 13.735020154125818,
+        "y": 4.693603591482718
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -168,7 +168,7 @@
       ]
     },
     {
-      "position": 4.15,
+      "position": 4.3,
       "names": [
         "highCube"
       ]
@@ -180,7 +180,7 @@
       ]
     },
     {
-      "position": 4.945454545454523,
+      "position": 4.97,
       "names": [
         "SHOOT!"
       ]

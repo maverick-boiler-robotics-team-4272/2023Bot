@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.73,
-        "y": 3.85
+        "x": 13.60173323672063,
+        "y": 4.189017404163074
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 13.85,
-        "y": 4.65
+        "x": 13.668376695423227,
+        "y": 4.636480626880494
       },
       "prevControl": {
-        "x": 14.294148976376796,
-        "y": 4.65
+        "x": 14.112525671800023,
+        "y": 4.636480626880494
       },
       "nextControl": {
-        "x": 13.405851023623203,
-        "y": 4.65
+        "x": 13.22422771904643,
+        "y": 4.636480626880494
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -125,7 +125,7 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 1.25,
+      "position": 1.3672727272727163,
       "names": [
         "dropArm"
       ]
@@ -143,13 +143,13 @@
       ]
     },
     {
-      "position": 3.45,
+      "position": 3.4618181818181912,
       "names": [
         "cubeSet"
       ]
     },
     {
-      "position": 4.0,
+      "position": 3.75,
       "names": [
         "SHOOT!"
       ]
