@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -62,7 +61,17 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
             new ResetPoseState(drivetrain, CENTER),
             new CubeEjectState(intake, () -> 1.0).withTimeout(0.4),
             new ArmSetpointState(arm, STOWED),
-            new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_GRAB, true, false)
+            new FollowPathWithEvents(
+                new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_GRAB, true, false),
+                getGlobalTrajectories().CUBE_GRAB.getMarkers(),
+                Map.of(
+                    "drop intake",
+                    new ParallelCommandGroup(
+                        new ArmSetpointState(arm, GROUND_CUBE),
+                        new CubeGrabState(intake, () -> 0.75)
+                    )
+                )
+            )
         );
     }
 }
