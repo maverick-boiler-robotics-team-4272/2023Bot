@@ -184,7 +184,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), ROTARY_ARM_SMART_MOTION_MAX_SPEED);
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), getSafeArmSpeed(setpoint));
                 if(isArmSafe()) {
                     setElevatorMotor(setpoint.getElevatorHeight());
                 }
