@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.0,
-        "y": 3.0
+        "x": 6.92,
+        "y": 1.02
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 3.0
+        "x": 6.05743586487173,
+        "y": 1.0437833375666763
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,19 +24,19 @@
     },
     {
       "anchorPoint": {
-        "x": 3.0,
-        "y": 5.0
+        "x": 4.5,
+        "y": 0.72
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 4.0
+        "x": 5.278077639488613,
+        "y": 0.7654411142155626
       },
       "nextControl": {
-        "x": 3.0,
-        "y": 4.0
+        "x": 4.038670705880029,
+        "y": 0.6930575509677048
       },
-      "holonomicAngle": 0,
-      "isReversal": true,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
@@ -49,15 +49,40 @@
     },
     {
       "anchorPoint": {
-        "x": 5.0,
-        "y": 3.0
+        "x": 2.95,
+        "y": 0.69
       },
       "prevControl": {
-        "x": 4.0,
-        "y": 3.0
+        "x": 3.634894956618575,
+        "y": 0.7324720128988249
+      },
+      "nextControl": {
+        "x": 2.1467276267885875,
+        "y": 0.6401871137075626
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.59,
+        "y": 1.3
+      },
+      "prevControl": {
+        "x": 2.132810515621032,
+        "y": 1.2942913385826784
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
