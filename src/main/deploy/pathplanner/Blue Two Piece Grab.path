@@ -126,6 +126,12 @@
       "names": [
         "drop intake"
       ]
+    },
+    {
+      "position": 0.06,
+      "names": [
+        "stow intake"
+      ]
     }
   ]
 }
