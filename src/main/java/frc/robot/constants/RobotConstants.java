@@ -70,7 +70,7 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 293.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 257.0;
 
             public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.012 : 0.014;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.0;
@@ -90,10 +90,31 @@ public class RobotConstants {
 
             public static final double MIN_ARM_ANGLE = -120.0;
             public static final double MAX_ARM_ANGLE = 15.0;
+
+            public static double getSafeArmSpeed(ArmSetpoint setpoint) {
+                // Physics Math: Uniform acceleration equation
+                // omega final squared = omega initial squared + 2 * alpha * delta theta
+                // Omega is angular velocity (deg / s)
+                // Alpha is angular acceleration (deg / s ^ 2)
+                // delta theta is change in angle (deg)
+                // Want to profile down to zero, so omega final is zero
+                // So, final omega initial is sqrt(2 * alpha * delta theta)
+                //
+                // Coding Decisions
+                // absolute value of the delta theta so we dont need to worry about sign
+                // since the angles can sometimes both be negative which leads to possible negatives 
+                // under the square root 
+                // Also absolute valuing so we can get a velocity that the safe arm can get up
+                // to for setpoints on either side of the safe arm.
+                // Motion profiling will prevent it from accelerating too fast or getting to high,
+                // So absurd values for angles very far away from the safe arm setpoint are not only expected,
+                // but also handled
+                return Math.sqrt(2 * ROTARY_ARM_SMART_MOTION_MAX_ACCEL * Math.abs(setpoint.getArmAngle().getDegrees() - ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()));
+            }
         }
         
         public static enum ArmSetpoints implements ArmSetpoint {
-            MID_CUBE(Rotation2d.fromDegrees(-80), Units.inchesToMeters(0.000), false),
+            MID_CUBE(Rotation2d.fromDegrees(-83), Units.inchesToMeters(0.000), false),
             HIGH_CUBE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(30.000), false),
             GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),

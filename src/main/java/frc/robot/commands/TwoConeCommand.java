@@ -49,7 +49,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                     new ConeGrabState(intake, () -> 0.1),
                     new FollowPathWithEvents(
-                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN,false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() + 0.3),
+                        new PathFollowState(drivetrain, getGlobalTrajectories().TWO_CONE_PATH_RETURN, false, false).withTimeout(getGlobalTrajectories().TWO_CONE_PATH_RETURN.getTotalTimeSeconds() + 0.3),
                             getGlobalTrajectories().TWO_CONE_PATH_RETURN.getMarkers(),
                             Map.of(
                                 "ResetOd",

@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.constants.AutoConstants.Paths;
 import frc.robot.constants.TelemetryConstants.FMS;
 import frc.team4272.globals.Gyroscope;
 
@@ -62,12 +61,6 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        if(!Paths.hasGlobalTrajectories()) {
-            Paths.setGlobalTrajectories(
-                FMS.RED_ALLIANCE.get() ? Paths.RED_TRAJECTORIES : Paths.BLUE_TRAJECTORIES
-            );
-        }
-
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
