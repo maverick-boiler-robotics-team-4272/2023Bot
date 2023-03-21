@@ -171,10 +171,6 @@ public class RobotContainer {
         new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeSignalState(candle)
         );
-
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
-            new ArmSetpointState(arm, BACK).repeatedly()
-        );
     }
 
     private void configureDemo1Bindings() {
