@@ -140,7 +140,7 @@ public class RobotContainer {
             new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
         
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("rightBumper")::get).whileTrue(
+        new Trigger(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeSignalState(candle)
         );
 
@@ -168,7 +168,7 @@ public class RobotContainer {
             new ArmSetpointState(arm, HIGH_CONE).repeatedly()
         );
         
-        new Trigger(() -> operatorController.getPOV("d-pad").getValue() == 90).and(operatorController.getButton("leftBumper")::get).whileTrue(
+        new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeSignalState(candle)
         );
 
