@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -107,5 +108,13 @@ public class SwerveModule extends SwerveModuleBase {
 
     public void ensureCorrect() {
         rotationEncoder.setPosition(getMAVCoderReading());
+    }
+
+    public void setDriveToCoast() {
+        driveMotor.setIdleMode(IdleMode.kCoast);
+    }
+
+    public void setDriveToBreak() {
+        driveMotor.setIdleMode(IdleMode.kBrake);
     }
 }
