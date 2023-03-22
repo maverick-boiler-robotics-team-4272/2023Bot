@@ -72,7 +72,7 @@
   ],
   "markers": [
     {
-      "position": 0.01,
+      "position": 0.1,
       "names": [
         "liftArm"
       ]
