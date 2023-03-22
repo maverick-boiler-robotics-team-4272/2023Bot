@@ -84,4 +84,18 @@ public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
             new SwerveModuleState(0.1, Rotation2d.fromDegrees(-45))
         );
     }
+
+    public void setModulesToCoast() {
+        modules[0].setDriveToCoast();
+        modules[1].setDriveToCoast();
+        modules[2].setDriveToCoast();
+        modules[3].setDriveToCoast();
+    }
+
+    public void setModulesToBreak() {
+        modules[0].setDriveToBreak();
+        modules[1].setDriveToBreak();
+        modules[2].setDriveToBreak();
+        modules[3].setDriveToBreak();
+    }
 }
