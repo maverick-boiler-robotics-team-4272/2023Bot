@@ -35,7 +35,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                     "dropArm",
                     new ParallelCommandGroup(
                         new CubeGrabState(intake, () -> 0.75),
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE)
                     ),
                     "liftArm",
                     new ParallelCommandGroup(

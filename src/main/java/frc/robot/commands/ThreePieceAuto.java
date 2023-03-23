@@ -35,7 +35,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     ),
                     "dropArm",
                     new ParallelCommandGroup(
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE),
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE),
                         new CubeGrabState(intake, () -> 0.75)
                     ),
                     "prepare",
@@ -53,10 +53,10 @@ public class ThreePieceAuto extends TwoConeCommand {
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
                 Map.of(
-                "liftArm",
-                new ArmSetpointState(arm, ArmSetpoints.STOWED),
-                "dropArm",
-                new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                    "liftArm",
+                    new ArmSetpointState(arm, ArmSetpoints.STOWED),
+                    "dropArm",
+                    new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE)
                 )
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED)
