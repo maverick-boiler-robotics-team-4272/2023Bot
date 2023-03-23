@@ -50,15 +50,15 @@
     {
       "anchorPoint": {
         "x": 9.65,
-        "y": 4.65
+        "y": 4.6
       },
       "prevControl": {
         "x": 10.085198938320634,
-        "y": 4.65
+        "y": 4.6
       },
       "nextControl": {
         "x": 10.085198938320634,
-        "y": 4.65
+        "y": 4.6
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
@@ -125,7 +125,7 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 1.3672727272727163,
+      "position": 1.25,
       "names": [
         "dropArm"
       ]
@@ -143,13 +143,13 @@
       ]
     },
     {
-      "position": 3.4618181818181912,
+      "position": 3.3,
       "names": [
         "cubeSet"
       ]
     },
     {
-      "position": 3.75,
+      "position": 3.93,
       "names": [
         "SHOOT!"
       ]
