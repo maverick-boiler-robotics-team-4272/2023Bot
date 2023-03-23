@@ -5,6 +5,7 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Lidar;
@@ -60,6 +61,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public boolean isConeLidarTripped() {
         return coneLidar.getRawDutyCycle() < 0.038;
+    }
+
+    public void setToCoast() {
+        clawLeaderMotor.setIdleMode(IdleMode.kCoast);
+        clawFollowerMotor.setIdleMode(IdleMode.kCoast);
+    }
+
+    public void setToBreak() {
+        clawLeaderMotor.setIdleMode(IdleMode.kBrake);
+        clawFollowerMotor.setIdleMode(IdleMode.kBrake);
     }
 
     @Override
