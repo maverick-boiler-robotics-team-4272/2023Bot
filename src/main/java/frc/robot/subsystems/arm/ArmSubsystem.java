@@ -7,6 +7,7 @@ package frc.robot.subsystems.arm;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -98,6 +99,8 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
+            .withIdleMode(IdleMode.kCoast)
+            .withCurrentLimit(40)
             .build();
 
         armEncoder = new MAVCoder(armMotor, ROTARY_ARM_OFFSET);
@@ -105,7 +108,7 @@ public class ArmSubsystem extends SubsystemBase {
         setpoint.setElevatorHeight(ArmSetpoints.STOWED.getElevatorHeight());
         setpoint.setArmAngle(ArmSetpoints.STOWED.getArmAngle());
 
-        armController.reset(getArmPosition());
+        armController.reset(-getArmPosition());
         
         limit = elevatorRightLeader.getReverseLimitSwitch(Type.kNormallyOpen);
         limit.enableLimitSwitch(true);
@@ -144,7 +147,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmSafe() {
-        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
+        return -armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -185,7 +188,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(!isElevatorAtPosition(setpoint.getElevatorHeight())) {
             if(!isArmSafe() || setpoint.getArmAngle().getDegrees() > ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees()) {
-                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), 500.0);
+                setArmMotor(ArmSetpoints.SAFE_ARM.getArmAngle(), 200.0);
                 if(isArmSafe()) {
                     setElevatorMotor(setpoint.getElevatorHeight());
                 }
@@ -206,7 +209,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(DriverStation.isDisabled()) return;
         double armOutput = 0;
-        armOutput = -armController.calculate(armEncoder.getPosition());
+        armOutput = -armController.calculate(-armEncoder.getPosition());
         armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
         armMotor.set(armOutput);
 
