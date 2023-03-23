@@ -143,7 +143,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(Rotation2d angle) {
-        return Math.abs(MathUtils.inputModulo(armEncoder.getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
+        return Math.abs(MathUtils.inputModulo(-armEncoder.getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
     }
 
     public boolean isArmSafe() {
