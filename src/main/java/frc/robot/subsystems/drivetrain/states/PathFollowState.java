@@ -26,6 +26,7 @@ public class PathFollowState extends State<Drivetrain> {
         this.trajectory = trajectory;
         this.timer = new Timer();
         this.resetOdometry = resetOdometry;
+        this.forcePath = forcePath;
     }
 
     public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {

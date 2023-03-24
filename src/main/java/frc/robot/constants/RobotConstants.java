@@ -70,7 +70,7 @@ public class RobotConstants {
         }
 
         public static class RotaryArmConstants {
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 257.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 113.0;
 
             public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.012 : 0.014;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.0;
@@ -118,7 +118,9 @@ public class RobotConstants {
             HIGH_CUBE(Rotation2d.fromDegrees(-35), Units.inchesToMeters(30.000), false),
             GROUND_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(4), false),
             HYBRID_CUBE(Rotation2d.fromDegrees(0), Units.inchesToMeters(0.000), false),
-    
+
+            GROUND_AUTO_CUBE(Rotation2d.fromDegrees(6), Units.inchesToMeters(3), false),
+
             MID_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
             HIGH_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(41.000), false),
             GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),

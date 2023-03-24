@@ -10,12 +10,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.OneConeBackCommand;
+import frc.robot.commands.ChargeStationExit;
 import frc.robot.commands.ConeMultiCubeCommand;
 import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.LaunchCubeCommand;
 import frc.robot.commands.OneConeCharge;
+import frc.robot.commands.OneConeCommand;
+import frc.robot.commands.ThreePieceAuto;
+import frc.robot.commands.TwoConeCommand;
+import frc.robot.commands.TwoPieceCharge;
 import frc.robot.commands.TwoPieceCommand;
-import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.candle.Candle;
@@ -25,7 +29,6 @@ import frc.robot.subsystems.candle.states.RainbowState;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
-import frc.robot.subsystems.drivetrain.states.ResetPoseState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
@@ -39,9 +42,12 @@ import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints.*;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
@@ -57,7 +63,9 @@ public class RobotContainer {
     public XboxController demoController1 = new XboxController(2);
     public XboxController demoController2 = new XboxController(3);
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
         PathPlannerServer.startServer(4272);
         // Run all configuration methods
@@ -67,12 +75,17 @@ public class RobotContainer {
     }
 
     /**
-     * Use this method to define your trigger->command mappings. Triggers can be created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+     * an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+     * {@link
+     * CommandXboxController
+     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     * PS4} controllers or
+     * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {
@@ -95,21 +108,22 @@ public class RobotContainer {
         JoystickAxes rightAxes = driveController.getAxes("right");
 
         new Trigger(() -> leftAxes.getDeadzonedMagnitude() != 0.0).or(() -> rightAxes.getDeadzonedX() != 0.0).whileTrue(
-            new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
-        );
+                new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
 
-        // new Trigger(driveController.getButton("a")::get).onTrue(new ResetPoseState(drivetrain, Limelights.CENTER));
+        // new Trigger(driveController.getButton("a")::get).onTrue(new
+        // ResetPoseState(drivetrain, Limelights.CENTER));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
-        // new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
-        
-        new Trigger(driveController.getButton("rightBumper")::get).onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+        // new Trigger(driveController.getButton("x")::get).onTrue(new
+        // InstantCommand(drivetrain::resetModules, drivetrain));
 
-        //TODO: Move to other controller when buttons are available
+        new Trigger(driveController.getButton("rightBumper")::get)
+                .onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+
+        // TODO: Move to other controller when buttons are available
         new Trigger(driveController.getButton("leftBumper")::get).whileTrue(
-            new LaunchCubeCommand(arm, intake)
-        );
+                new LaunchCubeCommand(arm, intake));
     }
 
     private void configureOperatorBindings() {
@@ -189,8 +203,9 @@ public class RobotContainer {
         AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
         // AUTO_CHOOSER.addOption("One Half Charge", () -> new TwoPieceCharge(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
-        AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake, candle));
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
+        AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake, candle));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
 
