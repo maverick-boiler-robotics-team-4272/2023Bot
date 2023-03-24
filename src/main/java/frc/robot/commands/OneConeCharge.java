@@ -23,7 +23,7 @@ public class OneConeCharge extends SequentialCommandGroup{
             }, drivetrain),
             new DriveState(drivetrain, 0.0, 0.2, 0.0).withTimeout(1.1),
             new DriveState(drivetrain, 0.0, 0.05, 0.00).until(() -> drivetrain.getGyroscope().getPitch() < -4),
-            new DriveState(drivetrain, 0.0, -0.05, 0.0).withTimeout(1.6),
+            new DriveState(drivetrain, 0.0, -0.05, 0.0).withTimeout(1.7),
             new InstantCommand(
                 drivetrain::xConfig, drivetrain
             ),

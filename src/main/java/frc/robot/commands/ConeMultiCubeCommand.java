@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
+import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.drivetrain.states.ResetPoseState;
@@ -24,7 +25,7 @@ import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
 
 public class ConeMultiCubeCommand extends SequentialCommandGroup {
-    public ConeMultiCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
+    public ConeMultiCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake, Candle candle) {
         addCommands(
             new ArmSetpointState(arm, MID_CONE),
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.3),
@@ -59,7 +60,7 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
                 new CubeGrabState(intake, () -> 0.3)
             ),
             new ResetPoseState(drivetrain, CENTER),
-            new CubeEjectState(intake, () -> 1.0).withTimeout(0.4),
+            new CubeEjectState(intake, () -> 0.5).withTimeout(0.4),
             new ArmSetpointState(arm, STOWED),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().CUBE_GRAB, true, false),
@@ -67,11 +68,13 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
                 Map.of(
                     "drop intake",
                     new ParallelCommandGroup(
-                        new ArmSetpointState(arm, GROUND_CUBE),
+                        new ArmSetpointState(arm, GROUND_AUTO_CUBE),
                         new CubeGrabState(intake, () -> 0.75)
                     )
                 )
             )
         );
+
+        addRequirements(candle);
     }
 }

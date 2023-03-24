@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
@@ -13,6 +14,7 @@ import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
+import frc.robot.subsystems.candle.Candle;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
@@ -21,7 +23,7 @@ import java.util.Map;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 public class ThreePieceAuto extends TwoConeCommand {
-    public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
+    public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake, Candle candle) {
         super(drivetrain, arm, intake);
         addCommands(
             new FollowPathWithEvents(
@@ -35,7 +37,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     ),
                     "dropArm",
                     new ParallelCommandGroup(
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE),
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE),
                         new CubeGrabState(intake, () -> 0.75)
                     ),
                     "prepare",
@@ -46,20 +48,20 @@ public class ThreePieceAuto extends TwoConeCommand {
                     "highCube",
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
                     "SHOOT!",
-                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.7)
+                    new CubeEjectState(intake, () -> 0.085).withTimeout(0.5)
                 )
             ),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
                 Map.of(
-                "liftArm",
-                new ArmSetpointState(arm, ArmSetpoints.STOWED),
-                "dropArm",
-                new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                    "liftArm",
+                    new ArmSetpointState(arm, ArmSetpoints.STOWED)
                 )
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED)
         );
+
+        addRequirements(candle);
     }
 }

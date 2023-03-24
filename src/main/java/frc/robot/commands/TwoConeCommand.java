@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -10,6 +12,7 @@ import frc.robot.subsystems.intake.states.ConeEjectState;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeEjectState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
+import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -35,7 +38,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                     "dropArm",
                     new ParallelCommandGroup(
                         new CubeGrabState(intake, () -> 0.75),
-                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE)
                     ),
                     "liftArm",
                     new ParallelCommandGroup(
@@ -43,9 +46,9 @@ public class TwoConeCommand extends SequentialCommandGroup {
                         new CubeGrabState(intake, () -> 0.1).withTimeout(3.0)
                     ),
                     "cubeSet",
-                    new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
+                    new ArmSetpointState(arm, ArmSetpoint.createArbitrary(Units.inchesToMeters(5.0), Rotation2d.fromDegrees(-90.0))),
                     "SHOOT!",
-                    new CubeEjectState(intake, () -> 1.0).withTimeout(0.7)
+                    new CubeEjectState(intake, () -> 0.3).withTimeout(0.5)
                 )
            )
         );

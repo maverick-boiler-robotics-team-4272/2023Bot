@@ -83,6 +83,8 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
 
+        robotContainer.intake.setToBreak();
+
         Gyroscope gyro = robotContainer.drivetrain.getGyroscope();
         gyro.setRotation(
             gyro.getRotation().rotateBy(
