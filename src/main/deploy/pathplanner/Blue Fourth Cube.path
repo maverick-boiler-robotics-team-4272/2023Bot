@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.71,
-        "y": 4.43
+        "x": 2.6748641531471096,
+        "y": 4.499152246167741
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 4.34,
-        "y": 4.87
+        "x": 5.0,
+        "y": 4.83
       },
       "prevControl": {
-        "x": 3.3405350064471366,
-        "y": 4.902706676112988
+        "x": 3.9918406361713044,
+        "y": 4.852253827884357
       },
       "nextControl": {
-        "x": 5.556915721907454,
-        "y": 4.830177426293095
+        "x": 6.020680417429211,
+        "y": 4.807469785879743
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
@@ -49,15 +49,15 @@
     },
     {
       "anchorPoint": {
-        "x": 6.71,
-        "y": 2.67
+        "x": 7.03,
+        "y": 3.94
       },
       "prevControl": {
-        "x": 6.385198708639699,
-        "y": 3.8938820870515856
+        "x": 6.88853719587781,
+        "y": 4.579086423130112
       },
       "nextControl": null,
-      "holonomicAngle": -63.5,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -70,5 +70,12 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.11,
+      "names": [
+        "liftArm"
+      ]
+    }
+  ]
 }
