@@ -48,7 +48,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     "highCube",
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
                     "SHOOT!",
-                    new CubeEjectState(intake, () -> 0.1).withTimeout(0.5)
+                    new CubeEjectState(intake, () -> 0.08).withTimeout(0.5)
                 )
             ),
             new FollowPathWithEvents(
@@ -56,15 +56,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
                 Map.of(
                     "liftArm",
-                    new ArmSetpointState(arm, ArmSetpoints.STOWED),
-                    "dropArm",
-                    new SequentialCommandGroup(
-                        new InstantCommand(intake::setToCoast, intake),
-                        new ParallelCommandGroup(
-                            new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE),
-                            new CubeGrabState(intake, () -> 1.0)
-                        )
-                    )
+                    new ArmSetpointState(arm, ArmSetpoints.STOWED)
                 )
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED)

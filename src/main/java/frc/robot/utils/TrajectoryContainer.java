@@ -33,6 +33,6 @@ public class TrajectoryContainer {
         CUBE_GRAB = PathPlanner.loadPath(prefix + " Cube Grab", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         CUBE_NON_CABLE = PathPlanner.loadPath(prefix + " Cube Non Cable", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         THIRD_CUBE = PathPlanner.loadPath(prefix + " Third Cube", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
-        FOURTH_CUBE = PathPlanner.loadPath(prefix + " Fourth Cube", 4.3, 3.5);
+        FOURTH_CUBE = PathPlanner.loadPath(prefix + " Fourth Cube", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
     }
 }
