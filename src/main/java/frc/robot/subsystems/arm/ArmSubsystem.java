@@ -108,7 +108,7 @@ public class ArmSubsystem extends SubsystemBase {
         setpoint.setElevatorHeight(ArmSetpoints.STOWED.getElevatorHeight());
         setpoint.setArmAngle(ArmSetpoints.STOWED.getArmAngle());
 
-        armController.reset(-getArmPosition());
+        armController.reset(getArmPosition());
         
         limit = elevatorRightLeader.getReverseLimitSwitch(Type.kNormallyOpen);
         limit.enableLimitSwitch(true);
@@ -143,11 +143,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(Rotation2d angle) {
-        return Math.abs(MathUtils.inputModulo(-armEncoder.getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
+        return Math.abs(MathUtils.inputModulo(armEncoder.getPosition() - angle.getDegrees(), -180, 180)) < 5.0;
     }
 
     public boolean isArmSafe() {
-        return -armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
+        return armEncoder.getPosition() < ArmSetpoints.SAFE_ARM.getArmAngle().getDegrees() + 10.0;
     }
 
     public void inverseKinematics(double x, double y) {
@@ -209,7 +209,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         if(DriverStation.isDisabled()) return;
         double armOutput = 0;
-        armOutput = -armController.calculate(-armEncoder.getPosition());
+        armOutput = -armController.calculate(armEncoder.getPosition());
         armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
         armMotor.set(armOutput);
 
