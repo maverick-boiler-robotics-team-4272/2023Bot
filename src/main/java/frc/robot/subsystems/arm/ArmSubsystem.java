@@ -224,7 +224,7 @@ public class ArmSubsystem extends SubsystemBase {
             armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
             armMotor.set(armOutput);
         } else {
-            armMotor.set(-0.1);
+            armMotor.set(0.1);
         }
     }
 }
