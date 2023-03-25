@@ -24,20 +24,20 @@
     },
     {
       "anchorPoint": {
-        "x": 3.19,
-        "y": 0.91
+        "x": 3.12,
+        "y": 0.84
       },
       "prevControl": {
-        "x": 2.196181304476624,
-        "y": 0.9234879277359507
+        "x": 2.1261813044766242,
+        "y": 0.8534879277359506
       },
       "nextControl": {
-        "x": 3.809127149441121,
-        "y": 0.9015973182144363
+        "x": 3.739127149441121,
+        "y": 0.8315973182144363
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": 0.5,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -49,20 +49,20 @@
     },
     {
       "anchorPoint": {
-        "x": 4.32,
-        "y": 0.92
+        "x": 4.4,
+        "y": 0.84
       },
       "prevControl": {
-        "x": 4.140005622529646,
-        "y": 0.8961273596156394
+        "x": 4.220005622529646,
+        "y": 0.8161273596156393
       },
       "nextControl": {
-        "x": 4.633427794171504,
-        "y": 0.961569904137434
+        "x": 4.713427794171504,
+        "y": 0.881569904137434
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": 0.5,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -75,15 +75,15 @@
     {
       "anchorPoint": {
         "x": 5.6,
-        "y": 1.02
+        "y": 0.93
       },
       "prevControl": {
         "x": 4.927538724316513,
-        "y": 0.9916163174997513
+        "y": 0.9016163174997514
       },
       "nextControl": {
         "x": 6.2724612756834865,
-        "y": 1.0483836825002486
+        "y": 0.9583836825002486
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -99,12 +99,12 @@
     },
     {
       "anchorPoint": {
-        "x": 6.92,
-        "y": 1.01
+        "x": 6.82,
+        "y": 1.06
       },
       "prevControl": {
-        "x": 6.461362661442664,
-        "y": 0.9901313864385451
+        "x": 6.3471149775632885,
+        "y": 1.0250266700533412
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -122,9 +122,15 @@
   ],
   "markers": [
     {
-      "position": 3.03,
+      "position": 2.82,
       "names": [
         "drop intake"
+      ]
+    },
+    {
+      "position": 0.06,
+      "names": [
+        "stow intake"
       ]
     }
   ]
