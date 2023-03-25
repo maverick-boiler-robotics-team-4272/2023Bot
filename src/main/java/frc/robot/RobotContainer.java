@@ -21,6 +21,7 @@ import frc.robot.commands.TwoConeCommand;
 import frc.robot.commands.TwoPieceCharge;
 import frc.robot.commands.TwoPieceCommand;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.states.ArmFixState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.candle.states.ConeSignalState;
@@ -184,6 +185,10 @@ public class RobotContainer {
         
         new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeSignalState(candle)
+        );
+
+        new  Trigger(() -> operatorController.getPOV("d-pad").getValue() == 180).whileTrue(
+            new ArmFixState(arm)
         );
     }
 
