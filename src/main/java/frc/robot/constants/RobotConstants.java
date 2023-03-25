@@ -123,7 +123,7 @@ public class RobotConstants {
 
             MID_CONE(Rotation2d.fromDegrees(-51), Units.inchesToMeters(14.000), false),
             HIGH_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(41.000), false),
-            GROUND_CONE(Rotation2d.fromDegrees(-10), Units.inchesToMeters(0.000), false),
+            GROUND_CONE(Rotation2d.fromDegrees(-8), Units.inchesToMeters(0.000), false),
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(37.000), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
