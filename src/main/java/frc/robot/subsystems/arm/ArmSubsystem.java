@@ -75,6 +75,7 @@ public class ArmSubsystem extends SubsystemBase {
     private SetpointContainer setpoint =  new SetpointContainer();
 
     private boolean zeroed = false;
+    private boolean armFixing = false;
     private SparkMaxLimitSwitch limit;
 
     /** Creates a new ArmSubsystem. */
@@ -179,6 +180,15 @@ public class ArmSubsystem extends SubsystemBase {
 
     }
 
+    public void startArmFixing() {
+        armFixing = true;
+    }
+
+    public void stopArmFixing() {
+        armFixing = false;
+        armEncoder.setPosition(-121.4);
+    }
+
     @Override
     public void periodic() {
         TESTING_TABLE.putNumber("Elevator Current Inches", Units.metersToInches(elevatorRightLeader.getEncoder().getPosition()));
@@ -208,11 +218,13 @@ public class ArmSubsystem extends SubsystemBase {
         }
 
         if(DriverStation.isDisabled()) return;
-        double armOutput = 0;
-        armOutput = -armController.calculate(armEncoder.getPosition());
-        armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
-        armMotor.set(armOutput);
-
-        TESTING_TABLE.putNumber("Arm Encoder Position", armEncoder.getUnoffsetPosition());
+        if(!armFixing) {
+            double armOutput = 0;
+            armOutput = -armController.calculate(armEncoder.getPosition());
+            armOutput += armFeedforward.calculate(getArmPosition() * Math.PI / 180.0, 0.0, 0.0);
+            armMotor.set(armOutput);
+        } else {
+            armMotor.set(-0.1);
+        }
     }
 }
