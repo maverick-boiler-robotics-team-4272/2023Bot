@@ -24,6 +24,31 @@
     },
     {
       "anchorPoint": {
+        "x": 3.300558620119616,
+        "y": 4.684083097382348
+      },
+      "prevControl": {
+        "x": 3.0403449860735043,
+        "y": 4.634518595659278
+      },
+      "nextControl": {
+        "x": 3.5004889962273995,
+        "y": 4.722165073783831
+      },
+      "holonomicAngle": 77.4711922908484,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
         "x": 5.0,
         "y": 4.83
       },
