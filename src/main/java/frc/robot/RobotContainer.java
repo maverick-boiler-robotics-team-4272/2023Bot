@@ -34,6 +34,7 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
 import frc.robot.utils.XboxController;
+import frc.robot.utils.XboxController.POVDirection;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -187,7 +188,7 @@ public class RobotContainer {
             new ConeSignalState(candle)
         );
 
-        new  Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
+        new  Trigger(() -> POVDirection.UP.matches(operatorController.getPOV("d-pad").getValue())).whileTrue(
             new ArmFixState(arm)
         );
     }
