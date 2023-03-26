@@ -187,7 +187,7 @@ public class RobotContainer {
             new ConeSignalState(candle)
         );
 
-        new  Trigger(() -> operatorController.getPOV("d-pad").getValue() == 180).whileTrue(
+        new  Trigger(() -> operatorController.getPOV("d-pad").getValue() == 0).whileTrue(
             new ArmFixState(arm)
         );
     }
