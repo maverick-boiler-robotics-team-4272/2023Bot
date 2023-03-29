@@ -19,4 +19,8 @@ public class MAVCoder {
     public double getUnoffsetPosition() {
         return sensor.getPosition() * 360.0 / 3.3;
     }
+
+    public void setPosition(double position) {
+        this.offset = getUnoffsetPosition() - position;
+    }
 }

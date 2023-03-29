@@ -21,6 +21,7 @@ import frc.robot.commands.TwoConeCommand;
 import frc.robot.commands.TwoPieceCharge;
 import frc.robot.commands.TwoPieceCommand;
 import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.states.ArmFixState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.candle.states.ConeSignalState;
@@ -33,6 +34,7 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
 import frc.robot.utils.XboxController;
+import frc.robot.utils.XboxController.POVDirection;
 import frc.team4272.controllers.utilities.JoystickAxes;
 import frc.team4272.controllers.utilities.JoystickAxes.DeadzoneMode;
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -184,6 +186,10 @@ public class RobotContainer {
         
         new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeSignalState(candle)
+        );
+
+        new  Trigger(() -> POVDirection.UP.matches(operatorController.getPOV("d-pad").getValue())).whileTrue(
+            new ArmFixState(arm)
         );
     }
 
