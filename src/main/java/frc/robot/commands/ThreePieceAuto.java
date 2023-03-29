@@ -2,9 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
