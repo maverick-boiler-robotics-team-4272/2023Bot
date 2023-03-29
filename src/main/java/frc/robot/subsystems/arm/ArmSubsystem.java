@@ -59,7 +59,8 @@ public class ArmSubsystem extends SubsystemBase {
         }
     }
 
-    private CANSparkMax elevatorLeftFollower; // Nothing done with the value, kept here because it follows the leader
+    @SuppressWarnings({"unused"})
+    private CANSparkMax elevatorLeftFollower;
     private CANSparkMax elevatorRightLeader;
     private CANSparkMax armMotor;
 
