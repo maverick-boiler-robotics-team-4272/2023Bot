@@ -10,7 +10,6 @@ import static frc.robot.constants.RobotConstants.DrivetrainConstants.MAX_AUTO_AC
 public class TrajectoryContainer {
     public static TrajectoryContainer GLOBAL_SELECTED_TRAJECTORIES = null;
 
-    public final PathPlannerTrajectory ONE_CONE_PATH;
     public final PathPlannerTrajectory TWO_CONE_PATH;
     public final PathPlannerTrajectory TWO_PIECE_GRAB;
     public final PathPlannerTrajectory TWO_PIECE_PLACE;
@@ -22,7 +21,6 @@ public class TrajectoryContainer {
     public final PathPlannerTrajectory FOURTH_CUBE;
 
     public TrajectoryContainer(String prefix) {
-        ONE_CONE_PATH = PathPlanner.loadPath(prefix + " One Cone", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         TWO_CONE_PATH = PathPlanner.loadPath(prefix + " Two Cone", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         TWO_PIECE_GRAB = PathPlanner.loadPath(prefix + " Two Piece Grab", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         TWO_PIECE_PLACE = PathPlanner.loadPath(prefix + " Two Piece Place", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
