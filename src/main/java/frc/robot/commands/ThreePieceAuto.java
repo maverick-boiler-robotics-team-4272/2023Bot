@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
@@ -24,6 +25,7 @@ public class ThreePieceAuto extends TwoConeCommand {
     public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake, Candle candle) {
         super(drivetrain, arm, intake);
         addCommands(
+            new WaitCommand(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().THIRD_CUBE,true,false), 
                 getGlobalTrajectories().THIRD_CUBE.getMarkers(), 
@@ -44,11 +46,10 @@ public class ThreePieceAuto extends TwoConeCommand {
                         ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-90.0))
                     ),
                     "highCube",
-                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
-                    "SHOOT!",
-                    new CubeEjectState(intake, () -> 0.085).withTimeout(0.5)
+                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE)
                 )
             ),
+            new CubeEjectState(intake, () -> 0.085).withTimeout(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
