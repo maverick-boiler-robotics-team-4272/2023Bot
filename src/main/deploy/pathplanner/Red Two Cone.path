@@ -125,6 +125,12 @@
   "isReversed": null,
   "markers": [
     {
+      "position": 0.1,
+      "names": [
+        "liftArm"
+      ]
+    },
+    {
       "position": 1.2,
       "names": [
         "dropArm"
@@ -132,12 +138,6 @@
     },
     {
       "position": 2.45,
-      "names": [
-        "liftArm"
-      ]
-    },
-    {
-      "position": 0.1,
       "names": [
         "liftArm"
       ]
