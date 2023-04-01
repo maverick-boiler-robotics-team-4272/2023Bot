@@ -6,9 +6,9 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch Calc",
+      "name": "Launch Mirror",
       "request": "launch",
-      "mainClass": "frc.robot.Calc",
+      "mainClass": "frc.robot.Mirror",
       "projectName": "2023Bot"
     },
     {
