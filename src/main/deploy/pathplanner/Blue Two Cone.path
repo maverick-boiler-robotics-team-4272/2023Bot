@@ -128,15 +128,27 @@
       ]
     },
     {
-      "position": 2.2181818181818365,
+      "position": 1.2,
       "names": [
         "dropArm"
       ]
     },
     {
-      "position": 3.5636363636363084,
+      "position": 2.45,
       "names": [
         "liftArm"
+      ]
+    },
+    {
+      "position": 3.3,
+      "names": [
+        "cubeSet"
+      ]
+    },
+    {
+      "position": 3.93,
+      "names": [
+        "SHOOT!"
       ]
     }
   ]
