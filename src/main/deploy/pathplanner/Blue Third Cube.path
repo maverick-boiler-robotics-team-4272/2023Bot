@@ -147,39 +147,39 @@
   ],
   "markers": [
     {
-      "position": 0.1,
+      "position": 0.2,
       "names": [
         "liftArm"
       ]
     },
     {
-      "position": 1.3,
+      "position": 1.25,
       "names": [
         "dropArm"
       ]
     },
     {
-      "position": 2.6,
+      "position": 2.4,
       "names": [
         "liftArm"
       ]
     },
     {
-      "position": 3.8545454545454527,
+      "position": 3.95,
       "names": [
         "prepare"
+      ]
+    },
+    {
+      "position": 4.3,
+      "names": [
+        "highCube"
       ]
     },
     {
       "position": 4.97,
       "names": [
         "SHOOT!"
-      ]
-    },
-    {
-      "position": 4.254545454545441,
-      "names": [
-        "highCube"
       ]
     }
   ]

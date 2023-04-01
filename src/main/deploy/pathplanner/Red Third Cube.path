@@ -150,6 +150,12 @@
   "isReversed": null,
   "markers": [
     {
+      "position": 0.2,
+      "names": [
+        "liftArm"
+      ]
+    },
+    {
       "position": 1.25,
       "names": [
         "dropArm"
@@ -162,21 +168,15 @@
       ]
     },
     {
-      "position": 0.2,
+      "position": 3.95,
       "names": [
-        "liftArm"
+        "prepare"
       ]
     },
     {
       "position": 4.3,
       "names": [
         "highCube"
-      ]
-    },
-    {
-      "position": 3.95,
-      "names": [
-        "prepare"
       ]
     },
     {
