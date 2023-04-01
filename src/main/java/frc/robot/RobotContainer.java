@@ -201,7 +201,7 @@ public class RobotContainer {
         AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake, candle));
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
-        AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake, candle));
+        AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
 
