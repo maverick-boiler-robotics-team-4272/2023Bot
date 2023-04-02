@@ -10,7 +10,7 @@
         "x": 13.725764118194903,
         "y": 4.578729574125815
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -72,7 +72,7 @@
   ],
   "markers": [
     {
-      "position": 0.10909090909090902,
+      "position": 0.11,
       "names": [
         "liftArm"
       ]

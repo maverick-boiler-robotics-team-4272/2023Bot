@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.71,
+        "x": 1.79,
         "y": 4.43
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6722060094951554,
-        "y": 4.455591238973453
+        "x": 2.81,
+        "y": 4.693603591482718
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 3.76,
+        "x": 3.84,
         "y": 4.8
       },
       "prevControl": {
-        "x": 2.9672123741852303,
-        "y": 4.762907549559731
+        "x": 2.25,
+        "y": 4.8
       },
       "nextControl": {
-        "x": 4.538222853167797,
-        "y": 4.836411002988277
+        "x": 5.43,
+        "y": 4.8
       },
       "holonomicAngle": 90.0,
       "isReversal": false,
@@ -49,18 +49,18 @@
     },
     {
       "anchorPoint": {
-        "x": 7.1,
-        "y": 3.91
+        "x": 6.870743907758601,
+        "y": 3.789156651947509
       },
       "prevControl": {
-        "x": 6.42958388562858,
-        "y": 4.625042109181606
+        "x": 6.3007439077586005,
+        "y": 4.541275685876788
       },
       "nextControl": {
-        "x": 6.42958388562858,
-        "y": 4.625042109181606
+        "x": 6.3007439077586005,
+        "y": 4.541275685876788
       },
-      "holonomicAngle": -52.7,
+      "holonomicAngle": -38.37,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
@@ -74,16 +74,16 @@
     },
     {
       "anchorPoint": {
-        "x": 5.06,
-        "y": 4.9
+        "x": 5.176095957892629,
+        "y": 4.8554519911890175
       },
       "prevControl": {
-        "x": 5.833010050818203,
-        "y": 4.826890508887907
+        "x": 5.48609595789263,
+        "y": 4.8554519911890175
       },
       "nextControl": {
-        "x": 4.2937919805935785,
-        "y": 4.972466170815654
+        "x": 4.86609595789263,
+        "y": 4.8554519911890175
       },
       "holonomicAngle": 90.0,
       "isReversal": false,
@@ -99,20 +99,20 @@
     },
     {
       "anchorPoint": {
-        "x": 2.86,
-        "y": 4.75
+        "x": 3.3100791142199872,
+        "y": 4.712644579683459
       },
       "prevControl": {
-        "x": 3.5004889962273995,
-        "y": 4.817370014787536
+        "x": 4.510079114219987,
+        "y": 4.712644579683459
       },
       "nextControl": {
-        "x": 2.2195110037726002,
-        "y": 4.682629985212464
+        "x": 2.1100791142199875,
+        "y": 4.712644579683459
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -180.0,
       "isReversal": false,
-      "velOverride": null,
+      "velOverride": 1.1,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -124,12 +124,12 @@
     },
     {
       "anchorPoint": {
-        "x": 1.71,
-        "y": 4.65
+        "x": 1.7296770935584638,
+        "y": 4.42702975667234
       },
       "prevControl": {
-        "x": 2.1676198221755123,
-        "y": 4.7316855678842
+        "x": 1.9496770935584633,
+        "y": 4.42702975667234
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -145,41 +145,44 @@
       }
     }
   ],
+  "maxVelocity": 4.0,
+  "maxAcceleration": 3.5,
+  "isReversed": null,
   "markers": [
     {
-      "position": 0.1,
+      "position": 0.2,
       "names": [
         "liftArm"
       ]
     },
     {
-      "position": 1.3,
+      "position": 1.25,
       "names": [
         "dropArm"
       ]
     },
     {
-      "position": 2.6,
+      "position": 2.4,
       "names": [
         "liftArm"
       ]
     },
     {
-      "position": 3.8545454545454527,
+      "position": 3.95,
       "names": [
         "prepare"
+      ]
+    },
+    {
+      "position": 4.3,
+      "names": [
+        "highCube"
       ]
     },
     {
       "position": 4.97,
       "names": [
         "SHOOT!"
-      ]
-    },
-    {
-      "position": 4.254545454545441,
-      "names": [
-        "highCube"
       ]
     }
   ]

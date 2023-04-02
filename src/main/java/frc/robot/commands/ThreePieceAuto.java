@@ -13,7 +13,6 @@ import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
-import frc.robot.subsystems.candle.Candle;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 
@@ -22,7 +21,7 @@ import java.util.Map;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 public class ThreePieceAuto extends TwoConeCommand {
-    public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake, Candle candle) {
+    public ThreePieceAuto(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(drivetrain, arm, intake);
         addCommands(
             new WaitCommand(0.25),
@@ -49,7 +48,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE)
                 )
             ),
-            new CubeEjectState(intake, () -> 0.085).withTimeout(0.25),
+            new CubeEjectState(intake, () -> 0.095).withTimeout(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
@@ -60,7 +59,5 @@ public class ThreePieceAuto extends TwoConeCommand {
             ),
             new ArmSetpointState(arm, ArmSetpoints.STOWED)
         );
-
-        addRequirements(candle);
     }
 }
