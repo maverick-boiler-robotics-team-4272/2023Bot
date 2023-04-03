@@ -90,6 +90,7 @@ public class RobotContainer {
         configureOperatorBindings();
         configureDemo1Bindings();
         configureDemo2Bindings();
+        configureCandleSignaling();
     }
 
     private void configureControllers() {
@@ -125,14 +126,6 @@ public class RobotContainer {
 
     private void configureOperatorBindings() {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
-
-        new Trigger(intake::isCubeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(8, 64, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
-        );
-
-        new Trigger(intake::isConeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(72, 30, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
-        );
 
         new Trigger(operatorController.getButton("rightBumper")::get).whileTrue(
             Commands.runEnd(() -> candle.setLEDs(0, 8, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
@@ -201,6 +194,16 @@ public class RobotContainer {
 
     private void configureDemo2Bindings() {
 
+    }
+
+    private void configureCandleSignaling() {
+        new Trigger(intake::isCubeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(8, 64, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
+        );
+
+        new Trigger(intake::isConeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(72, 30, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
+        );
     }
 
     private void configureAutoSendable() {
