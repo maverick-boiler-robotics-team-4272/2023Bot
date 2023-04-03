@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
-import frc.robot.subsystems.candle.Candle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
 import frc.robot.subsystems.drivetrain.states.ResetPoseState;
@@ -25,7 +24,7 @@ import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
 
 public class ConeMultiCubeCommand extends SequentialCommandGroup {
-    public ConeMultiCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake, Candle candle) {
+    public ConeMultiCubeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         addCommands(
             new ArmSetpointState(arm, MID_CONE),
             new ConeEjectState(intake, () -> 0.9).withTimeout(0.3),
@@ -74,7 +73,5 @@ public class ConeMultiCubeCommand extends SequentialCommandGroup {
                 )
             )
         );
-
-        addRequirements(candle);
     }
 }
