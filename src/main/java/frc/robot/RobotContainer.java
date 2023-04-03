@@ -127,7 +127,19 @@ public class RobotContainer {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
 
         new Trigger(intake::isCubeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(8, 64, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
+        );
+
+        new Trigger(intake::isConeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(72, 30, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
+        );
+
+        new Trigger(operatorController.getButton("rightBumper")::get).whileTrue(
             Commands.runEnd(() -> candle.setLEDs(0, 8, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
+        );
+
+        new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(0, 8, 255, 255, 0), () -> candle.turnOffLEDs(0, 8))
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
