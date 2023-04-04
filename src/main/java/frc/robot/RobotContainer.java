@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -19,9 +20,7 @@ import frc.robot.commands.TwoPieceCommand;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmFixState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
-import frc.robot.subsystems.candle.Candle;
-import frc.robot.subsystems.candle.states.ColorSetState;
-import frc.robot.subsystems.candle.states.ColorSetState.LEDState;
+import frc.robot.utils.Candle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
@@ -53,7 +52,7 @@ public class RobotContainer {
     public Drivetrain drivetrain = new Drivetrain();
     public ArmSubsystem arm = new ArmSubsystem();
     public IntakeSubsystem intake = new IntakeSubsystem();
-    public Candle candle = new Candle();
+    public Candle candle = Candle.getInstance();
 
     // The robot's IO devices and commands are defined here...
     public XboxController driveController = new XboxController(0);
@@ -91,6 +90,7 @@ public class RobotContainer {
         configureOperatorBindings();
         configureDemo1Bindings();
         configureDemo2Bindings();
+        configureCandleSignaling();
     }
 
     private void configureControllers() {
@@ -127,11 +127,12 @@ public class RobotContainer {
     private void configureOperatorBindings() {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
 
-        new Trigger(intake::isCubeLidarTripped).whileTrue(
-            new ColorSetState(
-                candle, 
-                new LEDState(0, 8, 128, 0, 128)
-            )
+        new Trigger(operatorController.getButton("rightBumper")::get).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(0, 8, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
+        );
+
+        new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(0, 8, 255, 255, 0), () -> candle.turnOffLEDs(0, 8))
         );
 
         new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
@@ -195,11 +196,21 @@ public class RobotContainer {
 
     }
 
+    private void configureCandleSignaling() {
+        new Trigger(intake::isCubeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(72, 30, 128, 0, 128), () -> candle.turnOffLEDs(72, 30))
+        );
+
+        new Trigger(intake::isConeLidarTripped).whileTrue(
+            Commands.runEnd(() -> candle.setLEDs(8, 64, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
+        );
+    }
+
     private void configureAutoSendable() {
         AUTO_CHOOSER.addOption("Charge Station", () -> new OneConeCharge(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Two Piece", () -> new TwoPieceCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("One Cone Back", () -> new OneConeBackCommand(drivetrain, arm, intake));
-        AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake, candle));
+        AUTO_CHOOSER.addOption("Cone Cube", () -> new ConeMultiCubeCommand(drivetrain, arm, intake));
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
         AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake));
 

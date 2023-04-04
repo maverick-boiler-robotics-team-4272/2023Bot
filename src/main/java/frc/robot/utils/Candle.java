@@ -1,17 +1,23 @@
-package frc.robot.subsystems.candle;
+package frc.robot.utils;
 
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static frc.robot.constants.HardwareMap.*;
+import static frc.robot.constants.HardwareMap.CANDLE_ID;
 import static frc.robot.constants.UniversalConstants.IS_PRACTICE_BOT;
 
-public class Candle extends SubsystemBase {
+public class Candle {
+    private static Candle instance = null;
+
+    public static Candle getInstance() {
+        if(instance == null) instance = new Candle();
+
+        return instance;
+    }
+
     private CANdle candle;
 
-    public Candle() {
+    private Candle() {
         if(IS_PRACTICE_BOT) {
             candle = null;
             return;
@@ -54,8 +60,13 @@ public class Candle extends SubsystemBase {
         candle.animate(animation);
     }
 
-    public void turnOffLEDs() {
+    public void stopAnimation() {
         if(IS_PRACTICE_BOT) return;
-        candle.setLEDs(0, 0, 0, 0, 0, 8);
+        candle.animate(null);
+    }
+
+    public void turnOffLEDs(int startIndex, int count) {
+        if(IS_PRACTICE_BOT) return;
+        candle.setLEDs(0, 0, 0, 0, startIndex, count);
     }
 }
