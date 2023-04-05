@@ -48,7 +48,8 @@ public class ThreePieceAuto extends TwoConeCommand {
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE)
                 )
             ),
-            new CubeEjectState(intake, () -> 0.08).withTimeout(0.25),
+            new WaitCommand(0.33),
+            new CubeEjectState(intake, () -> 0.15).withTimeout(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
                 getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
