@@ -60,7 +60,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isConeLidarTripped() {
-        return coneLidar.getRawDutyCycle() < 0.045;
+        return coneLidar.getRawDutyCycle() < 0.042;
     }
 
     public void setToCoast() {
