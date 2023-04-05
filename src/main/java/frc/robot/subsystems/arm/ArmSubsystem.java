@@ -101,7 +101,6 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor = MotorBuilder.createWithDefaults(ROTARY_ARM_ID)
             .withPositionFactor(360.0 / ARM_GEAR_RATIO)
             .withOutputRange(ROTARY_ARM_PID_OUTPUT_MIN, ROTARY_ARM_PID_OUTPUT_MAX)
-            .withIdleMode(IdleMode.kCoast)
             .withCurrentLimit(40)
             .build();
 
