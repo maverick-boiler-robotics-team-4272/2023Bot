@@ -14,19 +14,39 @@ import static frc.robot.constants.UniversalConstants.FIELD_WIDTH_METERS;
 public class Mirror {
     private static final String PATH_DIRECTORY = "C:/Users/itadmin/Documents/github/RoboticsRepos/2023Bot/src/main/deploy/pathplanner/";
     public static void main(String[] args) throws Exception {
-        mirrorPath("Two Cone");
-        mirrorPath("Third Cube");
-        mirrorPath("Fourth Cube");
+        mirrorPath("Two Cone", true);
+        mirrorPath("Third Cube", true);
     }
 
-    private static void mirrorPath(String pathName) throws Exception {
-        JSONObject path = loadJson(PATH_DIRECTORY + "Red " + pathName + ".path");
+    @SuppressWarnings({"unused"})
+    private static void mirrorPath(String pathName, boolean fromRed) throws Exception {
+        String fromPrefix;
+        String toPrefix;
+
+        if(fromRed) {
+            fromPrefix = "Red ";
+            toPrefix = "Blue ";
+        } else {
+            fromPrefix = "Blue ";
+            toPrefix = "Red ";
+        }
+
+        JSONObject path = loadJson(PATH_DIRECTORY + fromPrefix + pathName + ".path");
 
         JSONArray waypoints = (JSONArray) path.get("waypoints");
         for(int i = 0; i < waypoints.size(); i++) {
             JSONObject waypoint = (JSONObject) waypoints.get(i);
 
-            double r = (double) waypoint.get("holonomicAngle");
+            double r = 0;
+
+            Object angle = waypoint.get("holonomicAngle");
+
+            if(angle instanceof Long) {
+                r = (double)((long) angle);
+            } else if (angle instanceof Double) {
+                r = (double) angle;
+            }
+
             waypoint.put("holonomicAngle", MathUtils.inputModulo(180 - r, -180, 180));
 
             JSONObject anchor = (JSONObject) waypoint.get("anchorPoint");
@@ -38,7 +58,7 @@ public class Mirror {
             mirrorPoint(nextControl);
         }
 
-        FileWriter writer = new FileWriter(PATH_DIRECTORY + "Blue " + pathName + ".path");
+        FileWriter writer = new FileWriter(PATH_DIRECTORY + toPrefix + pathName + ".path");
 
         writer.append(path.toString());
 
