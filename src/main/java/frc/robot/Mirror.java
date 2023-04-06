@@ -36,7 +36,16 @@ public class Mirror {
         for(int i = 0; i < waypoints.size(); i++) {
             JSONObject waypoint = (JSONObject) waypoints.get(i);
 
-            double r = (double) waypoint.get("holonomicAngle");
+            double r = 0;
+
+            Object angle = waypoint.get("holonomicAngle");
+
+            if(angle instanceof Long) {
+                r = (double)((long) angle);
+            } else if (angle instanceof Double) {
+                r = (double) angle;
+            }
+
             waypoint.put("holonomicAngle", MathUtils.inputModulo(180 - r, -180, 180));
 
             JSONObject anchor = (JSONObject) waypoint.get("anchorPoint");
