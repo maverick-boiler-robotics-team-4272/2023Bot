@@ -14,11 +14,22 @@ import static frc.robot.constants.UniversalConstants.FIELD_WIDTH_METERS;
 public class Mirror {
     private static final String PATH_DIRECTORY = "C:/Users/itadmin/Documents/github/RoboticsRepos/2023Bot/src/main/deploy/pathplanner/";
     public static void main(String[] args) throws Exception {
-        
+
     }
 
-    private static void mirrorPath(String pathName) throws Exception {
-        JSONObject path = loadJson(PATH_DIRECTORY + "Red " + pathName + ".path");
+    private static void mirrorPath(String pathName, boolean fromRed) throws Exception {
+        String fromPrefix;
+        String toPrefix;
+
+        if(fromRed) {
+            fromPrefix = "Red ";
+            toPrefix = "Blue ";
+        } else {
+            fromPrefix = "Blue ";
+            toPrefix = "Red ";
+        }
+
+        JSONObject path = loadJson(PATH_DIRECTORY + fromPrefix + pathName + ".path");
 
         JSONArray waypoints = (JSONArray) path.get("waypoints");
         for(int i = 0; i < waypoints.size(); i++) {
@@ -36,7 +47,7 @@ public class Mirror {
             mirrorPoint(nextControl);
         }
 
-        FileWriter writer = new FileWriter(PATH_DIRECTORY + "Blue " + pathName + ".path");
+        FileWriter writer = new FileWriter(PATH_DIRECTORY + toPrefix + pathName + ".path");
 
         writer.append(path.toString());
 
