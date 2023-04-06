@@ -17,6 +17,7 @@ public class Mirror {
 
     }
 
+    @SuppressWarnings({"unused"})
     private static void mirrorPath(String pathName, boolean fromRed) throws Exception {
         String fromPrefix;
         String toPrefix;
