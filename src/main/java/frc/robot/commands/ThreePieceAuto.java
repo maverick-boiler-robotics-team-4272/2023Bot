@@ -45,7 +45,9 @@ public class ThreePieceAuto extends TwoConeCommand {
                         ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-90.0))
                     ),
                     "highCube",
-                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE)
+                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
+                    "hold",
+                    new CubeGrabState(intake, () -> 0.05)
                 )
             ),
             new WaitCommand(0.66),
