@@ -198,11 +198,11 @@ public class RobotContainer {
 
     private void configureCandleSignaling() {
         new Trigger(intake::isCubeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(72, 30, 128, 0, 128), () -> candle.turnOffLEDs(72, 30))
+            Commands.runEnd(() -> candle.setLEDs(40, 62, 128, 0, 128), () -> candle.turnOffLEDs(72, 30))
         );
 
         new Trigger(intake::isConeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(8, 64, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
+            Commands.runEnd(() -> candle.setLEDs(8, 32, 255, 255, 0), () -> candle.turnOffLEDs(8, 64))
         );
     }
 
