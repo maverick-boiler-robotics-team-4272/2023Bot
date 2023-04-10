@@ -34,7 +34,7 @@
       "nextControl": null,
       "holonomicAngle": -180.0,
       "isReversal": false,
-      "velOverride": 4.2,
+      "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -50,7 +50,7 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.2981818181818053,
+      "position": 0.029090909090921966,
       "names": [
         "liftArm"
       ]
