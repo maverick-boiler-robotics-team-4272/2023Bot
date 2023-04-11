@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.limelight.Limelight;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeEjectState;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.intake.states.CubeGrabState;
 import frc.robot.utils.ArmSetpoint;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.PathFollowState;
+import frc.robot.subsystems.drivetrain.states.ResetPoseState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 
 import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
@@ -33,6 +35,7 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                 new ConeGrabState(intake, () -> 0.1)
             ),
             new ConeEjectState(intake, () -> 0.5).withTimeout(0.2),
+            //new ResetPoseState(drivetrain, Limelight.getLimelight("left")),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE, true, false), 
                 getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE.getMarkers(), 
@@ -45,13 +48,16 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                         new CubeGrabState(intake, () -> 0.75)
                     ),
                     "liftArm",
-                    new ArmSetpointState(arm, ArmSetpoints.MID_CUBE),
+                    new ParallelCommandGroup(
+                        new CubeGrabState(intake, () -> 0.1),
+                        new ArmSetpointState(arm, ArmSetpoints.MID_CUBE)
+                    ),
                     "hold",
                     new CubeGrabState(intake, () -> 0.1)
                 )
             ),
-            new WaitCommand(0.3),
-            new CubeEjectState(intake, () -> 0.8).withTimeout(.3),
+            new WaitCommand(0.1),
+            new CubeEjectState(intake, () -> 0.8).withTimeout(.2),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().SECOND_CUBE_CABLE_SIDE, true, false), 
                 getGlobalTrajectories().SECOND_CUBE_CABLE_SIDE.getMarkers(), 
@@ -62,9 +68,20 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                     new ParallelCommandGroup(
                         new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE),
                         new CubeGrabState(intake, () -> 0.75)
+                    ),
+                    "liftArm",
+                    new ParallelCommandGroup(
+                        new CubeGrabState(intake, () -> 0.1),
+                        new ArmSetpointState(arm, ArmSetpoints.MID_CUBE)
+                    ),
+                    "drop",
+                    new ParallelCommandGroup(
+                        new CubeGrabState(intake, () -> 0.1),
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_CUBE)
                     )
                 )
-                )
+                ),
+                new CubeEjectState(intake, () -> .9)
         );
     }
 }
