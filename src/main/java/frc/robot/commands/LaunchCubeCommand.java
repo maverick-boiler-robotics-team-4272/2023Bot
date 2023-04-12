@@ -18,18 +18,18 @@ import frc.robot.subsystems.intake.states.CubeEjectState;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LaunchCubeCommand extends SequentialCommandGroup {
-  /** Creates a new LaunchCube. */
-  public LaunchCubeCommand(ArmSubsystem arm, IntakeSubsystem intake) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new ParallelCommandGroup(
-        new ArmSetpointState(arm, ArmSetpoints.LAUNCH_CUBE),
-        new SequentialCommandGroup(
-          new WaitCommand(.35),
-          new CubeEjectState(intake, () -> 1.0). withTimeout(.3)
-        )
-      )
-    );
-  }
+    /** Creates a new LaunchCube. */
+    public LaunchCubeCommand(ArmSubsystem arm, IntakeSubsystem intake) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+            new ParallelCommandGroup(
+                new ArmSetpointState(arm, ArmSetpoints.LAUNCH_CUBE),
+                new SequentialCommandGroup(
+                    new WaitCommand(.35),
+                    new CubeEjectState(intake, () -> 1.0).withTimeout(.3)
+                )
+            )
+        );
+    }
 }
