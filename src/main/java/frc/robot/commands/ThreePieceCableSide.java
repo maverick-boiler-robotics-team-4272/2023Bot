@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.limelight.Limelight;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
@@ -32,12 +33,11 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
         super(
             new ParallelRaceGroup(
                 new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
-                new ConeGrabState(intake, () -> 0.1)
+                new ConeEjectState(intake, () -> 0.5).withTimeout(0.2).beforeStarting(new WaitCommand(.5))
             ),
-            new ConeEjectState(intake, () -> 0.5).withTimeout(0.2),
-            //new ResetPoseState(drivetrain, Limelight.getLimelight("left")),
+            // new ResetPoseState(drivetrain, Limelights.LEFT),
             new FollowPathWithEvents(
-                new PathFollowState(drivetrain, getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE, true, false), 
+                new PathFollowState(drivetrain, getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE, true, true), 
                 getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE.getMarkers(), 
                 Map.of(
                     "stowArm",
@@ -81,7 +81,10 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                     )
                 )
                 ),
-                new CubeEjectState(intake, () -> .9)
+                new ParallelCommandGroup(
+                    new CubeEjectState(intake, () -> .45).withTimeout(.3),
+                    new ArmSetpointState(arm, ArmSetpoints.STOWED).beforeStarting(new WaitCommand(0.25))
+                )
         );
     }
 }
