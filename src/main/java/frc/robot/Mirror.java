@@ -14,7 +14,8 @@ import static frc.robot.constants.UniversalConstants.FIELD_WIDTH_METERS;
 public class Mirror {
     private static final String PATH_DIRECTORY = "C:/Users/itadmin/Documents/github/RoboticsRepos/2023Bot/src/main/deploy/pathplanner/";
     public static void main(String[] args) throws Exception {
-        mirrorPath("Fourth Cube", true);
+        mirrorPath("First Cube Cable side", true);
+        mirrorPath("Second Cube Cable", true);
     }
 
     @SuppressWarnings({"unused"})
