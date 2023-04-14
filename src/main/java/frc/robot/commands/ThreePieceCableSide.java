@@ -22,10 +22,8 @@ import com.pathplanner.lib.commands.FollowPathWithEvents;
 public class ThreePieceCableSide extends SequentialCommandGroup {
     public ThreePieceCableSide(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
-            new ParallelRaceGroup(
-                new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
-                new ConeEjectState(intake, () -> 0.5).withTimeout(0.2).beforeStarting(new WaitCommand(.5))
-            ),
+            new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
+            new ConeEjectState(intake, () -> 0.8).withTimeout(0.2),
             // new ResetPoseState(drivetrain, Limelights.LEFT),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FIRST_CUBE_CABLE_SIDE, true, true), 
@@ -73,7 +71,7 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                 )
                 ),
                 new ParallelCommandGroup(
-                    new CubeEjectState(intake, () -> .45).withTimeout(.3),
+                    new CubeEjectState(intake, () -> .35).withTimeout(.3),
                     new ArmSetpointState(arm, ArmSetpoints.STOWED).beforeStarting(new WaitCommand(0.25))
                 )
         );
