@@ -47,10 +47,10 @@ public class ThreePieceAuto extends TwoConeCommand {
                     "highCube",
                     new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
                     "hold",
-                    new CubeGrabState(intake, () -> 0.05)
+                    new CubeGrabState(intake, () -> 0.1)
                 )
             ),
-            new WaitCommand(0.66),
+            new WaitCommand(0.2),
             new CubeEjectState(intake, () -> 0.30).withTimeout(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 

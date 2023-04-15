@@ -4,8 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -16,15 +18,18 @@ import frc.robot.subsystems.intake.states.CubeEjectState;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LaunchCubeCommand extends SequentialCommandGroup {
-  /** Creates a new LaunchCube. */
-  public LaunchCubeCommand(ArmSubsystem arm, IntakeSubsystem intake) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new ParallelRaceGroup(
-        new ArmSetpointState(arm, ArmSetpoints.LAUNCH_CUBE),
-        new CubeEjectState(intake, () -> 1.5)
-      )
-    );
-  }
+    /** Creates a new LaunchCube. */
+    public LaunchCubeCommand(ArmSubsystem arm, IntakeSubsystem intake) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+            new ParallelCommandGroup(
+                new ArmSetpointState(arm, ArmSetpoints.LAUNCH_CUBE),
+                new SequentialCommandGroup(
+                    new WaitCommand(.35),
+                    new CubeEjectState(intake, () -> 1.0).withTimeout(.3)
+                )
+            )
+        );
+    }
 }
