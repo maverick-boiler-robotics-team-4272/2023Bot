@@ -50,7 +50,7 @@ public class ThreePieceAuto extends TwoConeCommand {
                     new CubeGrabState(intake, () -> 0.1)
                 )
             ),
-            new WaitCommand(0.2),
+            new WaitCommand(0.5),
             new CubeEjectState(intake, () -> 0.30).withTimeout(0.25),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().FOURTH_CUBE, true, false), 
