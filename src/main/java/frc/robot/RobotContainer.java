@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.utils.Candle;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.states.DriveState;
+import frc.robot.subsystems.drivetrain.states.HumanPlayerLineupState;
 import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
@@ -106,8 +108,9 @@ public class RobotContainer {
         JoystickAxes leftAxes = driveController.getAxes("left");
         JoystickAxes rightAxes = driveController.getAxes("right");
 
-        new Trigger(() -> leftAxes.getDeadzonedMagnitude() != 0.0).or(() -> rightAxes.getDeadzonedX() != 0.0).whileTrue(
-                new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX));
+        drivetrain.setDefaultCommand(
+            new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
+        );
 
         // new Trigger(driveController.getButton("a")::get).onTrue(new
         // ResetPoseState(drivetrain, Limelights.CENTER));
@@ -119,6 +122,11 @@ public class RobotContainer {
 
         new Trigger(driveController.getButton("rightBumper")::get)
                 .onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+
+        new Trigger(driveController.getButton("y")::get)
+            .whileTrue(
+                new HumanPlayerLineupState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, new PIDController(0.1, 0, 0))
+            );
 
         // TODO: Move to other controller when buttons are available
         new Trigger(driveController.getButton("leftBumper")::get).whileTrue(
