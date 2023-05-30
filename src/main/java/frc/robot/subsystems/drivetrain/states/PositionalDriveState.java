@@ -4,10 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
-public class PositionalDriveState extends AbstractDriveState {
-    private double desiredX;
-    private double desiredY;
-    private Rotation2d desiredTheta;
+public abstract class PositionalDriveState extends AbstractDriveState {
     private PIDController xController;
     private PIDController yController;
     private PIDController thetaController;
@@ -20,17 +17,9 @@ public class PositionalDriveState extends AbstractDriveState {
         this.thetaController = thetaController;
     }
 
-    public void setDesiredX(double desiredX) {
-        this.desiredX = desiredX;
-    }
-
-    public void setDesiredY(double desiredY) {
-        this.desiredY = desiredY;
-    }
-
-    public void setDesiredTheta(Rotation2d desiredTheta) {
-        this.desiredTheta = desiredTheta;
-    }
+    public abstract double getDesiredX();
+    public abstract double getDesiredY();
+    public abstract Rotation2d getDesiredTheta();
 
     @Override
     public boolean isFieldRelative() {
@@ -39,16 +28,16 @@ public class PositionalDriveState extends AbstractDriveState {
 
     @Override
     public double getXSpeed() {
-        return -xController.calculate(requiredSubsystem.getRobotPose().getX(), desiredX);
+        return -xController.calculate(requiredSubsystem.getRobotPose().getX(), getDesiredX());
     }
 
     @Override
     public double getYSpeed() {
-        return yController.calculate(requiredSubsystem.getRobotPose().getY(), desiredY);
+        return yController.calculate(requiredSubsystem.getRobotPose().getY(), getDesiredY());
     }
 
     @Override
     public double getThetaSpeed() {
-        return -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians(), desiredTheta.getRadians());
+        return -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians(), getDesiredTheta().getRadians());
     }
 }
