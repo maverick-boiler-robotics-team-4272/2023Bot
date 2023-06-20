@@ -135,7 +135,7 @@
         "x": 6.95,
         "y": 1.8564963495722726
       },
-      "holonomicAngle": 41.85778689339512,
+      "holonomicAngle": 32.0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
@@ -228,7 +228,7 @@
       ]
     },
     {
-      "position": 3.2,
+      "position": 3.05,
       "names": [
         "dropArm"
       ]

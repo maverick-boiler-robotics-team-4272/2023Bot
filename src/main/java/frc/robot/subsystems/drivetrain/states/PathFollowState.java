@@ -5,23 +5,24 @@ import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.team4272.globals.State;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.CENTER;
 
-public class PathFollowState extends State<Drivetrain> {
+public class PathFollowState extends PositionalDriveState {
     private PathPlannerTrajectory trajectory;
     private boolean resetOdometry;
     private boolean forcePath;
 
     private Timer timer;
     private Pose2d endPose;
+    private Pose2d desiredPose;
 
     public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory, boolean resetOdometry, boolean forcePath) {
-        super(drivetrain);
+        super(drivetrain, X_CONTROLLER, Y_CONTROLLER, THETA_CONTROLLER);
 
         this.trajectory = trajectory;
         this.timer = new Timer();
@@ -32,6 +33,8 @@ public class PathFollowState extends State<Drivetrain> {
     public PathFollowState(Drivetrain drivetrain, PathPlannerTrajectory trajectory) {
         this(drivetrain, trajectory, true, false);
     }
+
+
 
     @Override
     public void initialize() {
@@ -55,18 +58,26 @@ public class PathFollowState extends State<Drivetrain> {
     }
 
     @Override
+    public double getDesiredX() {
+        return desiredPose.getX();
+    }
+
+    @Override
+    public double getDesiredY() {
+        return desiredPose.getY();
+    }
+
+    @Override
+    public Rotation2d getDesiredTheta() {
+        return desiredPose.getRotation();
+    }
+
+    @Override
     public void execute() {
-        PathPlannerState desiredState = (PathPlannerState) trajectory.sample(timer.get());
-        Pose2d currentPose = requiredSubsystem.getRobotPose();
-        Pose2d desiredPose = new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation);
+        PathPlannerState state = (PathPlannerState) trajectory.sample(timer.get());
+        desiredPose = new Pose2d(state.poseMeters.getTranslation(), state.holonomicRotation);
 
-        double xSpeed =     -X_CONTROLLER.calculate(currentPose.getX(), desiredPose.getX());
-        double ySpeed =      Y_CONTROLLER.calculate(currentPose.getY(), desiredPose.getY());
-        double thetaSpeed = -THETA_CONTROLLER.calculate(currentPose.getRotation().getRadians(), desiredPose.getRotation().getRadians());
-
-        requiredSubsystem.driveFieldOriented(xSpeed, ySpeed, thetaSpeed);
-
-        PathPlannerServer.sendPathFollowingData(desiredPose, currentPose);
+        super.execute();
     }
 
     @Override
