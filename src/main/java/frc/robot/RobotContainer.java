@@ -125,7 +125,7 @@ public class RobotContainer {
 
         new Trigger(driveController.getButton("y")::get)
             .whileTrue(
-                new HumanPlayerLineupState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, new PIDController(0.1, 0, 0))
+                new HumanPlayerLineupState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, new PIDController(2.5, 0, 0))
             );
 
         // TODO: Move to other controller when buttons are available
