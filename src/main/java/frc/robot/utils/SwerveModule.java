@@ -54,6 +54,14 @@ public class SwerveModule extends SwerveModuleBase {
 
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
 
+        // TODO: Remove these three lines of code
+        // They shouldn't be necessary because the 
+        // optimize function should handle continuity.
+        // Fix issue with logic, and figure out why thing no work.
+        rotationPidController.setPositionPIDWrappingEnabled(true);
+        rotationPidController.setPositionPIDWrappingMinInput(-180);
+        rotationPidController.setPositionPIDWrappingMaxInput(180);
+
         rotationMotor.burnFlash();
     }
 
