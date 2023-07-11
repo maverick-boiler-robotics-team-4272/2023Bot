@@ -75,6 +75,12 @@ public class Drivetrain extends SwerveDriveBase<Pigeon, SwerveModule> {
         }
     }
 
+    public void stopModules() {
+        for(SwerveModule module : modules) {
+            module.stopModule();
+        }
+    }
+
     public void xConfig() {
         setStates(
             new SwerveModuleState(0.1, Rotation2d.fromDegrees(135)),

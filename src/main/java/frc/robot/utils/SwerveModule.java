@@ -94,6 +94,10 @@ public class SwerveModule extends SwerveModuleBase {
         rotationPidController.setReference(state.angle.getDegrees(), ControlType.kPosition);
     }
 
+    public void stopModule() {
+        drivePidController.setReference(0, ControlType.kVelocity);
+    }
+
     /**
      * 
      * @return Current state of the module

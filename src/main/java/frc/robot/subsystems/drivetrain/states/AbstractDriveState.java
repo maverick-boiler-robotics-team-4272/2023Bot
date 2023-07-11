@@ -24,6 +24,6 @@ public abstract class AbstractDriveState extends State<Drivetrain> {
 
     @Override
     public void end(boolean interrupted) {
-        requiredSubsystem.drive(0, 0, 0);
+        requiredSubsystem.stopModules();
     }
 }
