@@ -143,11 +143,11 @@ public class RobotContainer {
             Commands.runEnd(() -> candle.setLEDs(0, 8, 255, 255, 0), () -> candle.turnOffLEDs(0, 8))
         );
 
-        new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
+        new Trigger(operatorController.getTrigger("left")::isTriggered).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
-        new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("rightBumper")::get).whileTrue(
+        new Trigger(operatorController.getTrigger("right")::isTriggered).and(operatorController.getButton("rightBumper")::get).whileTrue(
             new CubeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
@@ -167,11 +167,11 @@ public class RobotContainer {
             new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
         );
 
-        new Trigger(() -> operatorController.getTrigger("left").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
+        new Trigger(operatorController.getTrigger("left")::isTriggered).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
         );
 
-        new Trigger(() -> operatorController.getTrigger("right").getValue() != 0).and(operatorController.getButton("leftBumper")::get).whileTrue(
+        new Trigger(operatorController.getTrigger("right")::isTriggered).and(operatorController.getButton("leftBumper")::get).whileTrue(
             new ConeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
         );
 
