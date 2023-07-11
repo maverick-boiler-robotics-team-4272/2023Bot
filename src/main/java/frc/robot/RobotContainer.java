@@ -108,92 +108,144 @@ public class RobotContainer {
         JoystickAxes leftAxes = driveController.getAxes("left");
         JoystickAxes rightAxes = driveController.getAxes("right");
 
-        drivetrain.setDefaultCommand(
-            new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
-        );
+        new Trigger(leftAxes::isTriggered)
+            .or(rightAxes::isTriggered)
+            .and(
+                new Trigger(driveController.getButton("y")::get).negate()
+            )
+            .whileTrue(
+                new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
+            );
 
         // new Trigger(driveController.getButton("a")::get).onTrue(new
         // ResetPoseState(drivetrain, Limelights.CENTER));
 
-        new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
+        new Trigger(driveController.getButton("b")::get)
+            .onTrue(
+                new ResetHeadingState(drivetrain)
+            );
 
-        new Trigger(driveController.getButton("x")::get).onTrue(new InstantCommand(drivetrain::resetModules, drivetrain));
+        new Trigger(driveController.getButton("x")::get)
+            .onTrue(
+                new InstantCommand(drivetrain::resetModules, drivetrain)
+            );
 
         new Trigger(driveController.getButton("rightBumper")::get)
-                .onTrue(new InstantCommand(drivetrain::xConfig, drivetrain));
+            .onTrue(
+                new InstantCommand(drivetrain::xConfig, drivetrain)
+            );
 
         new Trigger(driveController.getButton("y")::get)
+            .and(
+                new Trigger(leftAxes::isTriggered)
+            )
             .whileTrue(
                 new HumanPlayerLineupState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, new PIDController(2.5, 0, 0))
             );
 
         // TODO: Move to other controller when buttons are available
-        new Trigger(driveController.getButton("leftBumper")::get).whileTrue(
-                new LaunchCubeCommand(arm, intake));
+        new Trigger(driveController.getButton("leftBumper")::get)
+            .whileTrue(
+                new LaunchCubeCommand(arm, intake)
+            );
     }
 
     private void configureOperatorBindings() {
         arm.setDefaultCommand(new ArmSetpointState(arm, STOWED));
 
-        new Trigger(operatorController.getButton("rightBumper")::get).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(0, 8, 128, 0, 128), () -> candle.turnOffLEDs(0, 8))
+        new Trigger(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                Commands.runEnd(
+                    () -> candle.setLEDs(0, 8, 128, 0, 128),
+                    () -> candle.turnOffLEDs(0, 8)
+                )
+            );
+
+        new Trigger(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                Commands.runEnd(
+                    () -> candle.setLEDs(0, 8, 255, 255, 0),
+                    () -> candle.turnOffLEDs(0, 8)
+                )
+            );
+
+        new Trigger(operatorController.getTrigger("left")::isTriggered)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
+            );
+
+        new Trigger(operatorController.getTrigger("right")::isTriggered)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new CubeGrabState(intake, () -> -operatorController.getTrigger("right").getValue()
+            )
         );
 
-        new Trigger(operatorController.getButton("leftBumper")::get).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(0, 8, 255, 255, 0), () -> candle.turnOffLEDs(0, 8))
-        );
+        new Trigger(operatorController.getButton("a")::get)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, GROUND_CUBE).repeatedly()
+            );
 
-        new Trigger(operatorController.getTrigger("left")::isTriggered).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(intake, operatorController.getTrigger("left")::getValue)
-        );
+        new Trigger(operatorController.getButton("b")::get)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
+            );
 
-        new Trigger(operatorController.getTrigger("right")::isTriggered).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new CubeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
-        );
+        new Trigger(operatorController.getButton("x")::get)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, MID_CUBE).repeatedly()
+            );
 
-        new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, GROUND_CUBE).repeatedly()
-        );
+        new Trigger(operatorController.getButton("y")::get)
+            .and(operatorController.getButton("rightBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
+            );
 
-        new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
-        );
+        new Trigger(operatorController.getTrigger("left")::isTriggered)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
+            );
 
-        new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, MID_CUBE).repeatedly()
-        );
+        new Trigger(operatorController.getTrigger("right")::isTriggered)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ConeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
+            );
 
-        new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("rightBumper")::get).whileTrue(
-            new ArmSetpointState(arm, HIGH_CUBE).repeatedly()
-        );
+        new Trigger(operatorController.getButton("a")::get)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, GROUND_CONE).repeatedly()
+            );
 
-        new Trigger(operatorController.getTrigger("left")::isTriggered).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(intake, operatorController.getTrigger("left")::getValue)
-        );
+        new Trigger(operatorController.getButton("b")::get)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
+            );
 
-        new Trigger(operatorController.getTrigger("right")::isTriggered).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ConeGrabState(intake, () -> -operatorController.getTrigger("right").getValue())
-        );
+        new Trigger(operatorController.getButton("x")::get)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, MID_CONE).repeatedly()
+            );
 
-        new Trigger(operatorController.getButton("a")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, GROUND_CONE).repeatedly()
-        );
+        new Trigger(operatorController.getButton("y")::get)
+            .and(operatorController.getButton("leftBumper")::get)
+            .whileTrue(
+                new ArmSetpointState(arm, HIGH_CONE).repeatedly()
+            );
 
-        new Trigger(operatorController.getButton("b")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, HUMAN_PLAYER_CONE).repeatedly()
-        );
-
-        new Trigger(operatorController.getButton("x")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, MID_CONE).repeatedly()
-        );
-
-        new Trigger(operatorController.getButton("y")::get).and(operatorController.getButton("leftBumper")::get).whileTrue(
-            new ArmSetpointState(arm, HIGH_CONE).repeatedly()
-        );
-
-        new  Trigger(() -> operatorController.getPOV("d-pad").getDirection().equals(Direction.UP)).whileTrue(
-            new ArmFixState(arm)
-        );
+        new  Trigger(() -> operatorController.getPOV("d-pad").getDirection().equals(Direction.UP))
+            .whileTrue(
+                new ArmFixState(arm)
+            );
     }
 
     private void configureDemo1Bindings() {
@@ -206,11 +258,17 @@ public class RobotContainer {
 
     private void configureCandleSignaling() {
         new Trigger(intake::isCubeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(40, 52, 128, 0, 128), () -> candle.turnOffLEDs(40, 52))
+            Commands.runEnd(
+                () -> candle.setLEDs(40, 52, 128, 0, 128),
+                () -> candle.turnOffLEDs(40, 52)
+            )
         );
 
         new Trigger(intake::isConeLidarTripped).whileTrue(
-            Commands.runEnd(() -> candle.setLEDs(8, 32, 255, 255, 0), () -> candle.turnOffLEDs(8, 32))
+            Commands.runEnd(
+                () -> candle.setLEDs(8, 32, 255, 255, 0),
+                () -> candle.turnOffLEDs(8, 32)
+            )
         );
     }
 
