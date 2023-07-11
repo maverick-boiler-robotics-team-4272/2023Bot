@@ -54,18 +54,6 @@ public class SwerveModule extends SwerveModuleBase {
 
         rotationEncoder.setPosition(externalRotationEncoder.getPosition());
 
-        // TODO: Remove these three lines of code
-        // They shouldn't be necessary because the
-        // optimize function should handle continuity.
-        // Fix issue with logic, and figure out why thing no work.
-        
-        // Issue found, not changing while at comp, because this works.
-        // Issue is with not changing the position while not moving
-        // Remove if block, and all will be right with the world.
-        rotationPidController.setPositionPIDWrappingEnabled(true);
-        rotationPidController.setPositionPIDWrappingMinInput(-180);
-        rotationPidController.setPositionPIDWrappingMaxInput(180);
-
         rotationMotor.burnFlash();
     }
 
@@ -103,10 +91,7 @@ public class SwerveModule extends SwerveModuleBase {
         SwerveModuleState state = optimize(desiredState, getHeading());
 
         drivePidController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
-
-        if(state.speedMetersPerSecond != 0.0){
-            rotationPidController.setReference(state.angle.getDegrees(), ControlType.kPosition);
-        }
+        rotationPidController.setReference(state.angle.getDegrees(), ControlType.kPosition);
     }
 
     /**
