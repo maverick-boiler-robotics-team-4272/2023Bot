@@ -46,7 +46,7 @@ public class ThreePieceCableSide extends SequentialCommandGroup {
                 )
             ),
             new WaitCommand(0.1),
-            new CubeEjectState(intake, () -> 0.8).withTimeout(.2),
+            new CubeEjectState(intake, () -> 0.85).withTimeout(.3),
             new FollowPathWithEvents(
                 new PathFollowState(drivetrain, getGlobalTrajectories().SECOND_CUBE_CABLE_SIDE, true, false), 
                 getGlobalTrajectories().SECOND_CUBE_CABLE_SIDE.getMarkers(), 

@@ -6,19 +6,18 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.team4272.globals.State;
 
-import static frc.robot.constants.AutoConstants.PathUtils.THETA_CONTROLLER;
+import static frc.robot.constants.AutoConstants.PathUtils.*;
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 
-public class RotationLockState extends State<Drivetrain> {
+public class RotationLockState extends PositionalDriveState {
     private DoubleSupplier xSpeed;
     private DoubleSupplier ySpeed;
     private Supplier<Rotation2d> thetaSupplier;
     private PIDController thetaController;
 
     public RotationLockState(Drivetrain drivetrain, DoubleSupplier xSpeed, DoubleSupplier ySpeed, Supplier<Rotation2d> thetaSupplier, PIDController thetaController) {
-        super(drivetrain);
+        super(drivetrain, X_CONTROLLER,  Y_CONTROLLER, THETA_CONTROLLER);
 
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
@@ -41,9 +40,28 @@ public class RotationLockState extends State<Drivetrain> {
     }
 
     @Override
-    public void execute() {
-        double thetaSpeed = -thetaController.calculate(requiredSubsystem.getRobotPose().getRotation().getRadians(), thetaSupplier.get().getRadians());
-        requiredSubsystem.driveFieldOriented(ySpeed.getAsDouble() * MAX_TRANS_SPEED, -xSpeed.getAsDouble() * MAX_TRANS_SPEED, thetaSpeed * MAX_ROT_SPEED);
+    public double getDesiredX() {
+        return 0;
+    }
+
+    @Override
+    public double getDesiredY() {
+        return 0;
+    }
+
+    @Override
+    public Rotation2d getDesiredTheta() {
+        return thetaSupplier.get();
+    }
+
+    @Override
+    public double getXSpeed() {
+        return ySpeed.getAsDouble() * MAX_TRANS_SPEED;
+    }
+
+    @Override
+    public double getYSpeed() {
+        return -xSpeed.getAsDouble() * MAX_TRANS_SPEED;
     }
 
     @Override
