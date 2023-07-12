@@ -1,0 +1,66 @@
+package frc.robot.commands.yagsl;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoints;
+import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.states.CubeEjectState;
+import frc.robot.subsystems.intake.states.CubeGrabState;
+import frc.robot.utils.ArmSetpoint;
+import frc.robot.subsystems.yagsldrive.YagslDrive;
+import frc.robot.subsystems.yagsldrive.states.PathFollowState;
+import frc.robot.subsystems.arm.states.ArmSetpointState;
+
+import static frc.robot.constants.AutoConstants.Paths.getGlobalTrajectories;
+
+import java.util.Map;
+
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+
+public class ThreePieceAuto extends TwoConeCommand {
+    public ThreePieceAuto(YagslDrive yagsldrive, ArmSubsystem arm, IntakeSubsystem intake) {
+        super(yagsldrive, arm, intake);
+        addCommands(
+            new WaitCommand(0.25),
+            new FollowPathWithEvents(
+                new PathFollowState(yagsldrive, getGlobalTrajectories().THIRD_CUBE,true,false), 
+                getGlobalTrajectories().THIRD_CUBE.getMarkers(), 
+                Map.of(
+                    "liftArm",
+                    new ParallelCommandGroup(
+                        new ArmSetpointState(arm, ArmSetpoints.STOWED),
+                        new CubeGrabState(intake, () -> 0.1)
+                    ),
+                    "dropArm",
+                    new ParallelCommandGroup(
+                        new ArmSetpointState(arm, ArmSetpoints.GROUND_AUTO_CUBE),
+                        new CubeGrabState(intake, () -> 0.75)
+                    ),
+                    "prepare",
+                    new ArmSetpointState(
+                        arm,
+                        ArmSetpoint.createArbitrary(Units.inchesToMeters(10.0), Rotation2d.fromDegrees(-90.0))
+                    ),
+                    "highCube",
+                    new ArmSetpointState(arm, ArmSetpoints.HIGH_CUBE),
+                    "hold",
+                    new CubeGrabState(intake, () -> 0.1)
+                )
+            ),
+            new WaitCommand(0.5),
+            new CubeEjectState(intake, () -> 0.30).withTimeout(0.3),
+            new FollowPathWithEvents(
+                new PathFollowState(yagsldrive, getGlobalTrajectories().FOURTH_CUBE, true, false), 
+                getGlobalTrajectories().FOURTH_CUBE.getMarkers(), 
+                Map.of(
+                    "liftArm",
+                    new ArmSetpointState(arm, ArmSetpoints.STOWED)
+                )
+            ),
+            new ArmSetpointState(arm, ArmSetpoints.STOWED)
+        );
+    }
+}
