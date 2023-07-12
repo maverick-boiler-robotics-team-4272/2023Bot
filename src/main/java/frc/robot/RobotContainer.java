@@ -23,10 +23,10 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmFixState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
 import frc.robot.utils.Candle;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.states.DriveState;
-import frc.robot.subsystems.drivetrain.states.HumanPlayerLineupState;
-import frc.robot.subsystems.drivetrain.states.ResetHeadingState;
+import frc.robot.subsystems.yagsldrive.YagslDrive;
+import frc.robot.subsystems.yagsldrive.states.DriveState;
+import frc.robot.subsystems.yagsldrive.states.HumanPlayerLineupState;
+import frc.robot.subsystems.yagsldrive.states.ResetHeadingState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
@@ -52,7 +52,7 @@ import static frc.robot.constants.RobotConstants.ArmSubsystemConstants.ArmSetpoi
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    public Drivetrain drivetrain = new Drivetrain();
+    public YagslDrive drivetrain = new YagslDrive();
     public ArmSubsystem arm = new ArmSubsystem();
     public IntakeSubsystem intake = new IntakeSubsystem();
     public Candle candle = Candle.getInstance();
