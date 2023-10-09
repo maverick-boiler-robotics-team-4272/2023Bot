@@ -13,6 +13,7 @@ import frc.team4272.swerve.utils.SwerveModuleBase;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.SwerveModuleConstants.*;
 import static frc.robot.constants.UniversalConstants.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.TESTING_TABLE;
 
 public class SwerveModule extends SwerveModuleBase {
 
@@ -102,6 +103,8 @@ public class SwerveModule extends SwerveModuleBase {
         // Specially made optimize function to handle continuity logic
         SwerveModuleState state = optimize(desiredState, getHeading());
 
+        TESTING_TABLE.putNumber("Module Set Speed", state.speedMetersPerSecond);
+
         drivePidController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
 
         if(state.speedMetersPerSecond != 0.0){
@@ -119,5 +122,9 @@ public class SwerveModule extends SwerveModuleBase {
 
     public void ensureCorrect() {
         rotationEncoder.setPosition(getMAVCoderReading());
+    }
+
+    public double getSpeed() {
+        return driveEncoder.getVelocity();
     }
 }

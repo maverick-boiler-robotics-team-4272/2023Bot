@@ -77,6 +77,8 @@ public class PathFollowState extends PositionalDriveState {
         PathPlannerState state = (PathPlannerState) trajectory.sample(timer.get());
         desiredPose = new Pose2d(state.poseMeters.getTranslation(), state.holonomicRotation);
 
+        PathPlannerServer.sendPathFollowingData(desiredPose, requiredSubsystem.getRobotPose());
+
         super.execute();
     }
 

@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.yagsldrive.YagslDrive;
 
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 public class DriveState extends AbstractDriveState {
 
@@ -26,6 +27,9 @@ public class DriveState extends AbstractDriveState {
 
     @Override
     public double getXSpeed() {
+        // TESTING_TABLE.putNumber("Mag", Math.hypot(ySpeed.getAsDouble(), xSpeed.getAsDouble()));
+        TESTING_TABLE.putNumber("Mag", ySpeed.getAsDouble() * MAX_TRANS_SPEED);
+
         return ySpeed.getAsDouble() * MAX_TRANS_SPEED;
     }
 

@@ -17,6 +17,7 @@ import frc.robot.utils.YAGSL.SwerveKinematics2;
 import static frc.robot.constants.HardwareMap.*;
 import static frc.robot.constants.RobotConstants.DrivetrainConstants.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.*;
+import static frc.robot.constants.TelemetryConstants.ShuffleboardTables.*;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
@@ -34,20 +35,21 @@ public class YagslDrive extends SubsystemBase {
     public YagslDrive() {
         gyroscope = new Pigeon(PIGEON_ID, 90);
         kinematics = new SwerveKinematics2(
-            new Translation2d(-WHEEL_DISTANCE,  WHEEL_DISTANCE),
             new Translation2d(-WHEEL_DISTANCE, -WHEEL_DISTANCE),
+            new Translation2d(-WHEEL_DISTANCE,  WHEEL_DISTANCE),
             new Translation2d (WHEEL_DISTANCE,  WHEEL_DISTANCE),
             new Translation2d( WHEEL_DISTANCE, -WHEEL_DISTANCE)
         );
 
         modules = new SwerveModule[] {
             new SwerveModule(MODULE_FR_ID,FRONT_RIGHT_OFFSET),
-            new SwerveModule(MODULE_FR_ID, FRONT_RIGHT_OFFSET),
+            new SwerveModule(MODULE_FL_ID, FRONT_LEFT_OFFSET),
             new SwerveModule(MODULE_BL_ID, BACK_LEFT_OFFSET),
             new SwerveModule(MODULE_BR_ID, BACK_RIGHT_OFFSET)
         };
 
         odometry = new SwerveDriveOdometry2(kinematics, gyroscope.getRotation(), getPositions());
+        setMaxSpeeds(MAX_TRANS_SPEED, MAX_ROT_SPEED, MAX_MODULE_SPEED);
     }
 
     
@@ -70,6 +72,8 @@ public class YagslDrive extends SubsystemBase {
         if(maxTotal == 0) {
             throw new IllegalCallerException("Max total must have a value. Call setMaxSpeeds at some point during initialization");
         }
+
+        TESTING_TABLE.putNumber("Magnitude", Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond));
 
         if(maxTranslational == 0 && maxRotational == 0) {
             SwerveKinematics2.desaturateWheelSpeeds(states, maxTotal);
@@ -136,12 +140,13 @@ public class YagslDrive extends SubsystemBase {
         return positions;
     }
 
+    private Pose2d odometryPose = null;
     public void updateOdometry() {
-        odometry.update(gyroscope.getRotation().unaryMinus(), getPositions());
+        odometryPose = odometry.update(gyroscope.getRotation().unaryMinus(), getPositions());
     }
 
     public Pose2d getRobotPose() {
-        return odometry.getPoseMeters();
+        return odometryPose == null ? new Pose2d() : odometryPose;
     }
 
     public void setRobotPose(Pose2d pose) {

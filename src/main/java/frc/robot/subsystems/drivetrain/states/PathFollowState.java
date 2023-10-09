@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.yagsldrive.YagslDrive;
 
 import static frc.robot.constants.AutoConstants.PathUtils.*;
 import static frc.robot.constants.TelemetryConstants.Limelights.CENTER;
