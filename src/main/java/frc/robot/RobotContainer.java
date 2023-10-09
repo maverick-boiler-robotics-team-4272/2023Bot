@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.yagsl.OneConeBackCommand;
+import frc.robot.commands.DemoAutoCommand;
+import frc.robot.commands.ThreeThrowCommand;
 import frc.robot.commands.yagsl.ConeMultiCubeCommand;
 import frc.robot.commands.yagsl.DefaultAutoCommand;
 import frc.robot.commands.yagsl.LaunchCubeCommand;
@@ -19,6 +21,7 @@ import frc.robot.commands.yagsl.OneConeCharge;
 import frc.robot.commands.yagsl.ThreePieceAuto;
 import frc.robot.commands.yagsl.ThreePieceCableSide;
 import frc.robot.commands.yagsl.TwoPieceCommand;
+import frc.robot.constants.TelemetryConstants.Limelights;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.states.ArmFixState;
 import frc.robot.subsystems.arm.states.ArmSetpointState;
@@ -27,6 +30,7 @@ import frc.robot.subsystems.yagsldrive.YagslDrive;
 import frc.robot.subsystems.yagsldrive.states.DriveState;
 import frc.robot.subsystems.yagsldrive.states.HumanPlayerLineupState;
 import frc.robot.subsystems.yagsldrive.states.ResetHeadingState;
+import frc.robot.subsystems.yagsldrive.states.ResetPoseState;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.states.ConeGrabState;
 import frc.robot.subsystems.intake.states.CubeGrabState;
@@ -112,8 +116,8 @@ public class RobotContainer {
             new DriveState(drivetrain, leftAxes::getDeadzonedX, leftAxes::getDeadzonedY, rightAxes::getDeadzonedX)
         );
 
-        // new Trigger(driveController.getButton("a")::get).onTrue(new
-        // ResetPoseState(drivetrain, Limelights.CENTER));
+        new Trigger(driveController.getButton("a")::get).onTrue(new
+        ResetPoseState(drivetrain, Limelights.CENTER));
 
         new Trigger(driveController.getButton("b")::get).onTrue(new ResetHeadingState(drivetrain));
 
@@ -222,6 +226,8 @@ public class RobotContainer {
         AUTO_CHOOSER.setDefaultOption("Default Auto", () -> new DefaultAutoCommand(arm, intake));
         AUTO_CHOOSER.addOption("Three Piece No Cables", () -> new ThreePieceAuto(drivetrain, arm, intake));
         AUTO_CHOOSER.addOption("Three Piece Cable", () -> new ThreePieceCableSide(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Demo Auto", () -> new DemoAutoCommand(drivetrain, arm, intake));
+        AUTO_CHOOSER.addOption("Three Throw", () -> new ThreeThrowCommand(drivetrain, arm, intake));
 
         AUTO_TABLE.putData("Auto Chooser", AUTO_CHOOSER);
 

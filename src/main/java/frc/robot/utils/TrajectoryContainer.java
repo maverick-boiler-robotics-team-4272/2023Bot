@@ -20,6 +20,10 @@ public class TrajectoryContainer {
     public final PathPlannerTrajectory FIRST_CUBE_CABLE_SIDE;
     public final PathPlannerTrajectory SECOND_CUBE_CABLE_SIDE;
     public final PathPlannerTrajectory SPIN;
+    public final PathPlannerTrajectory DEMO;
+    public final PathPlannerTrajectory DEMO_TWO;
+    public final PathPlannerTrajectory THREE_THROW;
+
 
     public TrajectoryContainer(String prefix) {
         TWO_CONE_PATH = PathPlanner.loadPath(prefix + " Two Cone", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
@@ -32,5 +36,9 @@ public class TrajectoryContainer {
         FIRST_CUBE_CABLE_SIDE = PathPlanner.loadPath(prefix + " First Cube Cable side", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         SECOND_CUBE_CABLE_SIDE = PathPlanner.loadPath(prefix + " Second Cube Cable", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
         SPIN = PathPlanner.loadPath(prefix + " Spin", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
+        DEMO = PathPlanner.loadPath(prefix + " Demo Path", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
+        DEMO_TWO = PathPlanner.loadPath(prefix + " Demo Two", MAX_AUTO_SPEED, MAX_AUTO_ACCEL, false);
+        THREE_THROW = PathPlanner.loadPath(prefix + " Three Throw", MAX_AUTO_SPEED, MAX_AUTO_ACCEL);
+        
     }
 }

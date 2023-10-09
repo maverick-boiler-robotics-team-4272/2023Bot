@@ -15,14 +15,14 @@ public class RobotConstants {
 
         public static final double MAX_TRANS_SPEED = 4.0; // 4.0 meters per second
         public static final double MAX_ROT_SPEED = UniversalConstants.PI2 * 2.0; // 1.5 rotations per second
-        public static final double MAX_MODULE_SPEED = Units.feetToMeters(14.5); // 14.5 feet per second
+        public static final double MAX_MODULE_SPEED = 0.0254 * (14.5 * 12); // 14.5 feet per second
 
         public static final double MAX_AUTO_SPEED = 4.0;
         public static final double MAX_AUTO_ACCEL = 3.0;
 
-        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 112.0;
+        public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 110.0;
         public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 91.0;
-        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 229.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 166.0;
         public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 316.0;
 
         public static class SwerveModuleConstants {
@@ -72,7 +72,7 @@ public class RobotConstants {
         public static class RotaryArmConstants {
             // Any offset less than 120 degrees is generally going to be bad
             // To fix this, reset encoder position or chain to make the offset greater than 120
-            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 218.0;
+            public static final double ROTARY_ARM_OFFSET = IS_PRACTICE_BOT ? 192.0 : 199.0;
 
             public static final double ROTARY_ARM_PID_P = IS_PRACTICE_BOT ? 0.012 : 0.014;
             public static final double ROTARY_ARM_PID_I = IS_PRACTICE_BOT ? 0.001 : 0.0;
@@ -130,8 +130,10 @@ public class RobotConstants {
             HUMAN_PLAYER_CONE(Rotation2d.fromDegrees(-25), Units.inchesToMeters(37.000), false),
             HYBRID_CONE(Rotation2d.fromDegrees(-100), Units.inchesToMeters(0.000), false),
     
-            LAUNCH_CUBE(Rotation2d.fromDegrees(-50), Units.inchesToMeters(0.000), false),
+
+            LAUNCH_CUBE(Rotation2d.fromDegrees(-80), Units.inchesToMeters(25.000), false),
             
+
             STOWED(Rotation2d.fromDegrees(-108), Units.inchesToMeters(0.000), false),
             SAFE_ARM(Rotation2d.fromDegrees(-70), Units.inchesToMeters(0.000), false),
             ZERO(Rotation2d.fromDegrees(0), 0, false),

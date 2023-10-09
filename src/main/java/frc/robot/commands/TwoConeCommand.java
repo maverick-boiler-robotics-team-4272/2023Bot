@@ -26,9 +26,9 @@ import com.pathplanner.lib.commands.FollowPathWithEvents;
 public class TwoConeCommand extends SequentialCommandGroup {
     public TwoConeCommand(Drivetrain drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         super(
-            new ParallelRaceGroup(
+            new ParallelCommandGroup(
                     new ArmSetpointState(arm, ArmSetpoints.MID_CONE),
-                    new ConeGrabState(intake, () -> 0.1)
+                    new ConeGrabState(intake, () -> 0.1).withTimeout(0.2)
             ),
             new ConeEjectState(intake, () -> 0.5).withTimeout(0.2),
             new FollowPathWithEvents(

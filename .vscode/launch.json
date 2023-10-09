@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch Bencher",
+      "request": "launch",
+      "mainClass": "frc.robot.utils.Bencher",
+      "projectName": "2023Bot"
+    },
+    {
+      "type": "java",
       "name": "Launch Mirror",
       "request": "launch",
       "mainClass": "frc.robot.Mirror",

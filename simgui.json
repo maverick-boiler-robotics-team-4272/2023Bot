@@ -1,0 +1,9 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Auto Data/Auto Chooser": "String Chooser",
+      "/Shuffleboard/Auto Data/Side Chooser": "String Chooser"
+    }
+  }
+}
