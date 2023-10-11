@@ -22,7 +22,7 @@ public class RobotConstants {
 
         public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 110.0;
         public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 91.0;
-        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 166.0;
+        public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 164.0;
         public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 316.0;
 
         public static class SwerveModuleConstants {
