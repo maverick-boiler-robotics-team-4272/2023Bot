@@ -51,7 +51,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                     new CubeGrabState(intake, () -> 0.1)
                 )
            ),
-           new CubeEjectState(intake, () -> 0.20).withTimeout(0.1)
+           new CubeEjectState(intake, () -> 0.20).withTimeout(0.2)
         );
     }
 }
