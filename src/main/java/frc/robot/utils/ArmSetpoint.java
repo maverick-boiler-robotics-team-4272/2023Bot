@@ -26,7 +26,7 @@ public interface ArmSetpoint {
 
             @Override
             public String toString() {
-                return String.format("ArbitrarySetpoint(height = %.2f, angle = %.2fdeg", elevatorHeight, armAngle);
+                return String.format("ArbitrarySetpoint(height = %.2f, angle = %.2fdeg)", elevatorHeight, armAngle);
             }
         };
     }
