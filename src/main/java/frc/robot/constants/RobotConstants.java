@@ -21,7 +21,7 @@ public class RobotConstants {
         public static final double MAX_AUTO_ACCEL = 3.0;
 
         public static final double FRONT_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 110.0;
-        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 318.0; // was 91 but andy change 10/12/2023
+        public static final double FRONT_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 88.0;
         public static final double BACK_LEFT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 164.0;
         public static final double BACK_RIGHT_OFFSET = IS_PRACTICE_BOT ? 0.0 : 316.0;
 
