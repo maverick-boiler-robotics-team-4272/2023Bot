@@ -52,7 +52,7 @@ public class TwoConeCommand extends SequentialCommandGroup {
                     new CubeGrabState(intake, () -> 0.1)
                 )
            ),
-           new InstantCommand(drivetrain::resetModules, drivetrain),
+        //    new InstantCommand(drivetrain::resetModules, drivetrain),
            new CubeEjectState(intake, () -> 0.20).withTimeout(0.2)
         );
     }
