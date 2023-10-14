@@ -160,7 +160,10 @@ public class YagslDrive extends SubsystemBase {
         if(!DriverStation.isAutonomous()) {
             PathPlannerServer.sendPathFollowingData(robotPose, getRobotPose());
         }
-        TelemetryConstants.ShuffleboardTables.TESTING_TABLE.putNumber("Pitch", gyroscope.getPitch());
+        
+        TESTING_TABLE.putNumber("Pitch", gyroscope.getPitch());
+        TESTING_TABLE.putNumber("Module 0 Angle", modules[0].getHeading().getDegrees());
+        TESTING_TABLE.putNumber("Module 2 Angle", modules[2].getHeading().getDegrees());
     }
 
     public void resetModules() {
